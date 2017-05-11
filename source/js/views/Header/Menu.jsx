@@ -7,14 +7,24 @@ export default class Menu extends Component {
   render() {
     return (
       <div className='Menu'>
-        <IndexLink to={ routeCodes.DASHBOARD }>
-          Dashboard
+        <IndexLink to='News'>
+          Новости
         </IndexLink>
-        <Link to={ routeCodes.ABOUT }>
-          About
+
+        <Link to='Articles'>
+          Статьи
         </Link>
-        <Link to='404'>
-          404
+
+        <Link to='Video'>
+          Видео
+        </Link>
+
+        <Link to='Games'>
+          Игры
+        </Link>
+
+        <Link to='More'>
+          Еще
         </Link>
       </div>
     );
