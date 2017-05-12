@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { IndexLink } from 'react-router';
-// import { routeCodes } from '../../routes';
+import { Link } from 'react-router';
 
 export default class Auth extends Component {
 
   render() {
     return (
       <div className='Auth'>
-        <IndexLink to='login'>
-          Войти
-        </IndexLink>
+        <Link to='login'>
+          Вход
+        </Link>
       </div>
     );
   }

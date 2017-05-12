@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
-import { routeCodes } from '../../routes';
 
 export default class Menu extends Component {
 
@@ -15,7 +14,7 @@ export default class Menu extends Component {
           Статьи
         </Link>
 
-        <Link to='Video'>
+        <Link to='Videos'>
           Видео
         </Link>
 

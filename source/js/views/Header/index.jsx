@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Menu from './Menu';
-import Auth from './Auth';
+import Menu from './Menu/index';
+import Auth from './Auth/index';
 
 export default class Header extends Component {
   render() {
