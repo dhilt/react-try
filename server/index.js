@@ -6,6 +6,6 @@ app.get('/api/test', function (req, res) {
   res.send('API server works!');
 });
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log('Hello, console! Listening on port ' + port + '...');
 });
