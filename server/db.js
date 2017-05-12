@@ -13,7 +13,8 @@ var db = new sqlite3.Database(DATABASE_PATH);
 db.serialize(function () {
   db.run('CREATE TABLE User (id INTEGER PRIMARY KEY, login TEXT NOT NULL, hash TEXT NOT NULL)');
   var adminHash = passwordHash.generate('password34');
-  var stmt = db.prepare('INSERT INTO User VALUES (1, "admin", "' + adminHash + '")');
+  var stmt = db.prepare('INSERT INTO User VALUES (?, ?, ?)');
+  stmt.run(1, 'admin', adminHash + '');
   stmt.finalize();
 });
 db.close();

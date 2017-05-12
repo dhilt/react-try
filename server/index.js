@@ -5,6 +5,7 @@ var port = 3003;
 
 app.get('/api/test', function (req, res) {
   var users = [];
+  var user = {};
   var db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, function (Error) {
     if (Error !== null)
       throw ('No development.db found. Run "node db.js"...');
@@ -12,15 +13,13 @@ app.get('/api/test', function (req, res) {
 
   db.all('SELECT * FROM User', function (err, rows) {
     rows.forEach(function (row) {
-      users.join({
-        id: row.id,
-        login: row.login,
-        hash: row.hash
-      });
+      user = {id: row.id, login: row.login, hash: row.hash};
+      console.log(user);
+      users.push(user);
     });
   });
   db.close();
-  res.send(JSON.stringify(users));
+  res.send(users);
 });
 
 app.listen(port, function () {
