@@ -14,12 +14,11 @@ app.get('/api/test', function (req, res) {
   db.all('SELECT * FROM User', function (err, rows) {
     rows.forEach(function (row) {
       user = {id: row.id, login: row.login, hash: row.hash};
-      console.log(user);
       users.push(user);
     });
+    res.send(users);
   });
   db.close();
-  res.send(users);
 });
 
 app.listen(port, function () {
