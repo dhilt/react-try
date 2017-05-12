@@ -10,11 +10,13 @@ app.get('/api/test', function (req, res) {
       throw ('No development.db found. Run "node db.js"...');
   });
 
-  db.all('SELECT * FROM User', function (err, row) {
-    users.join({
-      id: row.id,
-      login: row.login,
-      hash: row.hash
+  db.all('SELECT * FROM User', function (err, rows) {
+    rows.forEach(function (row) {
+      users.join({
+        id: row.id,
+        login: row.login,
+        hash: row.hash
+      });
     });
   });
   db.close();
