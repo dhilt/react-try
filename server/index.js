@@ -33,25 +33,17 @@ app.post('/api/login', function (req, res) {
     res.send({error: 'No login or password!'});
     return;
   };
-
-  db.all('SELECT id, login, hash FROM User', function(err, rows) {
-    if (err) {
-        res.send({success: false, error: err});
-    } else {
-      var row = rows.find(function(element) {
-        return element.login = login;
-      });
-
-      var access = passwordHash.verify(password, row.hash);
-      if (access)
+  
+  db.get('SELECT * FROM User WHERE login = ?', login, function(err, row) {
+    if (err)
+      res.send({success: false, error: err});
+    else
+      if (passwordHash.verify(password, row.hash))
         res.send({id: row.id, login: row.login});
       else
-        res.send({success: false, error: 'Invalid password.'})
-    };
+        res.send({success: false, error: 'Invalid password.'});
   });
-//  db.get('SELECT id, login = ?, hash FROM User', login, function(err, row) {
-//    res.send({id: row.id, login: row.login, hash: row.hash});
-//  });
+  
 });
 
 app.listen(port, function () {
