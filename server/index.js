@@ -5,6 +5,8 @@ var passwordHash = require('password-hash');
 var Cookies = require('cookies');
 var jwt = require('jsonwebtoken');
 var REGISTRATION_KEY = 'REGISTRATION_KEY';
+var SECRET_KEY = 'SecretKey';
+var monthTime = 2592000;
 var port = 3003;
 
 var db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, function (Error) {
@@ -43,7 +45,7 @@ app.post('/api/login', function (req, res) {
     else
       if (passwordHash.verify(password, row.hash)) {
         // Хеш пароля с логином шифруем и сохраняем в json
-        var token = jwt.sign({login: row.login, password: row.hash}, 'secretKey');
+        var token = jwt.sign({id: row.id, login: row.login}, SECRET_KEY, {expiresIn: monthTime});
 
         // Сохраняем в cookies
         var cookies = new Cookies(req, res);
