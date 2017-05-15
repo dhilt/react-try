@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var sqlite3 = require('sqlite3');
 var passwordHash = require('password-hash');
+var Cookies = require('cookies');
+var jwt = require('jsonwebtoken');
+var REGISTRATION_KEY = 'REGISTRATION_KEY';
 var port = 3003;
 
 var db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, function (Error) {
@@ -33,13 +36,21 @@ app.post('/api/login', function (req, res) {
     res.send({error: 'No login or password!'});
     return;
   };
-  
+
   db.get('SELECT * FROM User WHERE login = ?', login, function(err, row) {
     if (err)
       res.send({success: false, error: err});
     else
-      if (passwordHash.verify(password, row.hash))
+      if (passwordHash.verify(password, row.hash)) {
+        // Хеш пароля с логином шифруем и сохраняем в json
+        var token = jwt.sign({login: row.login, password: row.hash}, 'secretKey');
+
+        // Сохраняем в cookies
+        var cookies = new Cookies(req, res);
+        cookies.set(REGISTRATION_KEY, token);
+
         res.send({id: row.id, login: row.login});
+      }
       else
         res.send({success: false, error: 'Invalid password.'});
   });
