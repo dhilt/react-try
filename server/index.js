@@ -31,6 +31,24 @@ app.get('/api/test', function (req, res) {
   });
 });
 
+app.get('/api/userInfo', function (req, res) {
+  // Берем cookies
+  var cookies = new Cookies(req, res);
+  var cookie_get = cookies.get(REGISTRATION_KEY);
+  if (cookie_get === undefined) {
+    res.send({success: false, error: 'Have no cookies.'});
+    return;
+  };
+
+  // Расшифровываем token
+  jwt.verify(cookie_get, SECRET_KEY, function (err, decoded) {
+    if (err)
+      res.send({success: false, error: 'Error with cookies.'});
+    else
+      res.send({id: decoded.id, login: decoded.login});
+  });
+});
+
 app.post('/api/login', function (req, res) {
   var login = req.query.login;
   var password = req.query.password;
@@ -56,7 +74,6 @@ app.post('/api/login', function (req, res) {
       else
         res.send({success: false, error: 'Invalid password.'});
   });
-  
 });
 
 app.listen(port, function () {
