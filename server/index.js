@@ -1,81 +1,87 @@
-var express = require('express');
-var app = express();
-var sqlite3 = require('sqlite3');
-var passwordHash = require('password-hash');
-var Cookies = require('cookies');
-var jwt = require('jsonwebtoken');
-var REGISTRATION_KEY = 'REGISTRATION_KEY';
-var SECRET_KEY = 'SecretKey';
-var TOKEN_EXPIRATION_TIME = 2592000;
-var port = 3003;
+const express = require('express');
+const app = express();
+const sqlite3 = require('sqlite3');
+const passwordHash = require('password-hash');
+const Cookies = require('cookies');
+const jwt = require('jsonwebtoken');
 
-var db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, function (Error) {
-  if (Error !== null)
+const APP_PORT = 3003;
+const AUTH_TOKEN = {
+  cookieName: 'AUTH_TOKEN',
+  secretKey: 'MySecretKey',
+  expiresIn: 2592000
+}
+
+let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (err) => {
+  if (err) {
     throw ('No development.db found. Run "node db.js"...');
+  }
 });
 
-app.get('/api/test', function (req, res) {
-  var users = [];
-  var user = {};
+let getUserInfo = (userObj) => {
+  return {
+    id: userObj.id,
+    login: userObj.login
+  }
+};
 
-  db.all('SELECT * FROM User', function (err, rows) {
-    if (!err) {
-      rows.forEach(function (row) {
-        user = {id: row.id, login: row.login, hash: row.hash};
-        users.push(user);
-      });
-      res.send({success: true, result: users});
-    } else {
-      res.send({success: false, error: err});
-    };
+app.get('/api/test', (req, res) => {
+  db.all('SELECT * FROM User', (err, rows) => {
+    if (err) {
+      return res.send({ status: 'error', error: err });
+    }
+    let users = [];
+    rows.forEach(row => users.push(getUserInfo(row)));
+    res.send({ status: 'ok', result: users });
   });
 });
 
-app.get('/api/userInfo', function (req, res) {
+app.get('/api/userInfo', (req, res) => {
   // Берем cookies
-  var cookies = new Cookies(req, res);
-  var cookie_get = cookies.get(REGISTRATION_KEY);
-  if (cookie_get === undefined) {
-    res.send({success: false, error: 'Have no cookies.'});
-    return;
-  };
+  let cookies = new Cookies(req, res);
+  let cookie = cookies.get(AUTH_TOKEN.cookieName);
+  if (!cookie) {
+    return res.send({ status: 'error', error: 'Have no cookies.' });
+  }
 
   // Расшифровываем token
-  jwt.verify(cookie_get, SECRET_KEY, function (err, decoded) {
-    if (err)
-      res.send({success: false, error: 'Error with cookies.'});
-    else
-      res.send({id: decoded.id, login: decoded.login});
+  jwt.verify(cookie, AUTH_TOKEN.secretKey, (err, decoded) => {
+    if (err) {
+      return res.send({ status: 'error', error: 'Error with cookies.' });
+    }
+    res.send({ status: 'ok', result: getUserInfo(decoded) });
   });
 });
 
-app.post('/api/login', function (req, res) {
-  var login = req.query.login;
-  var password = req.query.password;
-  if (login === undefined || password === undefined) {
-    res.send({error: 'No login or password!'});
-    return;
-  };
+app.post('/api/login', (req, res) => {
+  let login = req.query.login;
+  let password = req.query.password;
+  if (!login || !password) {
+    return res.send({ error: 'No login or password!' });
+  }
 
-  db.get('SELECT * FROM User WHERE login = ?', login, function(err, row) {
-    if (err)
-      res.send({success: false, error: err});
-    else
-      if (passwordHash.verify(password, row.hash)) {
-        // Хеш пароля с логином шифруем и сохраняем в json
-        var token = jwt.sign({id: row.id, login: row.login}, SECRET_KEY, {expiresIn: TOKEN_EXPIRATION_TIME});
+  db.get('SELECT * FROM User WHERE login = ?', login, (err, row) => {
+    if (err) {
+      return res.send({ status: 'error', error: err });
+    }
+    if (!passwordHash.verify(password, row.hash)) {
+      return res.send({ status: 'error', error: 'Invalid password.' });
+    }
 
-        // Сохраняем в cookies
-        var cookies = new Cookies(req, res);
-        cookies.set(REGISTRATION_KEY, token);
+    let token = jwt.sign({
+        id: row.id,
+        login: row.login
+      },
+      AUTH_TOKEN.secretKey, { expiresIn: AUTH_TOKEN.expiresIn }
+    );
 
-        res.send({id: row.id, login: row.login});
-      }
-      else
-        res.send({success: false, error: 'Invalid password.'});
+    let cookies = new Cookies(req, res);
+    cookies.set(AUTH_TOKEN.cookieName, token);
+
+    res.send({ status: 'ok', result: getUserInfo(row) });
   });
 });
 
-app.listen(port, function () {
-  console.log('Hello, console! Listening on port ' + port + '...');
+app.listen(APP_PORT, () => {
+  console.log('Hello, console! Listening on port ' + APP_PORT + '...');
 });
