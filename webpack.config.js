@@ -152,6 +152,12 @@ module.exports = {
     contentBase: isProduction ? buildPath : sourcePath,
     historyApiFallback: true,
     port: 3000,
+    proxy: {
+      "/api": {
+        "target": "http://localhost:3003/",
+        "secure": false
+      }
+    },
     compress: isProduction,
     inline: !isProduction,
     hot: !isProduction,
