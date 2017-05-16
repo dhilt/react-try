@@ -1,34 +1,44 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import ReactModal from 'react-modal';
 
+import { openLoginModal, closeLoginModal } from 'actions/auth';
+
+@connect(state => ({
+  dialogOpen: state.auth.get('dialogOpen')
+}))
 export default class Auth extends Component {
+  static propTypes = {
+    dialogOpen: PropTypes.bool,
+    dispatch: PropTypes.func
+  }
+
   constructor () {
     super();
-    this.state = {
-      showModal: false
-    };
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
   openModal () {
-    this.setState({ showModal: true});
+    this.props.dispatch(openLoginModal());
   }
 
   closeModal () {
-    this.setState({ showModal: false});
+    this.props.dispatch(closeLoginModal());
   }
 
   render() {
+    let { dialogOpen } = this.props;
     return (
       <div className='Auth'>
-        <Link to='Login' onClick={this.openModal}>
+        <div onClick={this.openModal}>
           Login
-        </Link>
+        </div>
         <ReactModal
-          isOpen={this.state.showModal}
+          isOpen={dialogOpen}
           contentLabel='Authorization Modal'
           className='Modal'
           overlayClassName='Overlay'
