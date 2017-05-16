@@ -13,9 +13,8 @@ const AUTH_TOKEN = {
 }
 
 let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (err) => {
-  if (err) {
+  if (err)
     throw ('No development.db found. Run "node db.js"...');
-  }
 });
 
 let getUserInfo = (userObj) => {
@@ -27,9 +26,9 @@ let getUserInfo = (userObj) => {
 
 app.get('/api/test', (req, res) => {
   db.all('SELECT * FROM User', (err, rows) => {
-    if (err) {
+    if (err)
       return res.send({ status: 'error', error: err });
-    }
+
     let users = [];
     rows.forEach(row => users.push(getUserInfo(row)));
     res.send({ status: 'ok', result: users });
@@ -40,15 +39,14 @@ app.get('/api/userInfo', (req, res) => {
   // Берем cookies
   let cookies = new Cookies(req, res);
   let cookie = cookies.get(AUTH_TOKEN.cookieName);
-  if (!cookie) {
+  if (!cookie)
     return res.send({ status: 'error', error: 'Have no cookies.' });
-  }
 
   // Расшифровываем token
   jwt.verify(cookie, AUTH_TOKEN.secretKey, (err, decoded) => {
-    if (err) {
+    if (err)
       return res.send({ status: 'error', error: 'Error with cookies.' });
-    }
+
     res.send({ status: 'ok', result: getUserInfo(decoded) });
   });
 });
@@ -56,17 +54,15 @@ app.get('/api/userInfo', (req, res) => {
 app.post('/api/login', (req, res) => {
   let login = req.query.login;
   let password = req.query.password;
-  if (!login || !password) {
+  if (!login || !password)
     return res.send({ error: 'No login or password!' });
-  }
 
   db.get('SELECT * FROM User WHERE login = ?', login, (err, row) => {
-    if (err) {
+    if (err)
       return res.send({ status: 'error', error: err });
-    }
-    if (!passwordHash.verify(password, row.hash)) {
+
+    if (!passwordHash.verify(password, row.hash))
       return res.send({ status: 'error', error: 'Invalid password.' });
-    }
 
     let token = jwt.sign({
         id: row.id,
