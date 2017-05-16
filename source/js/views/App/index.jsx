@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Menu from 'components/Global/Menu';
+// import Menu from 'components/Global/Menu';
+import Header from 'views/Header/index'
 
 export default class App extends Component {
   static propTypes = {
@@ -14,11 +15,9 @@ export default class App extends Component {
 
     return (
       <div className='App'>
-        <Menu />
+        <Header />
 
-        <div className='Page'>
-          { children }
-        </div>
+        { children }
       </div>
     );
   }
