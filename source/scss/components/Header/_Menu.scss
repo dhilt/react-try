@@ -1,0 +1,24 @@
+.Menu {
+  a {
+    float: left;
+    margin-top: 0px;
+    font-weight: 100;
+    display: inline;
+    color: black;
+    text-decoration: none;
+    line-height: 20px;
+    font-size: 18px;
+    padding: 21px 20px 16px;
+  }
+  a:first-child {
+    padding: 0;
+  }
+  a:hover {
+    color: #aeaeae;
+  }
+  img {
+    float: left;
+    background-color: #30b5d7;
+    padding: 9px 45px 6px;
+  }
+}

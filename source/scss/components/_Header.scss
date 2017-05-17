@@ -1,0 +1,11 @@
+.Header {
+  width: calc(100% - 220px);
+  margin-left: 110px;
+  background: #ffffff;
+}
+
+.Menu,
+.Auth {
+  display: inline-block;
+  height: 65px;
+}
