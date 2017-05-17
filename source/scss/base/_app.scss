@@ -9,7 +9,6 @@ body {
 
 .Header {
   width: calc(100% - 220px);
-  height: 800px;
   margin-left: 110px;
   background: #ffffff;
 }
@@ -70,6 +69,7 @@ body {
   height: 614px;
   background: url(../assets/img/content.png) no-repeat;
   background-size: 100% auto;
+  background-color: #1C1E20;
   position: absolute;
   top: 64px;
 }
@@ -77,9 +77,23 @@ body {
 .Info {
   background-color: #30b5d7;
   width: 400px;
-  /*float: left;*/
+  float: right;
+  margin-top: 180px;
+  margin-right: 102px;
+  h2 {
+    font-weight: bold;
+    color: black;
+    line-height: 30px;
+    font-size: 22px;
+    padding: 0 20px;
+    margin-bottom: 10px;
+  }
   p {
     color: #ffffff;
+    padding: 0 20px;
+    line-height: 20px;
+    font-size: 15px;
+    font-weight: 100;
   }
 }
 

@@ -4,7 +4,7 @@ export default class Info extends Component {
   render() {
     return (
       <div className='Info'>
-        <h2>Ненавязчивый анализ Mirrors Edge</h2>
+        <h2>Ненавязчивый анализ <br /> Mirror's Edge</h2>
         <p>
           Еще совсем недавно осенью считалась главным поставщиком крупных игровых релизов.
           Полки магазинов ломились от новинок, а от покупателей не было отбоя.
