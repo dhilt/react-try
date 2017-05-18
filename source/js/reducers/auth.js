@@ -10,8 +10,8 @@ import {
 const initialState = Map({
   isAuthorized: false,
   dialogOpen: false,
-  login: null,
-  password: null
+  login: '',
+  password: ''
 });
 
 const actionsMap = {
