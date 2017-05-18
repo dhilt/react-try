@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import ReactModal from 'react-modal';
 
-import { openLoginModal, closeLoginModal } from 'actions/auth';
+import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString } from 'actions/auth';
 
 @connect(state => ({
-  dialogOpen: state.auth.get('dialogOpen')
+  dialogOpen: state.auth.get('dialogOpen'),
+  login: state.auth.get('login'),
+  password: state.auth.get('password')
 }))
 export default class Auth extends Component {
   static propTypes = {
     dialogOpen: PropTypes.bool,
+    login: PropTypes.string,
+    password: PropTypes.string,
     dispatch: PropTypes.func
   }
 
@@ -30,6 +34,14 @@ export default class Auth extends Component {
     this.props.dispatch(closeLoginModal());
   }
 
+  changeLogin (event) {
+    this.props.dispatch(changeLoginString(event.target.value));
+  }
+
+  changePassword (event) {
+    this.props.dispatch(changePasswordString(event.target.value));
+  }
+
   render() {
     let { dialogOpen } = this.props;
     return (
@@ -45,11 +57,11 @@ export default class Auth extends Component {
         >
           <div>
             <label>Login</label>
-            <input type='text' placeholder='User'></input>
+            <input type='text' placeholder='User' value={this.props.login} onChange={this.changeLogin}></input>
           </div>
           <div>
             <label>Password</label>
-            <input type='password' placeholder='**********'></input>
+            <input type='password' placeholder='**********' value={this.props.password} onChange={this.changePassword}></input>
           </div>
           <div>
             <button>Log in</button>
