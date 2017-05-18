@@ -45,7 +45,7 @@ export default class Auth extends Component {
   }
 
   render() {
-    let { dialogOpen } = this.props;
+    let { dialogOpen, login, password } = this.props;
     return (
       <div className='Auth'>
         <div onClick={this.openModal}>
@@ -59,11 +59,11 @@ export default class Auth extends Component {
         >
           <div>
             <label>Login</label>
-            <input type='text' placeholder='User' value={dialogOpen.login} onChange={this.changeLogin}></input>
+            <input type='text' placeholder='User' value={login} onChange={this.changeLogin}></input>
           </div>
           <div>
             <label>Password</label>
-            <input type='password' placeholder='**********' value={dialogOpen.password} onChange={this.changePassword}></input>
+            <input type='password' placeholder='**********' value={password} onChange={this.changePassword}></input>
           </div>
           <div>
             <button>Log in</button>
