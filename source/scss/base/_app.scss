@@ -54,7 +54,7 @@ body {
       border-radius: 2px;
     }
   }
-  div:last-child {
+  div:nth-child(3) {
     margin-left: 10%;
     margin-top: 10px;
     button {
@@ -65,6 +65,9 @@ body {
   }
 }
 
+.invalidInput {
+  border-left: 5px solid #a94442;
+}
 
 
 .BackgroundImgExample {

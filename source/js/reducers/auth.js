@@ -4,12 +4,16 @@ import {
   OPEN_LOGIN_MODAL,
   CLOSE_LOGIN_MODAL,
   CHANGE_LOGIN_STRING,
-  CHANGE_PASSWORD_STRING
+  CHANGE_PASSWORD_STRING,
+  VALIDATE_LOGIN_FORM
 } from 'actions/auth';
 
 const initialState = Map({
   isAuthorized: false,
   dialogOpen: false,
+  isLoginValid: true,
+  isPasswordValid: true,
+  errors: [],
   login: '',
   password: ''
 });
@@ -33,6 +37,13 @@ const actionsMap = {
   [CHANGE_PASSWORD_STRING]: (state, action) => {
     return state.merge({
       password: action.data
+    });
+  },
+  [VALIDATE_LOGIN_FORM]: (state, action) => {
+    return state.merge({
+      isLoginValid: action.isLoginValid,
+      isPasswordValid: action.isPasswordValid,
+      errors: action.errors
     });
   }
 };
