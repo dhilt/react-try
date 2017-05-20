@@ -30,19 +30,20 @@ export function changePasswordString(data) {
   }
 }
 
-export function validateForm() {
-  return function (dispatch, getState) {
+export function validateForm(login, password) {
+  return function (dispatch) {
     let isLoginValid, isPasswordValid;
     let errors = [];
-    console.log(getState().auth);
-    if (getState().auth.login.length === 0) {
+    console.log(login, password);   // Консоль показывает неактуальные данные
+
+    if (login.length == 0) {
       isLoginValid = false;
       errors.push('Login is required.');
     } else {
       isLoginValid = true;
     };
 
-    if (getState().auth.password.length === 0) {
+    if (password.length == 0) {
       isPasswordValid = false;
       errors.push('Password is required.');
     } else {
