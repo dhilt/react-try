@@ -44,12 +44,12 @@ export default class Auth extends Component {
 
   changeLogin (event) {
     this.props.dispatch(changeLoginString(event.target.value));
-    this.props.dispatch(validateForm(this.props.login, this.props.password));
+    this.props.dispatch(validateForm(event.target.value, this.props.password));
   }
 
   changePassword (event) {
     this.props.dispatch(changePasswordString(event.target.value));
-    this.props.dispatch(validateForm(this.props.login, this.props.password));
+    this.props.dispatch(validateForm(this.props.login, event.target.value));
   }
 
   render() {

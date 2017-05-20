@@ -34,7 +34,6 @@ export function validateForm(login, password) {
   return function (dispatch) {
     let isLoginValid, isPasswordValid;
     let errors = [];
-    console.log(login, password);   // Консоль показывает неактуальные данные
 
     if (login.length == 0) {
       isLoginValid = false;
