@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import ReactModal from 'react-modal';
 
-import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString, validateForm } from 'actions/auth';
+import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString, validateForm, doLoginAsync } from 'actions/auth';
 
 @connect(state => ({
   dialogOpen: state.auth.get('dialogOpen'),
+  userInfo: state.auth.get('userInfo'),
   login: state.auth.get('login'),
   password: state.auth.get('password'),
+  loginPending: state.auth.get('loginPending'),
   isLoginValid: state.auth.get('isLoginValid'),
   isPasswordValid: state.auth.get('isPasswordValid'),
   errors: state.auth.get('errors')
@@ -17,8 +19,10 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
 export default class Auth extends Component {
   static propTypes = {
     dialogOpen: PropTypes.bool,
+    userInfo: PropTypes.object,
     login: PropTypes.string,
     password: PropTypes.string,
+    loginPending: PropTypes.bool,
     isLoginValid: PropTypes.bool,
     isPasswordValid: PropTypes.bool,
     errors: PropTypes.array,
@@ -32,6 +36,7 @@ export default class Auth extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.changeLogin = this.changeLogin.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    this.buttonLogin = this.buttonLogin.bind(this);
   }
 
   openModal () {
@@ -50,6 +55,10 @@ export default class Auth extends Component {
   changePassword (event) {
     this.props.dispatch(changePasswordString(event.target.value));
     this.props.dispatch(validateForm(this.props.login, event.target.value));
+  }
+
+  buttonLogin () {
+    this.props.dispatch(doLoginAsync(this.props.login, this.props.password));
   }
 
   render() {
@@ -77,7 +86,7 @@ export default class Auth extends Component {
             {!isPasswordValid && <input type='password' className='invalidInput' placeholder='**********' value={password} onChange={this.changePassword}></input>}
           </div>
           <div>
-            <button disabled={ !isLoginValid && !isPasswordValid }>Log in</button>
+            <button disabled={ !isLoginValid && !isPasswordValid } onClick={this.buttonLogin}>Log in</button>
             <button onClick={this.closeModal}>Close Modal</button>
           </div>
           <ul>{listErrors}</ul>
