@@ -20,7 +20,7 @@ const initialState = Map({
   isPasswordValid: true,
   loginPending: false,
   errors: [],
-  apiError: {},
+  apiError: '',
   login: '',
   password: ''
 });
@@ -61,7 +61,8 @@ const actionsMap = {
   [LOGIN_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       loginPending: false,
-      userInfo: action.data
+      userInfo: action.data,
+      apiError: ''
     })
   },
   [LOGIN_ASYNC_END_FAIL]: (state, action) => {

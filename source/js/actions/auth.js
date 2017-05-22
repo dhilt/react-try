@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import asyncRequest from '../helpers'
 
 export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
 export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL';
@@ -37,8 +37,9 @@ export function changePasswordString(data) {
 }
 
 export function validateForm(login, password) {
-  return function (dispatch) {
-    let isLoginValid = true, isPasswordValid = true;
+  return function(dispatch) {
+    let isLoginValid = true,
+      isPasswordValid = true;
     let errors = [];
 
     if (login.length == 0) {
@@ -61,19 +62,15 @@ export function validateForm(login, password) {
 }
 
 export function doLoginAsync(login, password) {
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(loginAsyncStart());
-
-    const serverQuery = 'api/login?login=' + login + '&password=' + password;
-    fetch(serverQuery, {method: 'POST'}).then(function(response) {
-      return response.json();
-    }).then(function(result) {
-      dispatch(loginAsyncEndSuccess(result));
-      console.log(result);
-    }).catch(function(error) {
-      dispatch(loginAsyncEndFail(error));
-      console.log("Error!", error);
-    });
+    asyncRequest('login', { login, password })
+      .then(result => {
+        dispatch(loginAsyncEndSuccess(result))
+      })
+      .catch(error => {
+        dispatch(loginAsyncEndFail(error))
+      });
   };
 }
 
@@ -95,4 +92,4 @@ function loginAsyncEndFail(error) {
     type: LOGIN_ASYNC_END_FAIL,
     error: error
   }
-} 
+}

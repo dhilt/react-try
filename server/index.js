@@ -55,7 +55,7 @@ app.post('/api/login', (req, res) => {
   let login = req.query.login;
   let password = req.query.password;
   if (!login || !password)
-    return res.send({ error: 'No login or password!' });
+    return res.send({ status: 'error', error: 'No login or password!' });
 
   db.get('SELECT * FROM User WHERE login = ?', login, (err, row) => {
     if (err)

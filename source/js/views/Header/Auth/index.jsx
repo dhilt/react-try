@@ -14,7 +14,8 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
   loginPending: state.auth.get('loginPending'),
   isLoginValid: state.auth.get('isLoginValid'),
   isPasswordValid: state.auth.get('isPasswordValid'),
-  errors: state.auth.get('errors')
+  errors: state.auth.get('errors'),
+  apiError: state.auth.get('apiError')
 }))
 export default class Auth extends Component {
   static propTypes = {
@@ -26,6 +27,7 @@ export default class Auth extends Component {
     isLoginValid: PropTypes.bool,
     isPasswordValid: PropTypes.bool,
     errors: PropTypes.array,
+    apiError: PropTypes.string,
     dispatch: PropTypes.func
   }
 
@@ -61,12 +63,18 @@ export default class Auth extends Component {
     this.props.dispatch(doLoginAsync(this.props.login, this.props.password));
   }
 
-  renderErrors (errors) {
-    return errors.map((error, key) => <div key={key}>{error}</div> )
+  renderErrors (errors, apiError) {
+    let result = [];
+    errors.forEach(error => result.push(error));
+    if(apiError) {
+      result.push(apiError);
+    }
+    result = result.map((error, key) => <div key={key}>{error}</div>);
+    return result;
   }
 
   render() {
-    let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors } = this.props;
+    let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, apiError } = this.props;
     return (
       <div className='Auth'>
         <div onClick={this.openModal}>
@@ -100,7 +108,7 @@ export default class Auth extends Component {
             <button type="button" disabled={ errors.size } onClick={this.doLogin}>Log in { errors.length }</button>
             <button type="button" onClick={this.closeModal}>Close Modal</button>
           </div>
-          {this.renderErrors(errors)}
+          {this.renderErrors(errors, apiError)}
         </ReactModal>
       </div>
     );
