@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const sqlite3 = require('sqlite3');
 const passwordHash = require('password-hash');
@@ -11,6 +12,8 @@ const AUTH_TOKEN = {
   secretKey: 'MySecretKey',
   expiresIn: 2592000
 }
+
+app.use(bodyParser.json());
 
 let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (err) => {
   if (err)
@@ -52,8 +55,8 @@ app.get('/api/userInfo', (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-  let login = req.query.login;
-  let password = req.query.password;
+  let login = req.body.login;
+  let password = req.body.password;
   if (!login || !password)
     return res.send({ status: 'error', error: 'No login or password!' });
 
