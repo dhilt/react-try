@@ -64,6 +64,9 @@ app.post('/api/login', (req, res) => {
     if (err)
       return res.send({ status: 'error', error: err });
 
+    if (!row)
+      return res.send({status: 'error', error: 'Invalid login'})
+
     if (!passwordHash.verify(password, row.hash))
       return res.send({ status: 'error', error: 'Invalid password.' });
 
