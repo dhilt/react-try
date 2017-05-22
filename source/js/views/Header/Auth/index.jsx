@@ -36,7 +36,7 @@ export default class Auth extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.changeLogin = this.changeLogin.bind(this);
     this.changePassword = this.changePassword.bind(this);
-    this.buttonLogin = this.buttonLogin.bind(this);
+    this.doLogin = this.doLogin.bind(this);
   }
 
   openModal () {
@@ -57,13 +57,16 @@ export default class Auth extends Component {
     this.props.dispatch(validateForm(this.props.login, event.target.value));
   }
 
-  buttonLogin () {
+  doLogin () {
     this.props.dispatch(doLoginAsync(this.props.login, this.props.password));
+  }
+
+  renderErrors (errors) {
+    return errors.map((error, key) => <div key={key}>{error}</div> )
   }
 
   render() {
     let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors } = this.props;
-    let listErrors = this.props.errors.map((error) => <div>{error}</div> );
     return (
       <div className='Auth'>
         <div onClick={this.openModal}>
@@ -77,19 +80,27 @@ export default class Auth extends Component {
         >
           <div>
             <label>Login</label>
-            {isLoginValid && <input type='text' placeholder='User' value={login} onChange={this.changeLogin}></input>}
-            {!isLoginValid && <input type='text' className='invalidInput' placeholder='User' value={login} onChange={this.changeLogin}></input>}
+            <input
+              type='text'
+              placeholder='User'
+              value={login}
+              onChange={this.changeLogin}
+              className={!isLoginValid ? 'invalidInput' : ''}/>
           </div>
           <div>
             <label>Password</label>
-            {isPasswordValid && <input type='password' placeholder='**********' value={password} onChange={this.changePassword}></input>}
-            {!isPasswordValid && <input type='password' className='invalidInput' placeholder='**********' value={password} onChange={this.changePassword}></input>}
+            <input
+              type='password'
+              placeholder='**********'
+              value={password}
+              onChange={this.changePassword}
+              className={!isPasswordValid ? 'invalidInput' : ''}/>
           </div>
           <div>
-            <button disabled={ !isLoginValid && !isPasswordValid } onClick={this.buttonLogin}>Log in</button>
-            <button onClick={this.closeModal}>Close Modal</button>
+            <button type="button" disabled={ errors.size } onClick={this.doLogin}>Log in { errors.length }</button>
+            <button type="button" onClick={this.closeModal}>Close Modal</button>
           </div>
-          <ul>{listErrors}</ul>
+          {this.renderErrors(errors)}
         </ReactModal>
       </div>
     );

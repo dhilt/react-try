@@ -38,22 +38,18 @@ export function changePasswordString(data) {
 
 export function validateForm(login, password) {
   return function (dispatch) {
-    let isLoginValid, isPasswordValid;
+    let isLoginValid = true, isPasswordValid = true;
     let errors = [];
 
     if (login.length == 0) {
       isLoginValid = false;
       errors.push('Login is required.');
-    } else {
-      isLoginValid = true;
-    };
+    }
 
     if (password.length == 0) {
       isPasswordValid = false;
       errors.push('Password is required.');
-    } else {
-      isPasswordValid = true;
-    };
+    }
 
     dispatch({
       type: VALIDATE_LOGIN_FORM,
