@@ -65,12 +65,8 @@ export function doLoginAsync(login, password) {
   return function(dispatch) {
     dispatch(loginAsyncStart());
     asyncRequest('login', { login, password })
-      .then(result => {
-        dispatch(loginAsyncEndSuccess(result))
-      })
-      .catch(error => {
-        dispatch(loginAsyncEndFail(error))
-      });
+      .then(res => dispatch(loginAsyncEndSuccess(res.result)))
+      .catch(error => dispatch(loginAsyncEndFail(error)));
   };
 }
 
