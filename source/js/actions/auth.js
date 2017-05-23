@@ -25,38 +25,38 @@ export function closeLoginModal() {
 export function changeLoginString(data) {
   return {
     type: CHANGE_LOGIN_STRING,
-    data: data
+    data
   }
 }
 
 export function changePasswordString(data) {
   return {
     type: CHANGE_PASSWORD_STRING,
-    data: data
+    data
   }
 }
 
 export function validateForm(login, password) {
   return function(dispatch) {
     let isLoginValid = true,
-      isPasswordValid = true;
-    let errors = [];
+      isPasswordValid = true,
+      errors = [];
 
-    if (login.length == 0) {
+    if (!login) {
       isLoginValid = false;
       errors.push('Login is required.');
     }
 
-    if (password.length == 0) {
+    if (!password) {
       isPasswordValid = false;
       errors.push('Password is required.');
     }
 
     dispatch({
       type: VALIDATE_LOGIN_FORM,
-      isLoginValid: isLoginValid,
-      isPasswordValid: isPasswordValid,
-      errors: errors
+      isLoginValid,
+      isPasswordValid,
+      errors
     });
   }
 }
@@ -65,7 +65,11 @@ export function doLoginAsync(login, password) {
   return function(dispatch) {
     dispatch(loginAsyncStart());
     asyncRequest('login', { login, password })
-      .then(res => dispatch(loginAsyncEndSuccess(res.result, res.token)))
+      .then(result => {
+        localStorage.setItem('token', result.token);
+        dispatch(loginAsyncEndSuccess(result.userInfo));
+        dispatch(closeLoginModal());
+      })
       .catch(error => dispatch(loginAsyncEndFail(error)));
   };
 }
@@ -76,18 +80,16 @@ function loginAsyncStart() {
   }
 }
 
-function loginAsyncEndSuccess(data, token) {
-  localStorage.setItem('token', token);
-  let userInfo = {id: data.id, login: data.login, token: token};
+function loginAsyncEndSuccess(data) {
   return {
     type: LOGIN_ASYNC_END_SUCCESS,
-    data: userInfo,
+    data
   }
 }
 
 function loginAsyncEndFail(error) {
   return {
     type: LOGIN_ASYNC_END_FAIL,
-    error: error
+    error
   }
 }

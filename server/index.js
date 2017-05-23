@@ -73,7 +73,7 @@ app.post('/api/login', (req, res) => {
       AUTH_TOKEN.secretKey, { expiresIn: AUTH_TOKEN.expiresIn }
     );
 
-    res.send({ status: 'ok', result: getUserInfo(row), token: token });
+    res.send({ status: 'ok', userInfo: getUserInfo(row), token: token });
   });
 });
 

@@ -68,6 +68,7 @@ const actionsMap = {
   [LOGIN_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       loginPending: false,
+      userInfo: {},
       apiError: action.error
     })
   }

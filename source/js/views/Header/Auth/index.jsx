@@ -74,7 +74,7 @@ export default class Auth extends Component {
   }
 
   render() {
-    let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, apiError } = this.props;
+    let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError } = this.props;
     return (
       <div className='Auth'>
         <div onClick={this.openModal}>
@@ -105,7 +105,7 @@ export default class Auth extends Component {
               className={!isPasswordValid ? 'invalidInput' : ''}/>
           </div>
           <div>
-            <button type="button" disabled={ errors.size } onClick={this.doLogin}>Log in { errors.length }</button>
+            <button type="button" disabled={errors.size || loginPending} onClick={this.doLogin}>Log in</button>
             <button type="button" onClick={this.closeModal}>Close Modal</button>
           </div>
           {this.renderErrors(errors, apiError)}

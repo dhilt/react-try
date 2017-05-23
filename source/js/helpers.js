@@ -3,9 +3,10 @@ import fetch from 'isomorphic-fetch'
 let getConfig = (payload) => {
   let config = {
     headers: {}
-  };
-  if (localStorage.getItem('token')) {
-    config.headers['authorization'] = localStorage.getItem('token');
+  }
+  let token = localStorage.getItem('token')
+  if (token) {
+    config.headers['authorization'] = token
   }
   if (payload) {
     config.method = 'post'
