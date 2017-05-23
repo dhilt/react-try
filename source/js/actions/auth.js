@@ -65,7 +65,7 @@ export function doLoginAsync(login, password) {
   return function(dispatch) {
     dispatch(loginAsyncStart());
     asyncRequest('login', { login, password })
-      .then(res => dispatch(loginAsyncEndSuccess(res.result)))
+      .then(res => dispatch(loginAsyncEndSuccess(res.result, res.token)))
       .catch(error => dispatch(loginAsyncEndFail(error)));
   };
 }
@@ -76,10 +76,12 @@ function loginAsyncStart() {
   }
 }
 
-function loginAsyncEndSuccess(data) {
+function loginAsyncEndSuccess(data, token) {
+  localStorage.setItem('token', token);
+  let userInfo = {id: data.id, login: data.login, token: token};
   return {
     type: LOGIN_ASYNC_END_SUCCESS,
-    data: data
+    data: userInfo,
   }
 }
 

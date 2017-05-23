@@ -39,16 +39,12 @@ app.get('/api/test', (req, res) => {
 });
 
 app.get('/api/userInfo', (req, res) => {
-  // Берем cookies
-  let cookies = new Cookies(req, res);
-  let cookie = cookies.get(AUTH_TOKEN.cookieName);
-  if (!cookie)
-    return res.send({ status: 'error', error: 'Have no cookies.' });
+  let token = req.headers.authorization;
 
   // Расшифровываем token
-  jwt.verify(cookie, AUTH_TOKEN.secretKey, (err, decoded) => {
+  jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
     if (err)
-      return res.send({ status: 'error', error: 'Error with cookies.' });
+      return res.send({ status: 'error', error: 'Error with token.' });
 
     res.send({ status: 'ok', result: getUserInfo(decoded) });
   });
@@ -77,10 +73,7 @@ app.post('/api/login', (req, res) => {
       AUTH_TOKEN.secretKey, { expiresIn: AUTH_TOKEN.expiresIn }
     );
 
-    let cookies = new Cookies(req, res);
-    cookies.set(AUTH_TOKEN.cookieName, token);
-
-    res.send({ status: 'ok', result: getUserInfo(row) });
+    res.send({ status: 'ok', result: getUserInfo(row), token: token });
   });
 });
 

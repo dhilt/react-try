@@ -4,6 +4,9 @@ let getConfig = (payload) => {
   let config = {
     headers: {}
   };
+  if (localStorage.getItem('token')) {
+    config.headers['authorization'] = localStorage.getItem('token');
+  }
   if (payload) {
     config.method = 'post'
     config.body = JSON.stringify(payload)
