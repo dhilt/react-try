@@ -11,6 +11,7 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
   userInfo: state.auth.get('userInfo'),
   login: state.auth.get('login'),
   password: state.auth.get('password'),
+  tokenAuthPending: state.auth.get('tokenAuthPending'),
   loginPending: state.auth.get('loginPending'),
   isLoginValid: state.auth.get('isLoginValid'),
   isPasswordValid: state.auth.get('isPasswordValid'),
@@ -23,6 +24,7 @@ export default class Auth extends Component {
     userInfo: PropTypes.object,
     login: PropTypes.string,
     password: PropTypes.string,
+    tokenAuthPending: PropTypes.bool,
     loginPending: PropTypes.bool,
     isLoginValid: PropTypes.bool,
     isPasswordValid: PropTypes.bool,
@@ -74,11 +76,13 @@ export default class Auth extends Component {
   }
 
   render() {
-    let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError } = this.props;
+    let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = this.props;
     return (
       <div className='Auth'>
         <div onClick={this.openModal}>
-          Login
+          {tokenAuthPending && 'Авторизуем'}
+          {!userInfo.id && !tokenAuthPending && 'Login'}
+          {userInfo.id && !tokenAuthPending && 'Logout'}
         </div>
         <ReactModal
           isOpen={dialogOpen}

@@ -6,9 +6,11 @@ export const CHANGE_LOGIN_STRING = 'CHANGE_LOGIN_STRING';
 export const CHANGE_PASSWORD_STRING = 'CHANGE_PASSWORD_STRING';
 export const VALIDATE_LOGIN_FORM = 'VALIDATE_LOGIN_FORM';
 export const LOGIN_ASYNC_START = 'LOGIN_ASYNC_START';
-export const DO_LOGIN_ASYNC = 'DO_LOGIN_ASYNC';
 export const LOGIN_ASYNC_END_SUCCESS = 'LOGIN_ASYNC_END_SUCCESS';
 export const LOGIN_ASYNC_END_FAIL = 'LOGIN_ASYNC_END_FAIL';
+export const AUTHORIZE_BY_TOKEN_ASYNC_START = 'AUTHORIZE_BY_TOKEN_ASYNC_START';
+export const AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS = 'AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS';
+export const AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL = 'AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL';
 
 export function openLoginModal() {
   return {
@@ -90,6 +92,35 @@ function loginAsyncEndSuccess(data) {
 function loginAsyncEndFail(error) {
   return {
     type: LOGIN_ASYNC_END_FAIL,
+    error
+  }
+}
+
+export function authorizeByTokenAsync() {
+  return function(dispatch) {
+    dispatch(authorizeByTokenAsyncStart());
+    asyncRequest('userInfo')
+      .then(result => dispatch(authorizeByTokenAsyncEndSuccess(result)))
+      .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)));
+  }
+}
+
+function authorizeByTokenAsyncStart() {
+  return {
+    type: AUTHORIZE_BY_TOKEN_ASYNC_START
+  }
+}
+
+function authorizeByTokenAsyncEndSuccess(data) {
+  return {
+    type: AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS,
+    data
+  }
+}
+
+function authorizeByTokenAsyncEndFail(error) {
+  return {
+    type: AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL,
     error
   }
 }

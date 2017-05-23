@@ -6,14 +6,17 @@ import {
   CHANGE_LOGIN_STRING,
   CHANGE_PASSWORD_STRING,
   VALIDATE_LOGIN_FORM,
-  DO_LOGIN_ASYNC,
   LOGIN_ASYNC_START,
   LOGIN_ASYNC_END_SUCCESS,
-  LOGIN_ASYNC_END_FAIL
+  LOGIN_ASYNC_END_FAIL,
+  AUTHORIZE_BY_TOKEN_ASYNC_START,
+  AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS,
+  AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL
 } from 'actions/auth';
 
 const initialState = Map({
   isAuthorized: false,
+  tokenAuthPending: false,
   dialogOpen: false,
   userInfo: {},
   isLoginValid: true,
@@ -21,6 +24,7 @@ const initialState = Map({
   loginPending: false,
   errors: [],
   apiError: '',
+  tokenAuthError: '',
   login: '',
   password: ''
 });
@@ -70,6 +74,25 @@ const actionsMap = {
       loginPending: false,
       userInfo: {},
       apiError: action.error
+    })
+  },
+  [AUTHORIZE_BY_TOKEN_ASYNC_START]: (state) => {
+    return state.merge({
+      tokenAuthPending: true
+    })
+  },
+  [AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS]: (state, action) => {
+    return state.merge({
+      tokenAuthPending: false,
+      userInfo: action.data,
+      tokenAuthError: ''
+    })
+  },
+  [AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL]: (state, action) => {
+    return state.merge({
+      tokenAuthPending: false,
+      userInfo: {},
+      tokenAuthError: action.error
     })
   }
 };
