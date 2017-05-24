@@ -82,17 +82,17 @@ export default class Auth extends Component {
 
   render() {
     let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = this.props;
+    let authorizationButton = null;
+    if (tokenAuthPending) {
+      authorizationButton = <div>{'Авторизуем'}</div>
+    } else if (userInfo.login) {
+      authorizationButton = <div onClick={this.doLogout}>Выйти ({userInfo.login})</div>
+    } else if (!userInfo.login) {
+      authorizationButton = <div onClick={this.openModal}>{'Войти'}</div>
+    }
     return (
       <div className='Auth'>
-        <div>
-          {tokenAuthPending && 'Авторизуем'}
-        </div>
-        <div onClick={this.doLogout}>
-          {userInfo && !tokenAuthPending && 'Выйти '} ({login})
-        </div>
-        <div onClick={this.openModal}>
-          {!userInfo && !tokenAuthPending && 'Войти'}
-        </div>
+        {authorizationButton}
         <ReactModal
           isOpen={dialogOpen}
           contentLabel='Authorization Modal'
