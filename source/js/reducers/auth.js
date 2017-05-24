@@ -11,7 +11,8 @@ import {
   LOGIN_ASYNC_END_FAIL,
   AUTHORIZE_BY_TOKEN_ASYNC_START,
   AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS,
-  AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL
+  AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL,
+  DO_LOGOUT
 } from 'actions/auth';
 
 const initialState = Map({
@@ -93,6 +94,11 @@ const actionsMap = {
       tokenAuthPending: false,
       userInfo: {},
       tokenAuthError: action.error
+    })
+  },
+  [DO_LOGOUT]: (state) => {
+    return state.merge({
+      userInfo: {}
     })
   }
 };

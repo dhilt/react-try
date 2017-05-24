@@ -11,6 +11,7 @@ export const LOGIN_ASYNC_END_FAIL = 'LOGIN_ASYNC_END_FAIL';
 export const AUTHORIZE_BY_TOKEN_ASYNC_START = 'AUTHORIZE_BY_TOKEN_ASYNC_START';
 export const AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS = 'AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS';
 export const AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL = 'AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL';
+export const DO_LOGOUT = 'DO_LOGOUT';
 
 export function openLoginModal() {
   return {
@@ -122,5 +123,12 @@ function authorizeByTokenAsyncEndFail(error) {
   return {
     type: AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL,
     error
+  }
+}
+
+export function doLogout() {
+  localStorage.removeItem('token');
+  return {
+    type: DO_LOGOUT
   }
 }

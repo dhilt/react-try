@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import ReactModal from 'react-modal';
 
-import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString, validateForm, doLoginAsync } from 'actions/auth';
+import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString, validateForm, doLoginAsync, doLogout } from 'actions/auth';
 
 @connect(state => ({
   dialogOpen: state.auth.get('dialogOpen'),
@@ -41,6 +41,7 @@ export default class Auth extends Component {
     this.changeLogin = this.changeLogin.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.doLogin = this.doLogin.bind(this);
+    this.doLogout = this.doLogout.bind(this);
   }
 
   openModal () {
@@ -65,6 +66,10 @@ export default class Auth extends Component {
     this.props.dispatch(doLoginAsync(this.props.login, this.props.password));
   }
 
+  doLogout () {
+    this.props.dispatch(doLogout());
+  }
+
   renderErrors (errors, apiError) {
     let result = [];
     errors.forEach(error => result.push(error));
@@ -81,7 +86,9 @@ export default class Auth extends Component {
       <div className='Auth'>
         <div>
           {tokenAuthPending && 'Авторизуем'}
-          {userInfo && !tokenAuthPending && 'Выйти'}
+        </div>
+        <div onClick={this.doLogout}>
+          {userInfo && !tokenAuthPending && 'Выйти '} ({login})
         </div>
         <div onClick={this.openModal}>
           {!userInfo && !tokenAuthPending && 'Войти'}
