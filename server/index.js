@@ -46,7 +46,7 @@ app.get('/api/userInfo', (req, res) => {
     if (err)
       return res.send({ status: 'error', error: 'Error with token.' });
 
-    res.send({ status: 'ok', result: getUserInfo(decoded) });
+    res.send({ status: 'ok', userInfo: getUserInfo(decoded) });
   });
 });
 

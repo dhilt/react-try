@@ -21,7 +21,7 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
 export default class Auth extends Component {
   static propTypes = {
     dialogOpen: PropTypes.bool,
-    userInfo: PropTypes.object,
+    userInfo: PropTypes.string,
     login: PropTypes.string,
     password: PropTypes.string,
     tokenAuthPending: PropTypes.bool,
@@ -79,10 +79,12 @@ export default class Auth extends Component {
     let { dialogOpen, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = this.props;
     return (
       <div className='Auth'>
-        <div onClick={this.openModal}>
+        <div>
           {tokenAuthPending && 'Авторизуем'}
-          {!userInfo && !tokenAuthPending && 'Login'}
-          {userInfo && !tokenAuthPending && 'Logout'}
+          {userInfo && !tokenAuthPending && 'Выйти'}
+        </div>
+        <div onClick={this.openModal}>
+          {!userInfo && !tokenAuthPending && 'Войти'}
         </div>
         <ReactModal
           isOpen={dialogOpen}

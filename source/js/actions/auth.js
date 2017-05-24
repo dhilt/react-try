@@ -100,7 +100,7 @@ export function authorizeByTokenAsync() {
   return function(dispatch) {
     dispatch(authorizeByTokenAsyncStart());
     asyncRequest('userInfo')
-      .then(result => dispatch(authorizeByTokenAsyncEndSuccess(result)))
+      .then(result => dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo)))
       .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)));
   }
 }
