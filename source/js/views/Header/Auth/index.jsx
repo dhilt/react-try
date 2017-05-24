@@ -21,7 +21,7 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
 export default class Auth extends Component {
   static propTypes = {
     dialogOpen: PropTypes.bool,
-    userInfo: PropTypes.string,
+    userInfo: PropTypes.object,
     login: PropTypes.string,
     password: PropTypes.string,
     tokenAuthPending: PropTypes.bool,

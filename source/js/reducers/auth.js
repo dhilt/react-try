@@ -18,7 +18,7 @@ const initialState = Map({
   isAuthorized: false,
   tokenAuthPending: false,
   dialogOpen: false,
-  userInfo: '',
+  userInfo: {},
   isLoginValid: true,
   isPasswordValid: true,
   loginPending: false,
@@ -72,7 +72,7 @@ const actionsMap = {
   [LOGIN_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       loginPending: false,
-      userInfo: '',
+      userInfo: {},
       apiError: action.error
     })
   },
@@ -91,7 +91,7 @@ const actionsMap = {
   [AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       tokenAuthPending: false,
-      userInfo: '',
+      userInfo: {},
       tokenAuthError: action.error
     })
   }
