@@ -85,10 +85,10 @@ export default class Auth extends Component {
     let authorizationButton = null;
     if (tokenAuthPending) {
       authorizationButton = <div>{'Авторизуем'}</div>
-    } else if (userInfo.login) {
-      authorizationButton = <div onClick={this.doLogout}>Выйти ({userInfo.login})</div>
-    } else if (!userInfo.login) {
-      authorizationButton = <div onClick={this.openModal}>{'Войти'}</div>
+    } else if (userInfo.get('login')) {
+      authorizationButton = <div onClick={this.doLogout}>Выйти ({userInfo.get('login')})</div>
+    } else if (!userInfo.get('login')) {
+      authorizationButton = <div onClick={this.openModal}>Войти</div>
     }
     return (
       <div className='Auth'>
