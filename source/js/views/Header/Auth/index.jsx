@@ -81,8 +81,8 @@ export default class Auth extends Component {
       <div className='Auth'>
         <div onClick={this.openModal}>
           {tokenAuthPending && 'Авторизуем'}
-          {!userInfo.id && !tokenAuthPending && 'Login'}
-          {userInfo.id && !tokenAuthPending && 'Logout'}
+          {!userInfo && !tokenAuthPending && 'Login'}
+          {userInfo && !tokenAuthPending && 'Logout'}
         </div>
         <ReactModal
           isOpen={dialogOpen}

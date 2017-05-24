@@ -5,7 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import 'babel-polyfill';
 import logger from 'dev/logger';
-import {authorizeByTokenAsync} from 'actions/auth';
+import { authorizeByTokenAsync } from 'actions/auth';
 
 import rootReducer from 'reducers';
 import Routes from 'routes';
@@ -49,6 +49,7 @@ if (isProduction) {
   );
 }
 
+store.dispatch(authorizeByTokenAsync());
 
 // Render it to DOM
 ReactDOM.render(
@@ -57,5 +58,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
-authorizeByTokenAsync();
