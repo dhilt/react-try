@@ -66,6 +66,7 @@ const actionsMap = {
   [LOGIN_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       loginPending: false,
+      isAuthorized: true,
       userInfo: action.data,
       apiError: ''
     })
@@ -73,6 +74,7 @@ const actionsMap = {
   [LOGIN_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       loginPending: false,
+      isAuthorized: false,
       userInfo: {},
       apiError: action.error
     })
@@ -85,6 +87,7 @@ const actionsMap = {
   [AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       tokenAuthPending: false,
+      isAuthorized: true,
       userInfo: action.data,
       tokenAuthError: ''
     })
@@ -92,12 +95,14 @@ const actionsMap = {
   [AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       tokenAuthPending: false,
+      isAuthorized: false,
       userInfo: {},
       tokenAuthError: action.error
     })
   },
   [DO_LOGOUT]: (state) => {
     return state.merge({
+      isAuthorized: false,
       userInfo: {}
     })
   }

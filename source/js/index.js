@@ -42,14 +42,15 @@ if (isProduction) {
     enhancer = compose(middleware);
   }
 
-
   store = createStore(
     rootReducer,
     enhancer
   );
 }
 
-store.dispatch(authorizeByTokenAsync());
+if(localStorage.getItem('token')) {
+  store.dispatch(authorizeByTokenAsync());
+}
 
 // Render it to DOM
 ReactDOM.render(
