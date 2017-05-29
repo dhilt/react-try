@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import ReactModal from 'react-modal';
+import { AuthMenuElement } from './presentation/AuthMenuElement';
+import { AuthModal } from './presentation/AuthModal';
 
 import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString, validateForm, doLoginAsync, doLogout } from 'actions/auth';
 
@@ -19,7 +21,7 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
   errors: state.auth.get('errors'),
   apiError: state.auth.get('apiError')
 }))
-export default class Auth extends Component {
+export default class AuthContainer extends Component {
   static propTypes = {
     dialogOpen: PropTypes.bool,
     isAuthorized: PropTypes.bool,
@@ -84,49 +86,10 @@ export default class Auth extends Component {
 
   render() {
     let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = this.props;
-    let authMenuElement = null;
-    if (tokenAuthPending) {
-      authMenuElement = <div>{'Авторизуем'}</div>
-    } else {
-       if (isAuthorized) {
-        authMenuElement = <div onClick={this.doLogout}>Выйти ({userInfo.get('login')})</div>
-      } else {
-        authMenuElement = <div onClick={this.openModal}>Войти</div>
-      }
-    }
     return (
       <div className='Auth'>
-        {authMenuElement}
-        <ReactModal
-          isOpen={dialogOpen}
-          contentLabel='Authorization Modal'
-          className='Modal'
-          overlayClassName='Overlay'
-        >
-          <div>
-            <label>Login</label>
-            <input
-              type='text'
-              placeholder='User'
-              value={login}
-              onChange={this.changeLogin}
-              className={!isLoginValid ? 'invalidInput' : ''}/>
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type='password'
-              placeholder='**********'
-              value={password}
-              onChange={this.changePassword}
-              className={!isPasswordValid ? 'invalidInput' : ''}/>
-          </div>
-          <div>
-            <button type="button" disabled={errors.size || loginPending} onClick={this.doLogin}>Log in</button>
-            <button type="button" onClick={this.closeModal}>Close Modal</button>
-          </div>
-          {this.renderErrors(errors, apiError)}
-        </ReactModal>
+        <AuthMenuElement props={this.props} />
+        <AuthModal props={this.props} />
       </div>
     );
   }
