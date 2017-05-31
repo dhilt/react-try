@@ -1,12 +1,29 @@
-import { changeLoginString, changePasswordString, validateForm, doLoginAsync, closeLoginModal } from 'actions/auth';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import ReactModal from 'react-modal';
 
 export const AuthModal = props => {
+  
+  function renderErrors (errors, apiError) {
+    let result = [];
+    errors.forEach(error => result.push(error));
+    if(apiError) {
+      result.push(apiError);
+    }
+    result = result.map((error, key) => <div key={key}>{error}</div>);
+    return result;
+  }
 
-  let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = props;
+  function changeLogin (event) {
+    props.changeLogin(event);
+  }
+
+  function changePassword (event) {
+    props.changePassword(event);
+  }
+
   return (
     <ReactModal
-      isOpen={dialogOpen}
+      isOpen={props.dialogOpen}
       contentLabel='Authorization Modal'
       className='Modal'
       overlayClassName='Overlay'
@@ -15,25 +32,25 @@ export const AuthModal = props => {
         <label>Login</label>
         <input
           type='text'
-          placeholder='User'
-          value={login}
-          onChange={props.dispatch(changeLoginString)}
-          className={!isLoginValid ? 'invalidInput' : ''}/>
+          placeholder='Username'
+          value={props.login}
+          onChange={props.changeLogin}
+          className={!props.isLoginValid ? 'invalidInput' : ''}/>
       </div>
       <div>
         <label>Password</label>
         <input
           type='password'
           placeholder='**********'
-          value={password}
-          onChange={props.dispatch(changePasswordString)}
-          className={!isPasswordValid ? 'invalidInput' : ''}/>
+          value={props.password}
+          onChange={props.changePassword}
+          className={!props.isPasswordValid ? 'invalidInput' : ''}/>
       </div>
       <div>
-        <button type="button" disabled={errors.size || loginPending} onClick={props.dispatch(doLoginAsync)}>Log in</button>
-        <button type="button" onClick={props.dispatch(closeLoginModal)}>Close Modal</button>
+        <button type="button" disabled={props.errors.size || props.loginPending} onClick={props.doLogin}>Log in</button>
+        <button type="button" onClick={props.closeModal}>Close Modal</button>
       </div>
-      {this.renderErrors(errors, apiError)}
+      {renderErrors(props.errors, props.apiError)}
     </ReactModal>
   );
 }

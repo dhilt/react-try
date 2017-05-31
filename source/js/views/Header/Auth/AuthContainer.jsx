@@ -74,22 +74,29 @@ export default class AuthContainer extends Component {
     this.props.dispatch(doLogout());
   }
 
-  renderErrors (errors, apiError) {
-    let result = [];
-    errors.forEach(error => result.push(error));
-    if(apiError) {
-      result.push(apiError);
-    }
-    result = result.map((error, key) => <div key={key}>{error}</div>);
-    return result;
-  }
-
   render() {
     let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = this.props;
     return (
       <div className='Auth'>
-        <AuthMenuElement props={this.props} />
-        <AuthModal props={this.props} />
+        <AuthMenuElement
+          tokenAuthPending={tokenAuthPending}
+          isAuthorized={isAuthorized}
+          userInfo={userInfo}
+          doLogout={this.doLogout}
+          openModal={this.openModal} />
+        <AuthModal
+          errors={errors}
+          apiError={apiError}
+          dialogOpen={dialogOpen}
+          loginPending={loginPending}
+          closeModal={this.closeModal}
+          doLogin={this.doLogin}
+          changePassword={this.changePassword}
+          changeLogin={this.changeLogin}
+          login={login}
+          password={password}
+          isLoginValid={isLoginValid}
+          isPasswordValid={isPasswordValid} />
       </div>
     );
   }

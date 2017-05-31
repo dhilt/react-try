@@ -1,5 +1,4 @@
-import { openLoginModal, doLogout } from 'actions/auth';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 export const AuthMenuElement = props => {
 
@@ -8,9 +7,9 @@ export const AuthMenuElement = props => {
     authMenuElement = <div>{'Авторизуем'}</div>
   } else {
      if (props.isAuthorized) {
-      authMenuElement = <div onClick={props.dispatch(doLogout)}>Выйти ({props.userInfo.get('login')})</div>
+      authMenuElement = <div onClick={props.doLogout}>{'Выйти '} ({props.userInfo.get('login')})</div>
     } else {
-      authMenuElement = <div onClick={props.dispatch(openLoginModal)}>Войти</div>
+      authMenuElement = <div onClick={props.openModal}>{'Войти'}</div>
     }
   }
 
