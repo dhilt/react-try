@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 
 export const AuthMenuElement = props => {
+  const {isPending, isAuthorized, login, doLogout, doLogin} = props;
 
-  let authMenuElement = null;
-  if (props.tokenAuthPending) {
-    authMenuElement = <div>{'Авторизуем'}</div>
-  } else {
-     if (props.isAuthorized) {
-      authMenuElement = <div onClick={props.doLogout}>{'Выйти '} ({props.login})</div>
-    } else {
-      authMenuElement = <div onClick={props.openModal}>{'Войти'}</div>
-    }
-  }
-
-  return (
-    <div>{authMenuElement}</div>
+  return isPending ? (
+    <div>{'Авторизуем'}</div>
+  ) : (
+    isAuthorized ? (
+      <div onClick={doLogout}>{`Выйти (${login})`}</div>
+    ) : (
+      <div onClick={doLogin}>{'Войти'}</div>
+    )
   );
 }

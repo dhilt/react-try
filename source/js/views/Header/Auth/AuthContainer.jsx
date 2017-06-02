@@ -25,7 +25,7 @@ export default class AuthContainer extends Component {
   static propTypes = {
     dialogOpen: PropTypes.bool,
     isAuthorized: PropTypes.bool,
-    userInfo: PropTypes.object,
+    userInfoLogin: PropTypes.string,
     login: PropTypes.string,
     password: PropTypes.string,
     tokenAuthPending: PropTypes.bool,
@@ -79,11 +79,11 @@ export default class AuthContainer extends Component {
     return (
       <div className='Auth'>
         <AuthMenuElement
-          tokenAuthPending={tokenAuthPending}
+          isPending={tokenAuthPending}
           isAuthorized={isAuthorized}
           login={userInfoLogin}
           doLogout={this.doLogout}
-          openModal={this.openModal} />
+          doLogin={this.openModal} />
         <AuthModal
           errors={errors}
           apiError={apiError}
