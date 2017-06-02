@@ -11,7 +11,7 @@ import { openLoginModal, closeLoginModal, changeLoginString, changePasswordStrin
 @connect(state => ({
   dialogOpen: state.auth.get('dialogOpen'),
   isAuthorized: state.auth.get('isAuthorized'),
-  userInfo: state.auth.get('userInfo'),
+  userInfoLogin: state.auth.get('userInfo').get('login'),
   login: state.auth.get('login'),
   password: state.auth.get('password'),
   tokenAuthPending: state.auth.get('tokenAuthPending'),
@@ -75,13 +75,13 @@ export default class AuthContainer extends Component {
   }
 
   render() {
-    let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfo } = this.props;
+    let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfoLogin } = this.props;
     return (
       <div className='Auth'>
         <AuthMenuElement
           tokenAuthPending={tokenAuthPending}
           isAuthorized={isAuthorized}
-          userInfo={userInfo}
+          login={userInfoLogin}
           doLogout={this.doLogout}
           openModal={this.openModal} />
         <AuthModal

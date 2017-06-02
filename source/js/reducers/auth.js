@@ -19,7 +19,10 @@ const initialState = Map({
   isAuthorized: false,
   tokenAuthPending: false,
   dialogOpen: false,
-  userInfo: {},
+  userInfo: Map({
+    id: null,
+    login: null
+  }),
   isLoginValid: true,
   isPasswordValid: true,
   loginPending: false,
@@ -67,7 +70,7 @@ const actionsMap = {
     return state.merge({
       loginPending: false,
       isAuthorized: true,
-      userInfo: action.data,
+      userInfo: Map(action.data),
       apiError: ''
     })
   },
@@ -75,7 +78,7 @@ const actionsMap = {
     return state.merge({
       loginPending: false,
       isAuthorized: false,
-      userInfo: {},
+      userInfo: initialState.get('userInfo'),
       apiError: action.error
     })
   },
@@ -88,7 +91,7 @@ const actionsMap = {
     return state.merge({
       tokenAuthPending: false,
       isAuthorized: true,
-      userInfo: action.data,
+      userInfo: Map(action.data),
       tokenAuthError: ''
     })
   },
@@ -96,14 +99,14 @@ const actionsMap = {
     return state.merge({
       tokenAuthPending: false,
       isAuthorized: false,
-      userInfo: {},
+      userInfo: initialState.get('userInfo'),
       tokenAuthError: action.error
     })
   },
   [DO_LOGOUT]: (state) => {
     return state.merge({
       isAuthorized: false,
-      userInfo: {}
+      userInfo: initialState.get('userInfo')
     })
   }
 };

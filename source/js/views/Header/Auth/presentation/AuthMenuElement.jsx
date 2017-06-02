@@ -7,7 +7,7 @@ export const AuthMenuElement = props => {
     authMenuElement = <div>{'Авторизуем'}</div>
   } else {
      if (props.isAuthorized) {
-      authMenuElement = <div onClick={props.doLogout}>{'Выйти '} ({props.userInfo.get('login')})</div>
+      authMenuElement = <div onClick={props.doLogout}>{'Выйти '} ({props.login})</div>
     } else {
       authMenuElement = <div onClick={props.openModal}>{'Войти'}</div>
     }
