@@ -6,10 +6,12 @@ export default class Menu extends Component {
   render() {
     return (
       <div className='Menu'>
-        <IndexLink to='News'>
-          Новости
+        <IndexLink to='/'>
+          <img src="assets/img/logo.png" />
         </IndexLink>
-
+        <Link to='News'>
+          Новости
+        </Link>
         <Link to='Articles'>
           Статьи
         </Link>

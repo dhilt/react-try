@@ -1,2 +1,9 @@
 @import "base/normalize";
 @import "base/app";
+
+@import "components/App";
+@import "components/Header";
+@import "components/Header/Menu";
+@import "components/Header/Auth";
+@import "components/Header/Content";
+@import "components/Header/Info";
