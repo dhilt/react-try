@@ -9,7 +9,7 @@ import NotFound from 'views/NotFound';
 const publicPath = '/';
 
 export const routeCodes = {
-  DASHBOARD: publicPath,
+  DASHBOARD: `${ publicPath }dashboard`,
   ABOUT: `${ publicPath }about`,
 };
 
@@ -18,10 +18,8 @@ export default class Routes extends Component {
     return (
       <Router history={ browserHistory }>
         <Route path={ publicPath } component={ App }>
-          <IndexRoute component={ Dashboard } />
           <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
           <Route path={ routeCodes.ABOUT } component={ About } />
-
           <Route path='*' component={ NotFound } />
         </Route>
       </Router>

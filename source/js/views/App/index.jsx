@@ -16,8 +16,7 @@ export default class App extends Component {
     return (
       <div className='App'>
         <Header />
-
-        { children }
+        <div className='MainContent'>{ children }</div>
       </div>
     );
   }

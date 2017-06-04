@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
+import AuthContainer from '../Auth/AuthContainer';
 
 export default class Menu extends Component {
 
   render() {
+    let Authorization = {};
     return (
       <div className='Menu'>
         <IndexLink to='/'>
@@ -27,6 +29,8 @@ export default class Menu extends Component {
         <Link to='More'>
           Еще
         </Link>
+        
+        <AuthContainer className='Auth'/>        
       </div>
     );
   }

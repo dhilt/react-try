@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { testAction, testAsync } from 'actions/app';
+import { testAction, testAsync } from 'actions/dashboard';
 import bookImg from '../../../assets/img/book2.jpg';
 
-@connect(state => ({
-  asyncData: state.app.get('asyncData'),
-  asyncError: state.app.get('asyncError'),
-  asyncLoading: state.app.get('asyncLoading'),
-  counter: state.app.get('counter'),
-}))
+//@connect(state => ({
+//}))
 export default class Dashboard extends Component {
-  static propTypes = {
-    asyncData: PropTypes.string,
-    asyncError: PropTypes.object,
-    asyncLoading: PropTypes.bool,
-    counter: PropTypes.number,
-    // from react-redux connect
-    dispatch: PropTypes.func,
-  }
+//  static propTypes = {
+//    dispatch: PropTypes.func,
+//  }
 
   constructor() {
     super();
