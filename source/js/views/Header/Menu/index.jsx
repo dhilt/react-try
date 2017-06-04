@@ -11,23 +11,23 @@ export default class Menu extends Component {
         <IndexLink to='/'>
           <img src="assets/img/logo.png" />
         </IndexLink>
-        <Link to='News'>
+        <Link to='news'>
           Новости
         </Link>
-        <Link to='Articles'>
+        <Link to='articles'>
           Статьи
         </Link>
 
-        <Link to='Videos'>
+        <Link to='videos'>
           Видео
         </Link>
 
-        <Link to='Games'>
+        <Link to='games'>
           Игры
         </Link>
 
-        <Link to='More'>
-          Еще
+        <Link to='about'>
+          О проекте
         </Link>
         
         <AuthContainer className='Auth'/>        
