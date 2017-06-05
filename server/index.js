@@ -75,6 +75,19 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+app.get('/api/articles', (req, res) => {
+  const count = Number(req.query.count);
+  const offset = Number(req.query.offset);
+  let articles = [];
+  
+  for (let i = 0; i < count; i++) {
+    db.get('SELECT * FROM Article WHERE id = ?', Number(offset) + 1 + i, (err, row) => {
+      articles.push(row);
+    });
+  }
+  res.send({articles: articles});
+});
+
 app.listen(APP_PORT, () => {
   console.log('Hello, console! Listening on port ' + APP_PORT + '...');
 });

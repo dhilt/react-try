@@ -5,7 +5,7 @@ const passwordHash = require('password-hash');
 const DATABASE_PATH = 'server/development.db';
 
 const USERS_COUNT = 10;
-const ARTICLES_COUNT = 20;
+const ARTICLES_COUNT = 200;
 const ADMIN_LOGIN = 'admin';
 const ADMIN_HASH = 'password34';
 let logins = [];
