@@ -3,12 +3,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const sqlite3 = require('sqlite3');
 const passwordHash = require('password-hash');
-const Cookies = require('cookies');
 const jwt = require('jsonwebtoken');
 
 const APP_PORT = 3003;
 const AUTH_TOKEN = {
-  cookieName: 'AUTH_TOKEN',
   secretKey: 'MySecretKey',
   expiresIn: 2592000
 }
