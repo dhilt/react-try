@@ -8,7 +8,6 @@ export default class Header extends Component {
     return (
       <div className='Header'>
         <Menu />
-        <Content />
       </div>
     );
   }
