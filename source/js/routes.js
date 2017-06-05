@@ -18,6 +18,7 @@ export default class Routes extends Component {
     return (
       <Router history={ browserHistory }>
         <Route path={ publicPath } component={ App }>
+          <IndexRoute component={ Dashboard } />
           <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
           <Route path={ routeCodes.ABOUT } component={ About } />
           <Route path='*' component={ NotFound } />
