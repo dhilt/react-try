@@ -22,7 +22,7 @@ export default class DashboardArticles extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(getDashboardArticlesAsync(5, 10));  // --> (count, offset)
+    this.props.dispatch(getDashboardArticlesAsync());
   }
 
   render() {

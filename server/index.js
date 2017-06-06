@@ -11,6 +11,11 @@ const AUTH_TOKEN = {
   expiresIn: 2592000
 }
 
+const ARTICLES = {
+  defaultCount: 10,
+  dashboardCount: 5
+}
+
 app.use(bodyParser.json());
 
 let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (err) => {
@@ -76,13 +81,24 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/articles', (req, res) => {
-  const count = Number(req.query.count) || 10;
-  const offset = Number(req.query.offset) || 0;
+  const dashboard = req.query.hasOwnProperty('dashboard');
+  let count = Number(req.query.count) || ARTICLES.defaultCount;
+  let offset = Number(req.query.offset) || 0;
+  let orderBy = null;
+  let orderDir = null;
 
-  db.all('SELECT * FROM Article LIMIT ? OFFSET ?', [count, offset], (err, row) => {
+  if (dashboard) {
+    count = ARTICLES.dashboardCount;
+    offset = 0;
+    orderBy = 'createdAt';
+    orderDir = 'DESC';
+  }
+
+  const ordering = (orderBy ? ' ORDER BY ' + orderBy + ' ' : '') + (orderBy && orderDir ? orderDir : '');
+
+  db.all('SELECT * FROM Article ' + ordering + ' LIMIT ? OFFSET ?', [count, offset], (err, row) => {
     if (err)
       return res.send({ status: 'error', error: err });
-
     res.send({ articles: row });
   });
 });
