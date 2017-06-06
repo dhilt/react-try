@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 
-let getConfig = (queryType, payload) => {
+let getConfig = (payload) => {
   let config = {
     headers: {}
   }
@@ -8,19 +8,19 @@ let getConfig = (queryType, payload) => {
   if (token) {
     config.headers['authorization'] = token
   }
-  if (queryType == 'post') {
+  if (payload) {
     config.method = 'post'
     config.body = JSON.stringify(payload)
     config.headers['Accept'] = 'application/json'
     config.headers['Content-Type'] = 'application/json'
-  } else if (queryType == 'get') {
+  } else {
     config.method = 'get'
   }
   return config
 }
 
-let asyncRequest = (path, queryType, payload) =>
-  fetch('api/' + path, getConfig(queryType, payload))
+let asyncRequest = (path, payload) =>
+  fetch('api/' + path, getConfig(payload))
   .then(response => {
     // http response processing
     if (!response.ok) {

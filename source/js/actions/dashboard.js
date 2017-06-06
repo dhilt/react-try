@@ -7,7 +7,7 @@ export const GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL = 'GET_DASHBOARD_ARTICLES_ASY
 export function getDashboardArticlesAsync(count, offset) {
   return function(dispatch) {
     dispatch(getDashboardArticlesAsyncStart());
-    asyncRequest('articles', 'get', { count, offset })
+    asyncRequest('articles?count=' + count + '&offset=' + offset)
       .then(result => dispatch(getDashboardArticlesAsyncEndSuccess(result.articles)))
       .catch(error => dispatch(getDashboardArticlesAsyncEndFail(error)));
   }

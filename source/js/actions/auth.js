@@ -67,7 +67,7 @@ export function validateForm(login, password) {
 export function doLoginAsync(login, password) {
   return function(dispatch) {
     dispatch(loginAsyncStart());
-    asyncRequest('login', 'post', { login, password })
+    asyncRequest('login', { login, password })
       .then(result => {
         localStorage.setItem('token', result.token);
         dispatch(loginAsyncEndSuccess(result.userInfo));
@@ -100,7 +100,7 @@ function loginAsyncEndFail(error) {
 export function authorizeByTokenAsync() {
   return function(dispatch) {
     dispatch(authorizeByTokenAsyncStart());
-    asyncRequest('userInfo', 'get')
+    asyncRequest('userInfo')
       .then(result => dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo)))
       .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)));
   }

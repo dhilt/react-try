@@ -7,19 +7,18 @@ import { getDashboardArticlesAsync } from 'actions/dashboard';
 @connect(state => ({
   pending: state.dashboard.get('articles').get('pending'),
   error: state.dashboard.get('articles').get('error'),
-  listArticles: state.dashboard.get('articles').get('list')
+  list: state.dashboard.get('articles').get('list')
 }))
 export default class DashboardArticles extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
     pending: PropTypes.bool,
     error: PropTypes.string,
-    listArticles: PropTypes.array
+    list: PropTypes.array
   }
 
   constructor() {
     super();
-
   }
 
   componentWillMount() {
