@@ -42,7 +42,7 @@ app.get('/api/userInfo', (req, res) => {
   // Расшифровываем token
   jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
     if (err)
-      return res.send({ status: 'error', error: 'Error with token.' });
+      return res.send({ status: 'error', error: err });
 
     res.send({ status: 'ok', userInfo: getUserInfo(decoded) });
   });
@@ -59,7 +59,7 @@ app.post('/api/login', (req, res) => {
       return res.send({ status: 'error', error: err });
 
     if (!row)
-      return res.send({status: 'error', error: 'Invalid login'})
+      return res.send({ status: 'error', error: 'Invalid login' });
 
     if (!passwordHash.verify(password, row.hash))
       return res.send({ status: 'error', error: 'Invalid password.' });
@@ -76,11 +76,14 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/articles', (req, res) => {
-  const count = Number(req.query.count);
-  const offset = Number(req.query.offset);
-  
+  const count = Number(req.query.count) || 10;
+  const offset = Number(req.query.offset) || 0;
+
   db.all('SELECT * FROM Article LIMIT ? OFFSET ?', [count, offset], (err, row) => {
-    res.send({articles: row});
+    if (err)
+      return res.send({ status: 'error', error: err });
+
+    res.send({ articles: row });
   });
 });
 
