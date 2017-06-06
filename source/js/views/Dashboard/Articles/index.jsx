@@ -28,7 +28,7 @@ export default class DashboardArticles extends Component {
   render() {
     return (
       <div>
-        DashboardArticles
+        <span>DashboardArticles</span>
       </div>
     );
   }
