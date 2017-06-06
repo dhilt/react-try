@@ -44,7 +44,7 @@ function setupArticles(db) {
 
     const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     for (let i = 1; i <= ARTICLES_COUNT; i++) {
-      let userId = 1 + faker.random.number(USERS_COUNT - 1);
+      let userId = faker.random.number(USERS_COUNT - 1);
       stmt.run(i, faker.lorem.words(6), faker.lorem.paragraph(200), faker.lorem.paragraph(0), faker.date.past(0.5, new Date()), faker.image.abstract(), userId, logins[userId]);
     };
     stmt.finalize(() => console.log('Article table was populated.'));
