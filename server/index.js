@@ -103,13 +103,12 @@ app.get('/api/articles', (req, res) => {
 
     if (dashboard) {
       // режем текст на 150 символов
-      row.forEach((elem, index, arr) => {
-        arr[index].text = elem.text.slice(0, ARTICLES.dashboardTextCut);
-      });
-      res.send({ articles: row });
-    } else {
-      res.send({ articles: row });
+      row.forEach(item =>
+        item.text = item.text.slice(0, ARTICLES.dashboardTextCut)
+      );
     }
+
+    res.send({ articles: row });
   });
 });
 
