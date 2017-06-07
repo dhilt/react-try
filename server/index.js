@@ -99,7 +99,16 @@ app.get('/api/articles', (req, res) => {
   db.all('SELECT * FROM Article ' + ordering + ' LIMIT ? OFFSET ?', [count, offset], (err, row) => {
     if (err)
       return res.send({ status: 'error', error: err });
-    res.send({ articles: row });
+
+    if (dashboard) {
+      // режем текст на 150 символов
+      row.forEach((elem, index, arr) => {
+        arr[index].text = elem.text.slice(0, 150);
+      });
+      res.send({ articles: row });
+    } else {
+      res.send({ articles: row });
+    }
   });
 });
 
