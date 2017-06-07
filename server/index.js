@@ -13,7 +13,8 @@ const AUTH_TOKEN = {
 
 const ARTICLES = {
   defaultCount: 10,
-  dashboardCount: 5
+  dashboardCount: 5,
+  dashboardTextCut: 150
 }
 
 app.use(bodyParser.json());
@@ -103,7 +104,7 @@ app.get('/api/articles', (req, res) => {
     if (dashboard) {
       // режем текст на 150 символов
       row.forEach((elem, index, arr) => {
-        arr[index].text = elem.text.slice(0, 150);
+        arr[index].text = elem.text.slice(0, ARTICLES.dashboardTextCut);
       });
       res.send({ articles: row });
     } else {
