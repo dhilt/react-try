@@ -14,11 +14,10 @@ export default class Dashboard extends Component {
   constructor() {
     super();
   }
-
+//<DashboardHead />
   render() {
     return (
       <div>
-        <DashboardHead />
         <DashboardArticles />
       </div>
     );

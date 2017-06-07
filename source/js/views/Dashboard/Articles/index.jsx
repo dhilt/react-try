@@ -26,9 +26,40 @@ export default class DashboardArticles extends Component {
   }
 
   render() {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let listArticles = this.props.list.map((article, index) => {
+      const time = new Date(article.createdAt);
+      let articleMonth = time.getMonth();
+      let articleDay = time.getDate();
+      return <div className='Article'>
+               <div className='userInfoArticle'>
+                 <div className='articleCreatedAt'>
+                   <p>{articleDay}</p>
+                   <p>{months[articleMonth]}</p>
+                 </div>
+                 <img src={article.image} />
+                 <div>{article.userName}</div>
+               </div>
+               <div className='textArticle'>
+                  <p>{article.title}</p>
+                  <p>{article.description}</p>
+                  <p>{article.text}</p>
+               </div>
+               { index === 1 &&
+                  <img className='imageSecondArticle' src={article.image}></img> }
+             </div>
+    });
     return (
-      <div>
-        <span>DashboardArticles</span>
+      <div className='wrappingArticles'>
+        <div className='headerArticles'>
+          <h>{'Статьи'}</h>
+          <a>{'Все статьи'}</a>
+          <a>{'Добавить статью +'}</a>
+        </div>
+        <ul className='listArticles'>{listArticles}</ul>
+        <div className='downloadArticles'>
+          <a>{'Подгрузить еще'}</a>
+        </div>
       </div>
     );
   }
