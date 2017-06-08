@@ -31,7 +31,7 @@ export default class DashboardArticleList extends Component {
       const time = new Date(article.createdAt);
       let articleMonth = time.getMonth();
       let articleDay = time.getDate();
-      return <div className='Article'>
+      return <div key={index} className='Article'>
                <div className='userInfoArticle'>
                  <div className='articleCreatedAt'>
                    <p>{articleDay}</p>
