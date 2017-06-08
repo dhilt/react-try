@@ -13,7 +13,7 @@ const AUTH_TOKEN = {
 
 const ARTICLES = {
   defaultCount: 10,
-  dashboardCount: 5,
+  dashboardCount: 6,
   dashboardTextCut: 150
 }
 

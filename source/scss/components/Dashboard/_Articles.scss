@@ -1,13 +1,14 @@
 .wrappingArticles {
-  width: 90%;
-  height: 1330px;
+  width: 100%;
+  height: 100%;
   background-color: #ffffff;
 }
 
 .headerArticles {
   height: 155px;
+  width: 90%;
   h:first-child {
-    margin-left: 5%;
+    float: left;
     margin-right: 10%;
     color: #000000;
     font-family: "Open Sans";
@@ -16,15 +17,18 @@
     line-height: 155px;
   }
   a:nth-child(2) {
+    float: left;
+    margin-top: 70px;
     color: #bf2d2d;
     font-family: "Open Sans";
     font-size: 18px;
     font-weight: 300;
     line-height: 24px;
-    margin-right: 45%;
     cursor: pointer;
   }
   a:nth-child(3) {
+    float: right;
+    margin-top: 65px;
     padding: 5px 10px;
     border-radius: 23px;
     width: 210px;
@@ -32,13 +36,13 @@
     background-color: #2d95bf;
     font-family: "Open Sans";
     font-size: 18px;
-    line-height: 155px;
     font-weight: 700;
     cursor: pointer;
   }
 }
 
 .listArticles {
+  width: 90%;
   .Article {
     margin-right: 30px;
     margin-top: 20px;
@@ -48,10 +52,6 @@
     height: 460px;
     border: 2px solid #f2f2ef;
     background-color: #ffffff;
-  }
-
-  .Article:nth-child(2) {
-    width: 910px;
   }
 
   .userInfoArticle {
@@ -138,14 +138,6 @@
       font-size: 20px;
     }
   }
-
-  .imageSecondArticle {
-    width: 440px;
-    height: 430px;
-    display: block;
-    margin-top: -55px;
-    margin-right: 22px;
-  }
 }
 
 .downloadArticles {
@@ -161,5 +153,6 @@
     font-family: "Open Sans";
     font-size: 24px;
     font-weight: 300;
+    cursor: pointer;
   }
 }
