@@ -1,4 +1,13 @@
+@import '../variables';
+
 .App {
   width: 100%;
   position: absolute;
+}
+
+.MainContent {
+  width: calc(100% - 220px);
+  min-width: $min-width;
+  margin-left: 110px;
+  background: #ffffff;
 }

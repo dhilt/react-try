@@ -1,5 +1,8 @@
+@import '../variables';
+
 .Header {
   width: calc(100% - 220px);
+  min-width: $min-width;
   margin-left: 110px;
   background: #ffffff;
   height: 65px;
