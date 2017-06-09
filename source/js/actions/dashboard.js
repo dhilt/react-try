@@ -4,10 +4,11 @@ export const GET_DASHBOARD_ARTICLES_ASYNC_START = 'GET_DASHBOARD_ARTICLES_ASYNC_
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS = 'GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS';
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL = 'GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL';
 
-export function getDashboardArticlesAsync() {
+export function getDashboardArticlesAsync(offset) {
   return function(dispatch) {
     dispatch(getDashboardArticlesAsyncStart());
-    asyncRequest('articles?dashboard')
+    let offsetQuery = (offset !== undefined) ? ('&offset=' + offset) : ''; 
+    asyncRequest('articles?dashboard' + offsetQuery)
       .then(result => dispatch(getDashboardArticlesAsyncEndSuccess(result.articles)))
       .catch(error => dispatch(getDashboardArticlesAsyncEndFail(error)));
   }

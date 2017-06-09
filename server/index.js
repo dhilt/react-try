@@ -90,7 +90,6 @@ app.get('/api/articles', (req, res) => {
 
   if (dashboard) {
     count = ARTICLES.dashboardCount;
-    offset = 0;
     orderBy = 'createdAt';
     orderDir = 'DESC';
   }

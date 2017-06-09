@@ -5,13 +5,29 @@ import PropTypes from 'prop-types';
 import DashboardArticleList from './List/index';
 import { getDashboardArticlesAsync } from 'actions/dashboard';
 
+@connect(state => ({
+  pending: state.dashboard.get('articles').get('pending'),
+  list: state.dashboard.get('articles').get('list')
+}))
 export default class DashboardArticles extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    pending: PropTypes.bool,
+    list: PropTypes.array
+  }
 
   constructor() {
     super();
+    
+    this.getAnotherArticles = this.getAnotherArticles.bind(this);
+  }
+
+  getAnotherArticles() {
+    this.props.dispatch(getDashboardArticlesAsync(this.props.list.length));
   }
 
   render() {
+    let { pending } = this.props;
     return (
       <div className='wrappingArticles'>
         <div className='headerArticles'>
@@ -21,7 +37,9 @@ export default class DashboardArticles extends Component {
         </div>
         <DashboardArticleList />
         <div className='downloadArticles'>
-          <a>{'Подгрузить еще'}</a>
+          <a disabled={pending}
+             className={pending ? 'preloader' : ''}
+             onClick={this.getAnotherArticles}>{'Подгрузить еще'}</a>
         </div>
       </div>
     );
