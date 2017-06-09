@@ -29,7 +29,7 @@ const actionsMap = {
       articles: Map({
         pending: false,
         error: '',
-        list: [...initialState.get('articles').get('list')].concat(action.data)
+        list: [...initialState.get('articles').get('list'), ...action.data]
       })
     })
   },
