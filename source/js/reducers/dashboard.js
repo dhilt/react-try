@@ -17,25 +17,23 @@ const initialState = Map({
 const actionsMap = {
   [GET_DASHBOARD_ARTICLES_ASYNC_START]: (state) => {
     return state.merge({
-      articles: Map({
-        pending: true,
-        error: '',
-        list: []
+      articles: state.get('articles').merge({
+        pending: true
       })
     })
   },
   [GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
-      articles: Map({
+      articles: state.get('articles').merge({
         pending: false,
         error: '',
-        list: [...initialState.get('articles').get('list'), ...action.data]
+        list: [...state.get('articles').get('list'), ...action.data]
       })
     })
   },
   [GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
-      articles: Map({
+      articles: state.get('articles').merge({
         pending: false,
         error: action.error,
         list: []

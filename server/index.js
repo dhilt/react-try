@@ -9,13 +9,14 @@ const APP_PORT = 3003;
 const AUTH_TOKEN = {
   secretKey: 'MySecretKey',
   expiresIn: 2592000
-}
+};
+const DEV_DELAY = 500;
 
 const ARTICLES = {
   defaultCount: 10,
   dashboardCount: 6,
   dashboardTextCut: 150
-}
+};
 
 app.use(bodyParser.json());
 
@@ -107,7 +108,7 @@ app.get('/api/articles', (req, res) => {
       );
     }
 
-    res.send({ articles: row });
+    setTimeout(() => res.send({ articles: row }), DEV_DELAY);
   });
 });
 

@@ -28,7 +28,7 @@ export default class DashboardArticleList extends Component {
   render() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let listArticles = this.props.list.map((article, index) => {
-      const time = new Date(article.createdAt);
+      const time = new Date(article.get('createdAt'));
       let articleMonth = time.getMonth();
       let articleDay = time.getDate();
       return <div key={index} className='Article'>
@@ -37,13 +37,13 @@ export default class DashboardArticleList extends Component {
                    <p>{articleDay}</p>
                    <p>{months[articleMonth]}</p>
                  </div>
-                 <img src={article.image} />
-                 <div>{article.userName}</div>
+                 <img src={article.get('image')} />
+                 <div>{article.get('userName')}</div>
                </div>
                <div className='textArticle'>
-                  <p>{article.title}</p>
-                  <p>{article.description}</p>
-                  <p>{article.text}</p>
+                  <p>{article.get('title')}</p>
+                  <p>{article.get('description')}</p>
+                  <p>{article.get('text')}</p>
                </div>
              </div>
     });

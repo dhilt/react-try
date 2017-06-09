@@ -23,7 +23,9 @@ export default class DashboardArticles extends Component {
   }
 
   getAnotherArticles() {
-    this.props.dispatch(getDashboardArticlesAsync(this.props.list.length));
+    if(!this.props.pending) {
+      this.props.dispatch(getDashboardArticlesAsync(this.props.list.size));
+    }
   }
 
   render() {
@@ -37,8 +39,7 @@ export default class DashboardArticles extends Component {
         </div>
         <DashboardArticleList />
         <div className='downloadArticles'>
-          <a disabled={pending}
-             className={pending ? 'preloader' : ''}
+          <a className={pending ? 'preloader' : ''}
              onClick={this.getAnotherArticles}>{'Подгрузить еще'}</a>
         </div>
       </div>

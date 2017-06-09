@@ -5,9 +5,10 @@ export const GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS = 'GET_DASHBOARD_ARTICLES_
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL = 'GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL';
 
 export function getDashboardArticlesAsync(offset) {
-  return function(dispatch) {
+  return (dispatch) => {
+    offset = Number(offset);
+    let offsetQuery = offset >= 0 ? `&offset=${offset}` : '';
     dispatch(getDashboardArticlesAsyncStart());
-    let offsetQuery = (offset !== undefined) ? ('&offset=' + offset) : ''; 
     asyncRequest('articles?dashboard' + offsetQuery)
       .then(result => dispatch(getDashboardArticlesAsyncEndSuccess(result.articles)))
       .catch(error => dispatch(getDashboardArticlesAsyncEndFail(error)));
