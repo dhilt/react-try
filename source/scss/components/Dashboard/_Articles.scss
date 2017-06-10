@@ -7,9 +7,10 @@
 .headerArticles {
   height: 155px;
   width: 90%;
-  h:first-child {
+  a:first-child {
     float: left;
     margin-right: 10%;
+    text-decoration: none;
     color: #000000;
     font-family: "Open Sans";
     font-size: 40px;

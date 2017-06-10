@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -33,8 +34,8 @@ export default class DashboardArticles extends Component {
     return (
       <div className='wrappingArticles'>
         <div className='headerArticles'>
-          <h>{'Статьи'}</h>
-          <a>{'Все статьи'}</a>
+          <Link to='articles'>{'Статьи'}</Link>
+          <Link to='articles'>{'Все статьи'}</Link>
           <a>{'Добавить статью +'}</a>
         </div>
         <DashboardArticleList />

@@ -108,7 +108,9 @@ app.get('/api/articles', (req, res) => {
       );
     }
 
-    setTimeout(() => res.send({ articles: row }), DEV_DELAY);
+    db.get('SELECT COUNT(id) FROM Article', (err, total) => {
+      setTimeout(() => res.send({ articles: row, total: total['COUNT(id)'] }), DEV_DELAY);
+    })
   });
 });
 
