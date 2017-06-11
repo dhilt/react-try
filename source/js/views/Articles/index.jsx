@@ -50,7 +50,7 @@ export default class Articles extends Component {
     return (
       <div className='Articles'>
         <Paging />
-        <ul>{Articles}</ul>
+        <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
       </div>
     );
   }
