@@ -28,7 +28,9 @@ export default class Articles extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(getArticlesAsync(this.props.page * this.props.count, this.props.count));
+    if(this.props.listArticles.length == 0) {
+      this.props.dispatch(getArticlesAsync(this.props.page * this.props.count, this.props.count));
+    }
   }
 
   render() {
