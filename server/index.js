@@ -114,6 +114,18 @@ app.get('/api/articles', (req, res) => {
   });
 });
 
+app.get('/api/articles/:id', (req, res) => {
+  const id = req.params.id;
+  db.all('SELECT * FROM Article WHERE id = ?', id, (err, row) => {
+    if (err)
+      return res.send({ status: 'error', error: err });
+    if (!row.length) 
+      return res.send({ status: 'error', error: 'Article with this id doesn\'t exist'});
+    
+    res.send({ status: 'ok', article: row[0] });
+  });
+});
+
 app.listen(APP_PORT, () => {
   console.log('Hello, console! Listening on port ' + APP_PORT + '...');
 });

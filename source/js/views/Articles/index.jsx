@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -38,13 +39,12 @@ export default class Articles extends Component {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let Articles = this.props.listArticles.map((article, index) => {
       const time = new Date(article.get('createdAt'));
+      let articleYear = time.getFullYear();
       let articleMonth = time.getMonth();
       let articleDay = time.getDate();
       return <div key={index} className='Article'>
-               <p>Date: {articleDay} {months[articleMonth]}</p>
-               <p>Author: {article.get('userName')}</p>
-               <p>{article.get('title')}</p>
-               <p>{article.get('description')}</p>
+               <p>Date: {articleDay} {months[articleMonth]} {articleYear}. Author: {article.get('userName')}. Title: <Link to={'articles/' + article.get('id')}> {article.get('title')}</Link></p>
+               <span>Description: {article.get('description')}</span>
              </div>
     });
     return (
