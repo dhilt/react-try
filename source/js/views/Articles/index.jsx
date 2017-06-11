@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getArticlesAsync } from 'actions/articles';
+import Paging from './Paging';
 
 @connect(state => ({
   listArticles: state.articles.get('listArticles'),
@@ -28,8 +29,8 @@ export default class Articles extends Component {
   }
 
   componentWillMount() {
-    if(this.props.listArticles.length == 0) {
-      this.props.dispatch(getArticlesAsync(this.props.page * this.props.count, this.props.count));
+    if(!this.props.listArticles.length) {
+      this.props.dispatch(getArticlesAsync());
     }
   }
 
@@ -47,7 +48,10 @@ export default class Articles extends Component {
              </div>
     });
     return (
-      <ul className='Articles'>{Articles}</ul>
+      <div className='Articles'>
+        <Paging />
+        <ul>{Articles}</ul>
+      </div>
     );
   }
 }

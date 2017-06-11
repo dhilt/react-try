@@ -3,7 +3,8 @@ import { Map } from 'immutable';
 import {
   GET_ARTICLES_ASYNC_START,
   GET_ARTICLES_ASYNC_END_SUCCESS,
-  GET_ARTICLES_ASYNC_END_FAIL
+  GET_ARTICLES_ASYNC_END_FAIL,
+  SET_ARTICLES_PAGE
 } from 'actions/articles';
 
 const initialState = Map({
@@ -34,6 +35,11 @@ const actionsMap = {
       pending: false,
       error: action.error,
       listArticles: []
+    })
+  },
+  [SET_ARTICLES_PAGE]: (state, action) => {
+    return state.merge({
+      page: action.page
     })
   }
 };

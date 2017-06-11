@@ -3,11 +3,13 @@ import asyncRequest from '../helpers';
 export const GET_ARTICLES_ASYNC_START = 'GET_ARTICLES_ASYNC_START';
 export const GET_ARTICLES_ASYNC_END_SUCCESS = 'GET_ARTICLES_ASYNC_END_SUCCESS';
 export const GET_ARTICLES_ASYNC_END_FAIL = 'GET_ARTICLES_ASYNC_END_FAIL';
+export const SET_ARTICLES_PAGE = 'SET_ARTICLES_PAGE';
 
-export function getArticlesAsync(offset, count) {
-  return (dispatch) => {
-    offset = Number(offset);
-    count = Number(count);
+export function getArticlesAsync() {
+  return (dispatch, getState) => {
+    let page = getState().articles.get('page');
+    let count = getState().articles.get('count');
+    let offset = Number(page * count);
     let query = `&offset=${offset}` + `&count=${count}`;
     dispatch(getArticlesAsyncStart());
     asyncRequest('articles?' + query)
@@ -34,4 +36,14 @@ export function getArticlesAsyncEndFail(error) {
     type: GET_ARTICLES_ASYNC_END_FAIL,
     error
   }
+}
+
+export function setPage(page) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_ARTICLES_PAGE,
+      page
+    });
+    dispatch(getArticlesAsync());
+  };
 }
