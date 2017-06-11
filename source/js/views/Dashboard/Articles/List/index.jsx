@@ -22,7 +22,9 @@ export default class DashboardArticleList extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(getDashboardArticlesAsync());
+    if(!this.props.list.size) {
+      this.props.dispatch(getDashboardArticlesAsync());
+    }
   }
 
   render() {
