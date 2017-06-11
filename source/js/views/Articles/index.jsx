@@ -40,22 +40,14 @@ export default class Articles extends Component {
       let articleMonth = time.getMonth();
       let articleDay = time.getDate();
       return <div key={index} className='Article'>
-               <div className='userInfoArticle'>
-                 <div className='articleCreatedAt'>
-                   <p>{articleDay}</p>
-                   <p>{months[articleMonth]}</p>
-                 </div>
-                 <img src={article.get('image')} />
-                 <div>{article.get('userName')}</div>
-               </div>
-               <div className='textArticle'>
-                  <p>{article.get('title')}</p>
-                  <p>{article.get('description')}</p>
-               </div>
+               <p>Date: {articleDay} {months[articleMonth]}</p>
+               <p>Author: {article.get('userName')}</p>
+               <p>{article.get('title')}</p>
+               <p>{article.get('description')}</p>
              </div>
     });
     return (
-      <ul className='listArticles'>{Articles}</ul>
+      <ul className='Articles'>{Articles}</ul>
     );
   }
 }

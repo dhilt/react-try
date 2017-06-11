@@ -50,7 +50,7 @@ export default class DashboardArticleList extends Component {
              </div>
     });
     return (
-      <ul className='listArticles'>{listArticles}</ul>
+      <ul className='listDashboardArticles'>{listArticles}</ul>
     );
   }
 }
