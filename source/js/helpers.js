@@ -20,7 +20,7 @@ let getConfig = (payload) => {
 }
 
 let asyncRequest = (path, payload) =>
-  fetch('api/' + path, getConfig(payload))
+  fetch(location.origin + '/api/' + path, getConfig(payload))
   .then(response => {
     // http response processing
     if (!response.ok) {
