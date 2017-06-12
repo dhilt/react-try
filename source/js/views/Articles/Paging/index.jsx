@@ -6,6 +6,7 @@ import { setPage } from 'actions/articles';
   page: state.articles.get('page'),
   count: state.articles.get('count'),
   total: state.articles.get('total'),
+  pending: state.articles.get('pending')
 }))
 
 export default class Paging extends Component {
@@ -40,8 +41,10 @@ export default class Paging extends Component {
   }
 
   handleChangePage(page) {
-    const { dispatch } = this.props;
-    dispatch(setPage(page));
+    const { dispatch, pending } = this.props;
+    if(!pending) {
+      dispatch(setPage(page));
+    }
   }
 
   render() {

@@ -86,13 +86,11 @@ app.get('/api/articles', (req, res) => {
   const dashboard = req.query.hasOwnProperty('dashboard');
   let count = Number(req.query.count) || ARTICLES.defaultCount;
   let offset = Number(req.query.offset) || 0;
-  let orderBy = null;
-  let orderDir = null;
+  let orderBy = 'createdAt';
+  let orderDir = 'DESC';
 
   if (dashboard) {
     count = ARTICLES.dashboardCount;
-    orderBy = 'createdAt';
-    orderDir = 'DESC';
   }
 
   const ordering = (orderBy ? ' ORDER BY ' + orderBy + ' ' : '') + (orderBy && orderDir ? orderDir : '');
@@ -119,9 +117,9 @@ app.get('/api/articles/:id', (req, res) => {
   db.all('SELECT * FROM Article WHERE id = ?', id, (err, row) => {
     if (err)
       return res.send({ status: 'error', error: err });
-    if (!row.length) 
-      return res.send({ status: 'error', error: 'Article with this id doesn\'t exist'});
-    
+    if (!row.length)
+      return res.send({ status: 'error', error: 'Article with this id doesn\'t exist' });
+
     res.send({ status: 'ok', article: row[0] });
   });
 });

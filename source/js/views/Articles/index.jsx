@@ -43,8 +43,9 @@ export default class Articles extends Component {
       let articleMonth = time.getMonth();
       let articleDay = time.getDate();
       return <div key={index} className='Article'>
-               <p>Date: {articleDay} {months[articleMonth]} {articleYear}. Author: {article.get('userName')}. Title: <Link to={'articles/' + article.get('id')}> {article.get('title')}</Link></p>
-               <span>Description: {article.get('description')}</span>
+                <img src={article.get('image')} />
+                <div> {months[articleMonth]}, {articleDay} {articleYear} <Link to={'articles/' + article.get('id')}> {article.get('title')}</Link> {article.get('userName')}</div>
+                <span>{article.get('description')}&nbsp;</span>
              </div>
     });
     return (
