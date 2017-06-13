@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import asyncRequest from '../helpers';
 
 export const GET_ARTICLES_ASYNC_START = 'GET_ARTICLES_ASYNC_START';
@@ -45,5 +46,6 @@ export function setPage(page) {
       page
     });
     dispatch(getArticlesAsync());
+    browserHistory.push('articles?page=' + Number(page + 1));
   };
 }
