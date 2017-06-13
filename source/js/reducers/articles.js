@@ -12,7 +12,7 @@ const initialState = Map({
   pending: false,
   error: null,
   total: null,
-  page: location.search[location.search.indexOf('page=') + 'page='.length] == -1 ? 0 : Number(location.search.match(`page=[^\d]*`)[0].replace('page=', '') - 1),
+  page: 0,
   count: 20
 });
 

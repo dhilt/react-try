@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { IndexLink, Link } from 'react-router';
+import { IndexLink, Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getArticlesAsync } from 'actions/articles';
+import { setPage } from 'actions/articles';
 import Paging from './Paging';
 
 @connect(state => ({
@@ -31,7 +31,8 @@ export default class Articles extends Component {
 
   componentWillMount() {
     if(!this.props.listArticles.length) {
-      this.props.dispatch(getArticlesAsync());
+      let page = (browserHistory.getCurrentLocation().query.page - 1) || this.props.page;
+      this.props.dispatch(setPage(page));
     }
   }
 
