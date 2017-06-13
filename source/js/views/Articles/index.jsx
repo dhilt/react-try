@@ -30,8 +30,20 @@ export default class Articles extends Component {
   }
 
   componentWillMount() {
-    if(!this.props.listArticles.length) {
-      let page = (browserHistory.getCurrentLocation().query.page - 1) || this.props.page;
+    let urlPage = Number(browserHistory.getCurrentLocation().query.page);
+    let page = urlPage ? urlPage - 1 : 0;
+    if(page !== this.props.page || !this.props.listArticles.length) {
+      this.props.dispatch(setPage(page));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.pending) {
+      return;
+    }
+    let urlPage = Number(nextProps.location.query.page);
+    let page = urlPage ? urlPage - 1 : 0;
+    if(page !== this.props.page) {
       this.props.dispatch(setPage(page));
     }
   }

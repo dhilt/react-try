@@ -41,11 +41,14 @@ export function getArticlesAsyncEndFail(error) {
 
 export function setPage(page) {
   return (dispatch) => {
+    const location = browserHistory.getCurrentLocation();
+    location.query.page = page + 1;
+    browserHistory.push(location);
+
     dispatch({
       type: SET_ARTICLES_PAGE,
       page
     });
     dispatch(getArticlesAsync());
-    browserHistory.push('articles?page=' + Number(page + 1));
   };
 }
