@@ -11,22 +11,22 @@ export default class Menu extends Component {
         <IndexLink to='/'>
           <img src="assets/img/logo.png" />
         </IndexLink>
-        <Link to='news'>
+        <Link to='/news'>
           Новости
         </Link>
-        <Link to='articles'>
+        <Link to='/articles'>
           Статьи
         </Link>
 
-        <Link to='videos'>
+        <Link to='/videos'>
           Видео
         </Link>
 
-        <Link to='games'>
+        <Link to='/games'>
           Игры
         </Link>
 
-        <Link to='about'>
+        <Link to='/about'>
           О проекте
         </Link>
         
