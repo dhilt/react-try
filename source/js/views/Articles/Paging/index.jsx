@@ -17,7 +17,7 @@ export default class Paging extends Component {
 
   getPages(props) {
     const { page, count, total } = props;
-    const pagesCount = Math.floor(total / count);
+    const pagesCount = Math.ceil(total / count);
     const space = 2;
 
     let pages = [ { index: 0, type: 'button' } ];
