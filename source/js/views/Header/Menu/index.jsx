@@ -9,7 +9,7 @@ export default class Menu extends Component {
     return (
       <div className='Menu'>
         <IndexLink to='/'>
-          <img src="assets/img/logo.png" />
+          <img src="/assets/img/logo.png" />
         </IndexLink>
         <Link to='/news'>
           Новости
