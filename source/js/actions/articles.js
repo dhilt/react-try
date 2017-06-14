@@ -44,6 +44,7 @@ export function setPage(page) {
     const location = browserHistory.getCurrentLocation();
     location.query.page = page + 1;
     browserHistory.push(location);
+    localStorage.setItem('pageArticles', page);
 
     dispatch({
       type: SET_ARTICLES_PAGE,

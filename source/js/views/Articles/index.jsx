@@ -31,7 +31,7 @@ export default class Articles extends Component {
 
   componentWillMount() {
     let urlPage = Number(browserHistory.getCurrentLocation().query.page);
-    let page = urlPage ? urlPage - 1 : 0;
+    let page = Number(localStorage.getItem('pageArticles')) || (urlPage - 1) || 0;
     if(page !== this.props.page || !this.props.listArticles.length) {
       this.props.dispatch(setPage(page));
     }

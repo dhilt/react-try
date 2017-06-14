@@ -48,6 +48,7 @@ if (isProduction) {
   );
 }
 
+localStorage.removeItem('pageArticles');
 if(localStorage.getItem('token')) {
   store.dispatch(authorizeByTokenAsync());
 }
