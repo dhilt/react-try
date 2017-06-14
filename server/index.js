@@ -28,7 +28,8 @@ let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (e
 let getUserInfo = (userObj) => {
   return {
     id: userObj.id,
-    login: userObj.login
+    login: userObj.login,
+    role: userObj.role
   }
 };
 
@@ -73,7 +74,8 @@ app.post('/api/login', (req, res) => {
 
     let token = jwt.sign({
         id: row.id,
-        login: row.login
+        login: row.login,
+        role: row.role
       },
       AUTH_TOKEN.secretKey, { expiresIn: AUTH_TOKEN.expiresIn }
     );
