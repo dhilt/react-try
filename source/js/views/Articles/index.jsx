@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setPage } from 'actions/articles';
+import { persistPage } from 'helpers';
 import Paging from './Paging';
 
 @connect(state => ({
@@ -30,9 +31,15 @@ export default class Articles extends Component {
   }
 
   componentWillMount() {
-    let urlPage = Number(browserHistory.getCurrentLocation().query.page);
-    let page = Number(localStorage.getItem('pageArticles')) || (urlPage - 1) || 0;
-    if(page !== this.props.page || !this.props.listArticles.length) {
+    let urlPage = Number(browserHistory.getCurrentLocation().query.page), page;
+    if(urlPage) {
+      page = urlPage - 1;
+    }
+    else {
+      page = Number(localStorage.getItem('pageArticles')) || 0;
+      persistPage(page);
+    }
+    if(page !== this.props.page || !this.props.listArticles.size) {
       this.props.dispatch(setPage(page));
     }
   }

@@ -1,5 +1,4 @@
-import { browserHistory } from 'react-router';
-import asyncRequest from '../helpers';
+import { asyncRequest, persistPage } from '../helpers';
 
 export const GET_ARTICLES_ASYNC_START = 'GET_ARTICLES_ASYNC_START';
 export const GET_ARTICLES_ASYNC_END_SUCCESS = 'GET_ARTICLES_ASYNC_END_SUCCESS';
@@ -41,11 +40,7 @@ export function getArticlesAsyncEndFail(error) {
 
 export function setPage(page) {
   return (dispatch) => {
-    const location = browserHistory.getCurrentLocation();
-    location.query.page = page + 1;
-    browserHistory.push(location);
-    localStorage.setItem('pageArticles', page);
-
+    persistPage(page);
     dispatch({
       type: SET_ARTICLES_PAGE,
       page

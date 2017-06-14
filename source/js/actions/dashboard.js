@@ -1,4 +1,4 @@
-import asyncRequest from '../helpers';
+import { asyncRequest } from '../helpers';
 
 export const GET_DASHBOARD_ARTICLES_ASYNC_START = 'GET_DASHBOARD_ARTICLES_ASYNC_START';
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS = 'GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS';
