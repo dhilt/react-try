@@ -38,7 +38,7 @@ export default class DashboardArticles extends Component {
         <div className='headerArticles'>
           <Link to='articles'>{'Статьи'}</Link>
           <Link to='articles'>{'Все статьи'}</Link>
-          {role == 1 && <a>{'Добавить статью +'}</a>}
+          {role === 1 && <Link to='/admin/articles/new'>{'Добавить статью +'}</Link>}
         </div>
         <DashboardArticleList />
         <div className='downloadArticles'>
