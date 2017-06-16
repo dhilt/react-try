@@ -8,6 +8,7 @@ import logger from 'dev/logger';
 import { authorizeByTokenAsync } from 'actions/auth';
 
 import rootReducer from 'reducers';
+import adminReducer from 'reducers/_admin';
 import Routes from 'routes';
 
 // Load SCSS
