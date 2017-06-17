@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { storeHelper } from 'helpers/store';
 
 @connect(state => ({
-  initialized: state.admin.common.get('initialized')
+  isWorking: state.admin.newArticle.get('isWorking')
 }))
 export default class NewArticle extends Component {
   static propTypes = {
@@ -41,7 +41,7 @@ export default class NewArticle extends Component {
     return (
       <div>
         <h2>Route for creating articles...(only for admin)</h2>
-        { this.props.initialized ? 'init' : 'no-init' }
+        { 'newArticle state is ' + (this.props.isWorking ? 'accessible' : 'not accessible') }
         <LocalForm
           onUpdate={(form) => this.handleUpdate(form)}
           onChange={(values) => this.handleChange(values)}
