@@ -18,6 +18,9 @@ if (localStorage.getItem('token')) {
   store.dispatch(authorizeByTokenAsync());
 }
 
+// todo: attach admin reducers only for admin-user and strictly before tha admin component is loaded
+storeHelper.dispatchSetAdminReducerAction();
+
 // Render it to DOM
 ReactDOM.render( < Provider store = { store } >
   < Routes / >
