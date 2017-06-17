@@ -3,7 +3,7 @@ import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { storeHelper } from 'helpers';
+import { storeHelper } from 'helpers/store';
 
 @connect(state => ({
   initialized: state.admin.common.get('initialized')

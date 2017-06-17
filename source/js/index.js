@@ -5,7 +5,7 @@ import 'babel-polyfill';
 
 import '../scss/app.scss';
 
-import { storeHelper } from './helpers';
+import { storeHelper } from './helpers/store';
 import { authorizeByTokenAsync } from './actions/auth';
 import Routes from 'routes';
 

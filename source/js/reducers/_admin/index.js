@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { Map } from 'immutable';
 
 import setRootReducer from '../';
-import { storeHelper } from 'helpers';
+import { storeHelper } from 'helpers/store';
 
 import common from './common';
 import newArticle from './newArticle';

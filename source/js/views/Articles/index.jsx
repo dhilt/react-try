@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setPage } from 'actions/articles';
-import { persistPage } from 'helpers';
+import { persistPage } from 'helpers/page';
 import Paging from './Paging';
 
 @connect(state => ({

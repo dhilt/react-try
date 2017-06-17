@@ -1,5 +1,5 @@
 export const SET_ADMIN_REDUCERS = 'SET_ADMIN_REDUCERS';
-import { storeHelper } from 'helpers';
+import { storeHelper } from 'helpers/store';
 
 export function setAdminReducerAction() {
   return (dispatch, getState) => {
