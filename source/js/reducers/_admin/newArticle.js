@@ -3,7 +3,11 @@ import { Map } from 'immutable';
 //import {} from 'actions/_admin/newArticle';
 
 const initialState = Map({
-  hello: 'world!'
+  date: null,
+  title: '',
+  description: '',
+  image: '',
+  text: ''  
 });
 
 const actionsMap = {
