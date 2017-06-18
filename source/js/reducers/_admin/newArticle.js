@@ -8,7 +8,7 @@ const initialState = Map({
   title: '',
   description: '',
   image: '',
-  text: ''  
+  text: ''
 });
 
 const actionsMap = {
