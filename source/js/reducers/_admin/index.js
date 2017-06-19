@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { createForms } from 'react-redux-form';
 import { Map } from 'immutable';
 
 import setRootReducer from '../';
@@ -14,6 +15,8 @@ export let adminReducers = combineReducers({
 export function setAdminReducer() {
   adminReducers = combineReducers({
     common,
-    newArticle
+    ...createForms({
+      newArticle,
+    }),
   });  
 }
