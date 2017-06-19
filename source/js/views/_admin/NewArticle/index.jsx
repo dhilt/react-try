@@ -25,7 +25,8 @@ export default class NewArticle extends Component {
 
   handleSubmit(values) {
     console.log('Submit-button event!');
-    console.log(this.props.newArticle.get('title'));
+    console.log(this.props.newArticle.get('date'));
+    console.log(values);
   }
 
   render() {
@@ -43,14 +44,14 @@ export default class NewArticle extends Component {
           <Control.text model='newArticle.date' value={nowDate}
             validators={{required: (val) => val && val.length, length: (val) => val && val.length > 10}}
             errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 10}} />
-          <Errors className='errors' model='newArticle.date' messages={{
+          <Errors className='errors' model='newArticle.date' show='touched' messages={{
             required: 'Text is required '}} />
 
           <label>Title:</label>
           <Control.text model='newArticle.title'
             validators={{required: (val) => val && val.length, length: (val) => val && val.length > 10}}
             errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 10}} />
-          <Errors className='errors' model='newArticle.title' messages={{
+          <Errors className='errors' model='newArticle.title' show='touched' messages={{
             required: 'Text is required /',
             minLength: ' Must be 10 characters or more '}} />
 
@@ -58,7 +59,7 @@ export default class NewArticle extends Component {
           <Control.text model='newArticle.description'
             validators={{required: (val) => val && val.length, length: (val) => val && val.length > 10}}
             errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 10}} />
-          <Errors className='errors' model='newArticle.description' messages={{
+          <Errors className='errors' model='newArticle.description' show='touched' messages={{
             required: 'Text is required /',
             minLength: ' Must be 10 characters or more '}} />
 
@@ -66,7 +67,7 @@ export default class NewArticle extends Component {
           <Control.text model='newArticle.image'
             validators={{required: (val) => val && val.length, length: (val) => val && val.length > 5}}
             errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 5}} />
-          <Errors className='errors' model='newArticle.image' messages={{
+          <Errors className='errors' model='newArticle.image' show='touched' messages={{
             required: 'Text is required /',
             minLength: ' Must be 5 characters or more '}} />
 
@@ -74,7 +75,7 @@ export default class NewArticle extends Component {
           <Control.text model='newArticle.text'
             validators={{required: (val) => val && val.length, length: (val) => val && val.length > 100}}
             errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 100}} />
-          <Errors className='errors' model='newArticle.text' messages={{
+          <Errors className='errors' model='newArticle.text' show='touched' messages={{
             required: 'Text is required /',
             minLength: ' Must be 100 characters or more '}} />
 
