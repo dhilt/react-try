@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { createForms } from 'react-redux-form';
+import { createForms } from 'react-redux-form/immutable';
 import { Map } from 'immutable';
 
 import setRootReducer from '../';

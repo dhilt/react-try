@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { storeHelper } from 'helpers/store';
 
 @connect(state => ({
+  newArticle: state.admin.newArticle
 }))
 export default class NewArticle extends Component {
   static propTypes = {
@@ -24,7 +25,7 @@ export default class NewArticle extends Component {
 
   handleSubmit(values) {
     console.log('Submit-button event!');
-    console.log(values);
+    console.log(this.props.newArticle.get('title'));
   }
 
   render() {
@@ -77,7 +78,7 @@ export default class NewArticle extends Component {
             required: 'Text is required /',
             minLength: ' Must be 100 characters or more '}} />
 
-          <button type='submit'>Сохранить!</button>
+          <button onClick={() => this.handleSubmit()} type='submit'>Сохранить!</button>
         </Form>
       </div>
     );
