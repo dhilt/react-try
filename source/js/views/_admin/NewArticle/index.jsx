@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 import { storeHelper } from 'helpers/store';
 
 @connect(state => ({
-  newArticle: state.admin.newArticle
+  newArticle: state.admin.newArticle,
+  forms: state.admin.forms
 }))
 export default class NewArticle extends Component {
   static propTypes = {
@@ -23,21 +24,23 @@ export default class NewArticle extends Component {
     storeHelper.dispatchSetAdminReducerAction();
   }
 
-  handleSubmit(values) {
+  handleSubmit() {
     console.log('Submit-button event!');
     console.log(this.props.newArticle.get('date'));
-    console.log(values);
+    // todo : trigger generate and send POST action
   }
 
   render() {
     let nowDate = new Date();
+    let newArticleForm = this.props.forms.newArticle.$form;
+    let pristine = newArticleForm && newArticleForm.pristine;
+    let valid = newArticleForm && newArticleForm.valid;
+
     return (
       <div>
         <h2>Route for creating articles...(only for admin)</h2>
-        { 'newArticle state is ' + (this.props.isWorking ? 'accessible' : 'not accessible') }
         <Form
           model='newArticle'
-          onSubmit={(values) => this.handleSubmit(values)}
           className='ArticleForm'
         >
           <label>Date:</label>
@@ -79,7 +82,12 @@ export default class NewArticle extends Component {
             required: 'Text is required /',
             minLength: ' Must be 100 characters or more '}} />
 
-          <button onClick={() => this.handleSubmit()} type='submit'>Сохранить!</button>
+          <button
+            onClick={() => this.handleSubmit()}
+            disabled={pristine || !valid}
+            type='submit'>
+              Сохранить!
+          </button>
         </Form>
       </div>
     );
