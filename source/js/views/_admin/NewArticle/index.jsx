@@ -8,7 +8,7 @@ import { storeHelper } from 'helpers/store';
 
 @connect(state => ({
   newArticle: state.admin.newArticle,
-  forms: state.admin.forms
+  newArticleForm: state.admin.forms.newArticle
 }))
 export default class NewArticle extends Component {
   static propTypes = {
@@ -32,9 +32,9 @@ export default class NewArticle extends Component {
 
   render() {
     let nowDate = new Date();
-    let newArticleForm = this.props.forms.newArticle.$form;
-    let pristine = newArticleForm && newArticleForm.pristine;
-    let valid = newArticleForm && newArticleForm.valid;
+    let { newArticleForm } = this.props;
+    let pristine = newArticleForm.$form && newArticleForm.$form.pristine;
+    let valid = newArticleForm.$form && newArticleForm.$form.valid;
 
     return (
       <div>
