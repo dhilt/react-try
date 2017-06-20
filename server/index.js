@@ -33,6 +33,17 @@ let getUserInfo = (userObj) => {
   }
 };
 
+let doAuthorize = (req) => {
+  let token = req.headers.authorization;
+  return jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
+    if (err) {
+      return { status: false, error: err };
+    } else {
+      return { status: true, userInfo: getUserInfo(decoded) };
+    }
+  });
+};
+
 app.get('/api/test', (req, res) => {
   db.all('SELECT * FROM User', (err, rows) => {
     if (err)
@@ -129,6 +140,8 @@ app.get('/api/articles/:id', (req, res) => {
 app.post('/api/articles/create', (req, res) => {
   let token = req.headers.authorization;
   let article = req.body.article;
+  let userAuthorization = doAuthorize(req);
+  console.log(userAuthorization);
 
   jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
     if (err) {
