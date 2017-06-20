@@ -3,4 +3,19 @@
   background: url(../assets/img/content.png) no-repeat;
   background-size: 100% auto;
   background-color: #1C1E20;
+  .GamesList {
+    float: right;
+    height: 205px;
+    width: 50%;
+    margin-top: 100px;
+    li {
+      display: inline;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    img {
+      width: 160px;
+      height: 100px;
+    }
+  }
 }
