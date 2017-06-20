@@ -126,6 +126,25 @@ app.get('/api/articles/:id', (req, res) => {
   });
 });
 
+app.post('/api/articles/create', (req, res) => {
+  let token = req.headers.authorization;
+  let article = req.body.article;
+
+  jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
+    if (err) {
+      return res.send({ status: 'error', error: err });
+    } else if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+      return res.send({ status: 'error', error: 'Missed some data!' });
+    } else {
+      db.get('SELECT COUNT(id) FROM Article', (err, total) => {
+//        const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+//        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, decoded.id, decoded.login);
+        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: decoded.id, userName: decoded.login });
+      })
+    }
+  });
+});
+
 app.listen(APP_PORT, () => {
   console.log('Hello, console! Listening on port ' + APP_PORT + '...');
 });
