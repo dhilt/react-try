@@ -41,9 +41,9 @@ export default class Paging extends Component {
   }
 
   handleChangePage(page) {
-    const { dispatch, pending } = this.props;
+    const { dispatch, pending, history } = this.props;
     if(!pending) {
-      dispatch(setPage(page));
+      dispatch(setPage(page, history));
     }
   }
 

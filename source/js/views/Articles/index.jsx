@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { IndexLink, Link, browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setPage } from 'actions/articles';
-import { persistPage } from 'helpers/page';
+import { getLocationPage, persistPage } from 'helpers/page';
 import Paging from './Paging';
 
 @connect(state => ({
@@ -31,27 +31,29 @@ export default class Articles extends Component {
   }
 
   componentWillMount() {
-    let urlPage = Number(browserHistory.getCurrentLocation().query.page), page;
+    const { dispatch, history, page, listArticles } = this.props;
+    let urlPage = getLocationPage(history.location), currentPage;
     if(urlPage) {
-      page = urlPage - 1;
+      currentPage = urlPage - 1;
     }
     else {
-      page = Number(localStorage.getItem('pageArticles')) || 0;
-      persistPage(page);
+      currentPage = Number(localStorage.getItem('pageArticles')) || 0;
+      persistPage(currentPage, history);
     }
-    if(page !== this.props.page || !this.props.listArticles.size) {
-      this.props.dispatch(setPage(page));
+    if(currentPage !== page || !listArticles.size) {
+      dispatch(setPage(currentPage, history));
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    const { dispatch, history, page } = this.props;
     if(nextProps.pending) {
       return;
     }
-    let urlPage = Number(nextProps.location.query.page);
-    let page = urlPage ? urlPage - 1 : 0;
-    if(page !== this.props.page) {
-      this.props.dispatch(setPage(page));
+    let urlPage = getLocationPage(history.location);
+    let currentPage = urlPage ? urlPage - 1 : 0;
+    if(currentPage !== page) {
+      dispatch(setPage(currentPage, history));
     }
   }
 
@@ -64,13 +66,13 @@ export default class Articles extends Component {
       let articleDay = time.getDate();
       return <div key={index} className='Article'>
                 <img src={article.get('image')} />
-                <div> {months[articleMonth]}, {articleDay} {articleYear} <Link to={'articles/' + article.get('id')}> {article.get('title')}</Link> {article.get('userName')}</div>
+                <div> {months[articleMonth]}, {articleDay} {articleYear} <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link> {article.get('userName')}</div>
                 <span>{article.get('description')}&nbsp;</span>
              </div>
     });
     return (
       <div className='Articles'>
-        <Paging />
+        <Paging history={this.props.history} />
         <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
       </div>
     );

@@ -39,9 +39,9 @@ export function getArticlesAsyncEndFail(error) {
   }
 }
 
-export function setPage(page) {
+export function setPage(page, hystory) {
   return (dispatch) => {
-    persistPage(page);
+    persistPage(page, hystory);
     dispatch({
       type: SET_ARTICLES_PAGE,
       page

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Route, BrowserRouter } from 'react-router-dom';
 
-import App from 'views/App';
+import Header from 'views/Header/index'
+
 import Dashboard from 'views/Dashboard';
 import Articles from 'views/Articles';
 import Article from 'views/Article';
@@ -27,17 +28,21 @@ export const routeCodesAdmin = {
 export default class Routes extends Component {
   render() {
     return (
-      <Router history={ browserHistory }>
-        <Route path={ publicPath } component={ App }>
-          <IndexRoute component={ Dashboard } />
+      <BrowserRouter>
+
+        <div className='App'>
+          <Header />
+
+          <Route exact path={ publicPath } component={ Dashboard } />
           <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
           <Route path={ routeCodes.ABOUT } component={ About } />
           <Route path={ routeCodes.ARTICLES } component={ Articles } />
           <Route path={ routeCodes.ARTICLE } component={ Article } />
           <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
-          <Route path='*' component={ NotFound } />
-        </Route>
-      </Router>
+          <Route path='*' component={ NotFound } />          
+        </div>      
+
+      </BrowserRouter>
     );
   }
 }
