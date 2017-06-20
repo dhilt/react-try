@@ -4,8 +4,6 @@ import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { storeHelper } from 'helpers/store';
-
 @connect(state => ({
   newArticle: state.admin.newArticle,
   newArticleForm: state.admin.forms.newArticle
@@ -18,10 +16,6 @@ export default class NewArticle extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillMount() {
-    storeHelper.dispatchSetAdminReducerAction();
   }
 
   handleSubmit() {

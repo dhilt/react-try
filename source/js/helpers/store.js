@@ -3,7 +3,6 @@ import thunk from 'redux-thunk'
 import logger from 'dev/logger'
 
 import setRootReducer from '../reducers'
-import { setAdminReducerAction } from '../actions/_admin/common'
 import { setAdminReducer } from '../reducers/_admin';
 
 export let storeHelper = {
@@ -51,10 +50,6 @@ export let storeHelper = {
   setAdminReducer: function() {
     setAdminReducer();
     this.store.replaceReducer(setRootReducer())
-  },
-
-  dispatchSetAdminReducerAction: function() {
-    this.store.dispatch(setAdminReducerAction());
   }
 
 }
