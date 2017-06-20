@@ -49,7 +49,7 @@ export default class Paging extends Component {
 
   render() {
     let pages = this.getPages(this.props);
-    return (
+    return !this.props.total ? null : (
       <div className='Paging'>
         {
           pages.map((item, index) => 
