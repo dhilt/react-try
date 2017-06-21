@@ -34,15 +34,18 @@ let getUserInfo = (userObj) => {
 };
 
 let doAuthorize = (req) => {
-  let token = req.headers.authorization;
-  return jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
-    if (err) {
-      return { status: false, error: err };
-    } else {
-      return { status: true, userInfo: getUserInfo(decoded) };
-    }
-  });
-};
+  return new Promise((resolve, reject) => {
+    let token = req.headers.authorization;
+    return jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
+      if (err) {
+        resolve({ status: false, error: err });
+      } else {
+        resolve({ status: true, userInfo: getUserInfo(decoded) });
+      }
+    });
+    reject('Error!');
+  })
+}
 
 app.get('/api/test', (req, res) => {
   db.all('SELECT * FROM User', (err, rows) => {
@@ -138,24 +141,22 @@ app.get('/api/articles/:id', (req, res) => {
 });
 
 app.post('/api/articles/create', (req, res) => {
-  let token = req.headers.authorization;
   let article = req.body.article;
-  let userAuthorization = doAuthorize(req);
-  console.log(userAuthorization);
+  if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+    return res.send({ status: 'error', error: 'Missed some data!' });
+  }
 
-  jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
-    if (err) {
-      return res.send({ status: 'error', error: err });
-    } else if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
-      return res.send({ status: 'error', error: 'Missed some data!' });
-    } else {
+  doAuthorize(req)
+    .then(result => {
+      let user = result.userInfo;
       db.get('SELECT COUNT(id) FROM Article', (err, total) => {
-//        const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-//        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, decoded.id, decoded.login);
-        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: decoded.id, userName: decoded.login });
+        const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, user.id, user.login);
+        stmt.finalize();
+        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: user.id, userName: user.login });
       })
-    }
-  });
+    })
+    .catch(error => res.send({ status: 'error', error: error }));
 });
 
 app.listen(APP_PORT, () => {
