@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-//import {} from 'actions/_admin/newArticle';
+import { SET_TIME_ARTICLE } from 'actions/_admin/newArticle';
 
 const initialState = Map({
   date: null,
@@ -11,6 +11,11 @@ const initialState = Map({
 });
 
 const actionsMap = {
+  [SET_TIME_ARTICLE]: (state, action) => {
+    return state.merge({
+      date: action.data
+    })
+  }
 };
 
 export default function reducer(state = initialState, action = {}) {

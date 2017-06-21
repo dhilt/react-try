@@ -3,6 +3,9 @@ import { Form, Control, actions, Errors } from 'react-redux-form/immutable';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import { setTimeArticle } from 'actions/_admin/newArticle';
 
 @connect(state => ({
   newArticle: state.admin.newArticle,
@@ -15,13 +18,25 @@ export default class NewArticle extends Component {
 
   constructor() {
     super();
+    this.state = {
+      startDate: moment()
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.dateChange = this.dateChange.bind(this);
   }
 
   handleSubmit() {
     console.log('Submit-button event!');
     console.log(this.props.newArticle.get('date'));
     // todo : trigger generate and send POST action
+  }
+
+  dateChange(date) {
+    const { dispatch } = this.props;
+    dispatch(setTimeArticle(date._d));
+    this.setState({
+      startDate: date
+    });
   }
 
   render() {
@@ -38,11 +53,11 @@ export default class NewArticle extends Component {
           className='ArticleForm'
         >
           <label>Date:</label>
-          <Control.text model='newArticle.date' value={nowDate}
-            validators={{required: (val) => val && val.length, length: (val) => val && val.length > 10}}
-            errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 10}} />
-          <Errors className='errors' model='newArticle.date' show={{touched: true, pristine: false}} messages={{
-            required: 'Text is required '}} />
+          <DatePicker
+            dateFormat="DD-MMM HH:mm"
+            todayButton="Today"
+            selected={this.state.startDate}
+            onChange={this.dateChange} />
 
           <label>Title:</label>
           <Control.text model='newArticle.title'
