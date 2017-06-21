@@ -20,7 +20,7 @@ const ARTICLES = {
 
 app.use(bodyParser.json());
 
-let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (err) => {
+let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READWRITE, (err) => {
   if (err)
     throw ('No development.db found. Run "node db.js"...');
 });
