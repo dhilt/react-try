@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import Header from 'views/Header/index'
 
@@ -29,19 +29,20 @@ export default class Routes extends Component {
   render() {
     return (
       <BrowserRouter>
-
         <div className='App'>
           <Header />
-
-          <Route exact path={ publicPath } component={ Dashboard } />
-          <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
-          <Route path={ routeCodes.ABOUT } component={ About } />
-          <Route path={ routeCodes.ARTICLES } component={ Articles } />
-          <Route path={ routeCodes.ARTICLE } component={ Article } />
-          <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
-          <Route path='*' component={ NotFound } />          
-        </div>      
-
+          <div className='MainContent'>
+            <Switch>
+              <Route exact path={ publicPath } component={ Dashboard } />
+              <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
+              <Route path={ routeCodes.ABOUT } component={ About } />
+              <Route path={ routeCodes.ARTICLES } component={ Articles } />
+              <Route path={ routeCodes.ARTICLE } component={ Article } />
+              <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
+              <Route component={ NotFound } />
+            </Switch>
+          </div>
+        </div>
       </BrowserRouter>
     );
   }
