@@ -13,7 +13,7 @@ const initialState = Map({
 const actionsMap = {
   [SET_TIME_ARTICLE]: (state, action) => {
     return state.merge({
-      date: action.data
+      date: action.date
     })
   }
 };

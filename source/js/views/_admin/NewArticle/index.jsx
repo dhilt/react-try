@@ -12,17 +12,18 @@ import { setTimeArticle } from 'actions/_admin/newArticle';
   newArticleForm: state.admin.forms.newArticle
 }))
 export default class NewArticle extends Component {
-  static propTypes = {
-    dispatch: PropTypes.func
-  }
 
   constructor() {
     super();
-    this.state = {
-      startDate: moment()
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.dateChange = this.dateChange.bind(this);
+    this.onDateChanged = this.onDateChanged.bind(this);
+    this.state = {
+      date: moment()
+    };
+  }
+
+  componentWillMount() {
+    this.props.dispatch(setTimeArticle(this.state.date._d));
   }
 
   handleSubmit() {
@@ -31,12 +32,11 @@ export default class NewArticle extends Component {
     // todo : trigger generate and send POST action
   }
 
-  dateChange(date) {
+  onDateChanged(date) {
     const { dispatch } = this.props;
-    dispatch(setTimeArticle(date._d));
-    this.setState({
-      startDate: date
-    });
+    this.setState({ date });
+    dispatch(setTimeArticle(date ? date._d : null));
+    // this.props.newArticleForm.date.value ???
   }
 
   render() {
@@ -44,6 +44,14 @@ export default class NewArticle extends Component {
     let { newArticleForm } = this.props;
     let pristine = newArticleForm.$form && newArticleForm.$form.pristine;
     let valid = newArticleForm.$form && newArticleForm.$form.valid;
+
+    const MyDatePicker = (props) => 
+      <DatePicker
+        dateFormat="DD MMM YYYY"
+        todayButton="Today"
+        selected={this.state.date}
+        onChange={this.onDateChanged}
+      />;
 
     return (
       <div>
@@ -53,11 +61,14 @@ export default class NewArticle extends Component {
           className='ArticleForm'
         >
           <label>Date:</label>
-          <DatePicker
-            dateFormat="DD-MMM HH:mm"
-            todayButton="Today"
-            selected={this.state.startDate}
-            onChange={this.dateChange} />
+          <Control
+            model="newArticle.date"
+            component={MyDatePicker}
+            value={this.state.date}
+            validators={{required: (val) => val}}
+            errors={{required: (val) => !val}}/>
+          <Errors className='errors' model='newArticle.date' show={{touched: true, pristine: false}} messages={{
+            required: 'Date is required /'}} />
 
           <label>Title:</label>
           <Control.text model='newArticle.title'
