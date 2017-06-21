@@ -33,19 +33,21 @@ let getUserInfo = (userObj) => {
   }
 };
 
-let doAuthorize = (req) => {
+let doAuthorize = (req, res) => {
   return new Promise((resolve, reject) => {
     let token = req.headers.authorization;
-    return jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
-      if (err) {
-        resolve({ status: false, error: err });
-      } else {
-        resolve({ status: true, userInfo: getUserInfo(decoded) });
+    jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
+      if (!err) { // resolve userInfo
+        return resolve(getUserInfo(decoded));
+      }
+      if (!res) { // reject the error by default
+        reject(err);
+      } else { // send error response if possible
+        res.send({ status: 'error', error: err });
       }
     });
-    reject('Error!');
   })
-}
+};
 
 app.get('/api/test', (req, res) => {
   db.all('SELECT * FROM User', (err, rows) => {
@@ -59,15 +61,9 @@ app.get('/api/test', (req, res) => {
 });
 
 app.get('/api/userInfo', (req, res) => {
-  let token = req.headers.authorization;
-
-  // Расшифровываем token
-  jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
-    if (err)
-      return res.send({ status: 'error', error: err });
-
-    res.send({ status: 'ok', userInfo: getUserInfo(decoded) });
-  });
+  doAuthorize(req, res).then(userInfo =>
+    res.send({ status: 'ok', userInfo })
+  );
 });
 
 app.post('/api/login', (req, res) => {
@@ -141,22 +137,22 @@ app.get('/api/articles/:id', (req, res) => {
 });
 
 app.post('/api/articles/create', (req, res) => {
-  let article = req.body.article;
-  if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
-    return res.send({ status: 'error', error: 'Missed some data!' });
-  }
-
-  doAuthorize(req)
-    .then(result => {
-      let user = result.userInfo;
+  doAuthorize(req, res)
+    .then(user => {
+      let article = req.body.article;
+      if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+        return res.send({ status: 'error', error: 'Missed some data!' });
+      }
       db.get('SELECT COUNT(id) FROM Article', (err, total) => {
+        if (err) {
+          return res.send({ status: 'error', error: err });
+        }
         const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, user.id, user.login);
         stmt.finalize();
         res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: user.id, userName: user.login });
       })
-    })
-    .catch(error => res.send({ status: 'error', error: error }));
+    });
 });
 
 app.listen(APP_PORT, () => {
