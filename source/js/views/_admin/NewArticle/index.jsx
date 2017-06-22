@@ -5,13 +5,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import { setTimeArticle } from 'actions/_admin/newArticle';
+import { setTimeArticle, createNewArticleAsync } from 'actions/_admin/newArticle';
 
 @connect(state => ({
   newArticle: state.admin.newArticle,
-  newArticleForm: state.admin.forms.newArticle
+  newArticleForm: state.admin.forms.newArticle,
+  pending: state.admin.newArticle.get('pending')
 }))
 export default class NewArticle extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    pending: PropTypes.bool
+  }
 
   constructor() {
     super();
@@ -27,8 +32,10 @@ export default class NewArticle extends Component {
   }
 
   handleSubmit() {
+    const { dispatch } = this.props;
     console.log('Submit-button event!');
     console.log(this.props.newArticle.get('date'));
+    dispatch(createNewArticleAsync());
     // todo : trigger generate and send POST action
   }
 
