@@ -13,15 +13,15 @@ export default class DashboardHead extends Component {
   constructor() {
     super();
 
-    this.getGameDescription = this.getGameDescription.bind(this);
+    // this.getGameDescription = this.getGameDescription.bind(this);
   }
 
-  getGameDescription() {
-    this.props.dispatch(selectHeaderImage(this.props.selectedIndex));
-  }
+  // getGameDescription() {
+  //   this.props.dispatch(selectHeaderImage(this.props.selectedIndex));
+  // }
 
   render() {
-    const games = [
+    const data = [
       {
         img: 'assets/img/game1.png',
         title: "Battlefield 4",
@@ -55,13 +55,23 @@ export default class DashboardHead extends Component {
     ];
 
     var selectedIndex;
-    // how to show games?
-    this.props.data.map((game, index) => {
-      return <div key={index} className='DashboardHead'>
-              <div className='GamesList'>
-                <li><img src={game.img} /></li>
-              </div>
-            </div>
-    });
+
+    return(
+      <div className='DashboardHead'>
+        <div className='GamesList'>
+          {data.map((game, index) => (
+            <li
+              key={index}
+              onClick={() => {
+                  selectedIndex = index;
+                  console.log('Selected game:', data[selectedIndex].title  + ' ' + data[selectedIndex].text)
+                }}
+            >
+              <img src={game.img} />
+            </li>
+          ))}
+        </div>
+      </div>
+    );
   }
 }
