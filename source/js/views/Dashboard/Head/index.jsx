@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { selectHeaderImage } from 'actions/dashboard';
+
+@connect(state => ({
+  selectedIndex: state.dashboard.get('head').get('selectedIndex')
+}))
+
 
 export default class DashboardHead extends Component {
+  constructor() {
+    super();
+
+    this.getGameDescription = this.getGameDescription.bind(this);
+  }
+
+  getGameDescription() {
+    this.props.dispatch(selectHeaderImage(this.props.selectedIndex));
+  }
 
   render() {
-
-    const data = [
+    const games = [
       {
         img: 'assets/img/game1.png',
         title: "Battlefield 4",
@@ -38,23 +55,13 @@ export default class DashboardHead extends Component {
     ];
 
     var selectedIndex;
-
-    return (
-      <div className='DashboardHead'>
-        <div className='GamesList'>
-          {data.map((game, index)=> (
-            <li
-              key = {index}
-              onClick = {() => {
-                selectedIndex = index;
-                console.log('Selected game:', data[selectedIndex].title)
-              }}
-            >
-              <img src={game.img} />
-            </li>
-          ))}
-        </div>
-      </div>
-    );
+    // how to show games?
+    this.props.data.map((game, index) => {
+      return <div key={index} className='DashboardHead'>
+              <div className='GamesList'>
+                <li><img src={game.img} /></li>
+              </div>
+            </div>
+    });
   }
 }

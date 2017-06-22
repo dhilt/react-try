@@ -3,7 +3,8 @@ import { Map } from 'immutable';
 import {
   GET_DASHBOARD_ARTICLES_ASYNC_START,
   GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS,
-  GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL
+  GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL,
+  SELECT_HEADER_IMAGE
 } from 'actions/dashboard';
 
 const initialState = Map({
@@ -11,6 +12,9 @@ const initialState = Map({
     pending: false,
     error: '',
     list: []
+  }),
+  head: Map({
+    selectedIndex: []
   })
 });
 
@@ -37,6 +41,13 @@ const actionsMap = {
         pending: false,
         error: action.error,
         list: []
+      })
+    })
+  },
+  [SELECT_HEADER_IMAGE]: (state, action) => {
+    return state.merge({
+      head: state.get('head').merge({
+        selectedIndex: [...state.get('head').get('selectedIndex'), ...action.data]
       })
     })
   }
