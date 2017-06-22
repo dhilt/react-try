@@ -1,0 +1,18 @@
+.ArticleForm {
+  width: 80%;
+  height: 100%;
+  margin-top: 40px;
+  label,
+  input {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .errors {
+    font-size: 0.8rem;
+    color: #EE0000;
+    margin-top: 0.25rem;
+    animation: slide-down 0.3s backwards ease-in-out;
+  }
+}
+

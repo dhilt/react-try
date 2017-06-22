@@ -1,4 +1,5 @@
-import { asyncRequest, persistPage } from '../helpers';
+import { asyncRequest } from '../helpers/request';
+import { persistPage } from '../helpers/page';
 
 export const GET_ARTICLES_ASYNC_START = 'GET_ARTICLES_ASYNC_START';
 export const GET_ARTICLES_ASYNC_END_SUCCESS = 'GET_ARTICLES_ASYNC_END_SUCCESS';
@@ -38,9 +39,9 @@ export function getArticlesAsyncEndFail(error) {
   }
 }
 
-export function setPage(page) {
+export function setPage(page, hystory) {
   return (dispatch) => {
-    persistPage(page);
+    persistPage(page, hystory);
     dispatch({
       type: SET_ARTICLES_PAGE,
       page

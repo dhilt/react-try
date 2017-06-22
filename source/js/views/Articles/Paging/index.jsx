@@ -41,15 +41,15 @@ export default class Paging extends Component {
   }
 
   handleChangePage(page) {
-    const { dispatch, pending } = this.props;
+    const { dispatch, pending, history } = this.props;
     if(!pending) {
-      dispatch(setPage(page));
+      dispatch(setPage(page, history));
     }
   }
 
   render() {
     let pages = this.getPages(this.props);
-    return (
+    return !this.props.total ? null : (
       <div className='Paging'>
         {
           pages.map((item, index) => 
