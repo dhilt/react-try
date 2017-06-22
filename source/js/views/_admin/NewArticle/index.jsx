@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Control, actions, Errors } from 'react-redux-form/immutable';
-import Immutable from 'immutable';
+import { Form, Control, Errors } from 'react-redux-form/immutable';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import { setTimeArticle, createNewArticleAsync } from 'actions/_admin/newArticle';
+import { createNewArticleAsync } from 'actions/_admin/newArticle';
+
+import MyDatepickerInput from './datepicker';
 
 @connect(state => ({
   newArticle: state.admin.newArticle,
@@ -13,51 +12,21 @@ import { setTimeArticle, createNewArticleAsync } from 'actions/_admin/newArticle
   pending: state.admin.newArticle.get('pending')
 }))
 export default class NewArticle extends Component {
-  static propTypes = {
-    dispatch: PropTypes.func,
-    pending: PropTypes.bool
-  }
 
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onDateChanged = this.onDateChanged.bind(this);
-    this.state = {
-      date: moment()
-    };
-  }
-
-  componentWillMount() {
-    this.props.dispatch(setTimeArticle(this.state.date._d));
   }
 
   handleSubmit() {
     const { dispatch } = this.props;
-    console.log('Submit-button event!');
-    console.log(this.props.newArticle.get('date'));
     dispatch(createNewArticleAsync());
   }
 
-  onDateChanged(date) {
-    const { dispatch } = this.props;
-    this.setState({ date });
-    dispatch(setTimeArticle(date ? date._d : null));
-    // this.props.newArticleForm.date.value ???
-  }
-
   render() {
-    let nowDate = new Date();
     let { newArticleForm, pending } = this.props;
     let pristine = newArticleForm.$form && newArticleForm.$form.pristine;
     let valid = newArticleForm.$form && newArticleForm.$form.valid;
-
-    const MyDatePicker = (props) => 
-      <DatePicker
-        dateFormat="DD MMM YYYY"
-        todayButton="Today"
-        selected={this.state.date}
-        onChange={this.onDateChanged}
-      />;
 
     return (
       <div>
@@ -67,14 +36,7 @@ export default class NewArticle extends Component {
           className='ArticleForm'
         >
           <label>Date:</label>
-          <Control
-            model="newArticle.date"
-            component={MyDatePicker}
-            value={this.state.date}
-            validators={{required: (val) => val}}
-            errors={{required: (val) => !val}}/>
-          <Errors className='errors' model='newArticle.date' show={{touched: true, pristine: false}} messages={{
-            required: 'Date is required /'}} />
+          <MyDatepickerInput model="newArticle.date" />
 
           <label>Title:</label>
           <Control.text model='newArticle.title'
