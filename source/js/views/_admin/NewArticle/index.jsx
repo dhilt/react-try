@@ -36,7 +36,6 @@ export default class NewArticle extends Component {
     console.log('Submit-button event!');
     console.log(this.props.newArticle.get('date'));
     dispatch(createNewArticleAsync());
-    // todo : trigger generate and send POST action
   }
 
   onDateChanged(date) {
@@ -48,7 +47,7 @@ export default class NewArticle extends Component {
 
   render() {
     let nowDate = new Date();
-    let { newArticleForm } = this.props;
+    let { newArticleForm, pending } = this.props;
     let pristine = newArticleForm.$form && newArticleForm.$form.pristine;
     let valid = newArticleForm.$form && newArticleForm.$form.valid;
 
@@ -111,7 +110,7 @@ export default class NewArticle extends Component {
 
           <button
             onClick={() => this.handleSubmit()}
-            disabled={pristine || !valid}
+            disabled={pending || pristine || !valid}
             type='submit'>
               Сохранить!
           </button>
