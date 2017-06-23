@@ -17,7 +17,7 @@ export default class DashboardHead extends Component {
   }
 
   onImageClick(index) {
-    this.props.dispatch(selectHeaderImage(this.index));
+    this.props.dispatch(selectHeaderImage(index));
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class DashboardHead extends Component {
           {data.map((game, index) => (
             <li
               key={index}
-              onClick={() => this.onImageClick(game.index)}
+              onClick={this.onImageClick(index)}
             >
               <img src={game.img} />
             </li>
