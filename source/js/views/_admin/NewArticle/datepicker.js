@@ -5,8 +5,6 @@ import moment from 'moment';
 
 import DatePicker from 'react-datepicker';
 
-import { setTimeArticle } from 'actions/_admin/newArticle';
-
 @connect(state => ({
   newArticle: state.admin.newArticle
 }))
@@ -25,9 +23,25 @@ export default class MyDatepickerInput extends React.Component {
     const { dispatch, model } = this.props;
     this.setState({ date });
     let dateValue = date ? date._d : null;
-    //dispatch(setTimeArticle(dateValue));
     dispatch(actions.change(model, dateValue));
-  }  
+    dispatch(actions.validate('newArticle.date', {
+      required: (value) => value && value.valueOf(),
+      dateFormat: (value) => value && value.valueOf() && value.getYear() && value.getMonth() && value.getHours()
+    }));
+  }
+
+  componentWillMount() {
+    this.props.dispatch(actions.change('newArticle.date', new Date()));
+    this.props.dispatch(actions.setValidity('newArticle.date', true));
+    this.props.dispatch(actions.setValidity('newArticle.date', {
+      required: true,
+      dateFormat: true
+    }));
+    this.props.dispatch(actions.setErrors('newArticle.date', {
+      required: (value) => !value && !value.valueOf() && 'Date is required',
+      dateFormat: (value) => !value && !value.valueOf() && !value.getYear() && !value.getMonth() && !value.getHours() && 'Date is invalid'
+    }));
+  }
 
   render() {
     let { model, dispatch } = this.props;

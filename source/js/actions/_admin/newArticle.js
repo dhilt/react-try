@@ -1,16 +1,8 @@
 import { asyncRequest } from '../../helpers/request';
 
-export const SET_TIME_ARTICLE = 'SET_TIME_ARTICLE';
 export const CREATE_NEW_ARTICLE_ASYNC_START = 'CREATE_NEW_ARTICLE_ASYNC_START';
 export const CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS = 'CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS';
 export const CREATE_NEW_ARTICLE_ASYNC_END_FAIL = 'CREATE_NEW_ARTICLE_ASYNC_END_FAIL';
-
-export function setTimeArticle(date) {
-  return {
-    type: SET_TIME_ARTICLE,
-    date
-  }
-}
 
 export function createNewArticleAsync() {
   return (dispatch, getState) => {
