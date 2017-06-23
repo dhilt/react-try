@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,13 +8,15 @@ import { getDashboardArticlesAsync } from 'actions/dashboard';
 
 @connect(state => ({
   pending: state.dashboard.get('articles').get('pending'),
-  list: state.dashboard.get('articles').get('list')
+  list: state.dashboard.get('articles').get('list'),
+  role: state.auth.get('userInfo').get('role')
 }))
 export default class DashboardArticles extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
     pending: PropTypes.bool,
-    list: PropTypes.array
+    list: PropTypes.array,
+    role: PropTypes.number
   }
 
   constructor() {
@@ -30,13 +32,13 @@ export default class DashboardArticles extends Component {
   }
 
   render() {
-    let { pending } = this.props;
+    let { pending, role } = this.props;
     return (
       <div className='wrappingArticles'>
         <div className='headerArticles'>
           <Link to='articles'>{'Статьи'}</Link>
           <Link to='articles'>{'Все статьи'}</Link>
-          <a>{'Добавить статью +'}</a>
+          {role === 1 && <Link to='/admin/articles/new'>{'Добавить статью +'}</Link>}
         </div>
         <DashboardArticleList />
         <div className='downloadArticles'>

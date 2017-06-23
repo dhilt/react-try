@@ -19,18 +19,18 @@ function removeDB(cb) {
 
 function setupUsers(db) {
   db.serialize(() => {
-    db.run('CREATE TABLE User (id INTEGER PRIMARY KEY, login TEXT NOT NULL, hash TEXT NOT NULL)', (err) =>
+    db.run('CREATE TABLE User (id INTEGER PRIMARY KEY, login TEXT NOT NULL, hash TEXT NOT NULL, role INTEGER)', (err) =>
       console.log(err || 'User table was created.')
     );
 
     const adminHash = passwordHash.generate(ADMIN_HASH);
-    const stmt = db.prepare('INSERT INTO User VALUES (?, ?, ?)');
-    stmt.run(1, ADMIN_LOGIN, adminHash + '');
+    const stmt = db.prepare('INSERT INTO User VALUES (?, ?, ?, ?)');
+    stmt.run(1, ADMIN_LOGIN, adminHash + '', 1);
     logins.push(ADMIN_LOGIN);
     for (let i = 2; i <= USERS_COUNT; i++) {
       let login = faker.name.firstName();
       logins.push(login);
-      stmt.run(i, login, passwordHash.generate(faker.internet.password()) + '');
+      stmt.run(i, login, passwordHash.generate(faker.internet.password()) + '', 2);
     }
     stmt.finalize(() => console.log('User table was populated.'));
   });

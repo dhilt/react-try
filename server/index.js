@@ -20,7 +20,7 @@ const ARTICLES = {
 
 app.use(bodyParser.json());
 
-let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (err) => {
+let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READWRITE, (err) => {
   if (err)
     throw ('No development.db found. Run "node db.js"...');
 });
@@ -28,8 +28,25 @@ let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READONLY, (e
 let getUserInfo = (userObj) => {
   return {
     id: userObj.id,
-    login: userObj.login
+    login: userObj.login,
+    role: userObj.role
   }
+};
+
+let doAuthorize = (req, res) => {
+  return new Promise((resolve, reject) => {
+    let token = req.headers.authorization;
+    jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
+      if (!err) { // resolve userInfo
+        return resolve(getUserInfo(decoded));
+      }
+      if (!res) { // reject the error by default
+        reject(err);
+      } else { // send error response if possible
+        res.send({ status: 'error', error: err });
+      }
+    });
+  })
 };
 
 app.get('/api/test', (req, res) => {
@@ -44,15 +61,9 @@ app.get('/api/test', (req, res) => {
 });
 
 app.get('/api/userInfo', (req, res) => {
-  let token = req.headers.authorization;
-
-  // Расшифровываем token
-  jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
-    if (err)
-      return res.send({ status: 'error', error: err });
-
-    res.send({ status: 'ok', userInfo: getUserInfo(decoded) });
-  });
+  doAuthorize(req, res).then(userInfo =>
+    res.send({ status: 'ok', userInfo })
+  );
 });
 
 app.post('/api/login', (req, res) => {
@@ -73,7 +84,8 @@ app.post('/api/login', (req, res) => {
 
     let token = jwt.sign({
         id: row.id,
-        login: row.login
+        login: row.login,
+        role: row.role
       },
       AUTH_TOKEN.secretKey, { expiresIn: AUTH_TOKEN.expiresIn }
     );
@@ -122,6 +134,25 @@ app.get('/api/articles/:id', (req, res) => {
 
     res.send({ status: 'ok', article: row[0] });
   });
+});
+
+app.post('/api/articles/create', (req, res) => {
+  doAuthorize(req, res)
+    .then(user => {
+      let article = req.body.article;
+      if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+        return res.send({ status: 'error', error: 'Missed some data!' });
+      }
+      db.get('SELECT COUNT(id) FROM Article', (err, total) => {
+        if (err) {
+          return res.send({ status: 'error', error: err });
+        }
+        const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, user.id, user.login);
+        stmt.finalize();
+        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: user.id, userName: user.login });
+      })
+    });
 });
 
 app.listen(APP_PORT, () => {

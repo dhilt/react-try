@@ -21,7 +21,8 @@ const initialState = Map({
   dialogOpen: false,
   userInfo: Map({
     id: null,
-    login: null
+    login: null,
+    role: null
   }),
   isLoginValid: true,
   isPasswordValid: true,

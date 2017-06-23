@@ -1,4 +1,5 @@
-import { asyncRequest } from '../helpers'
+import { asyncRequest } from '../helpers/request'
+import { setAdminReducerAction } from './_admin/common'
 
 export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
 export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL';
@@ -101,7 +102,10 @@ export function authorizeByTokenAsync() {
   return function(dispatch) {
     dispatch(authorizeByTokenAsyncStart());
     asyncRequest('userInfo')
-      .then(result => dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo)))
+      .then(result => {
+        dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo));
+        dispatch(setAdminReducerAction());
+      })
       .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)));
   }
 }

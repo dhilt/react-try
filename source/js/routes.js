@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import App from 'views/App';
+import Header from 'views/Header/index'
+
 import Dashboard from 'views/Dashboard';
 import Articles from 'views/Articles';
 import Article from 'views/Article';
 import About from 'views/About';
 import NotFound from 'views/NotFound';
 
+import NewArticle from 'views/_admin/NewArticle';
+
 const publicPath = '/';
+const adminPath = '/admin/';
 
 export const routeCodes = {
   DASHBOARD: `${ publicPath }dashboard`,
@@ -17,19 +21,29 @@ export const routeCodes = {
   ARTICLE: `${ publicPath }articles/:id`
 };
 
+export const routeCodesAdmin = {
+  NEWARTICLE: `${ adminPath }articles/new`
+};
+
 export default class Routes extends Component {
   render() {
     return (
-      <Router history={ browserHistory }>
-        <Route path={ publicPath } component={ App }>
-          <IndexRoute component={ Dashboard } />
-          <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
-          <Route path={ routeCodes.ABOUT } component={ About } />
-          <Route path={ routeCodes.ARTICLES } component={ Articles } />
-          <Route path={ routeCodes.ARTICLE } component={ Article } />
-          <Route path='*' component={ NotFound } />
-        </Route>
-      </Router>
+      <BrowserRouter>
+        <div className='App'>
+          <Header />
+          <div className='MainContent'>
+            <Switch>
+              <Route exact path={ publicPath } component={ Dashboard } />
+              <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
+              <Route path={ routeCodes.ABOUT } component={ About } />
+              <Route path={ routeCodes.ARTICLES } component={ Articles } />
+              <Route path={ routeCodes.ARTICLE } component={ Article } />
+              <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
+              <Route component={ NotFound } />
+            </Switch>
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }
