@@ -14,7 +14,7 @@ const initialState = Map({
     list: []
   }),
   head: Map({
-    selectedIndex: []
+    selectedIndex: null
   })
 });
 
@@ -47,7 +47,7 @@ const actionsMap = {
   [SELECT_HEADER_IMAGE]: (state, action) => {
     return state.merge({
       head: state.get('head').merge({
-        selectedIndex: [...state.get('head').get('selectedIndex'), ...action.data]
+        selectedIndex: action.data
       })
     })
   }

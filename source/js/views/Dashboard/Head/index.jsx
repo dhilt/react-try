@@ -13,19 +13,19 @@ export default class DashboardHead extends Component {
   constructor() {
     super();
 
-    // this.getGameDescription = this.getGameDescription.bind(this);
+    this.onImageClick = this.onImageClick.bind(this);
   }
 
-  // getGameDescription() {
-  //   this.props.dispatch(selectHeaderImage(this.props.selectedIndex));
-  // }
+  onImageClick(index) {
+    this.props.dispatch(selectHeaderImage(this.index));
+  }
 
   render() {
     const data = [
       {
         img: 'assets/img/game1.png',
-        title: "Battlefield 4",
-        text: 'Текст для картинки 1.'
+        title: "Ненавязчивый анализ Mirror's EdgeBattlefield 4",
+        text: 'Еще совсем недавно осенью считалась главным поставщиком крупных игровых релизов. Полки магазинов ломились от новинок, а от покупателей не было отбоя. Доходило до того, что к концу сезона кошельки походили на выпотрошеные туши.'
       },
       {
         img: 'assets/img/game2.png',
@@ -34,8 +34,8 @@ export default class DashboardHead extends Component {
       },
       {
         img: 'assets/img/game3.png',
-        title: "Ненавязчивый анализ Mirror's Edge",
-        text: 'Еще совсем недавно осенью считалась главным поставщиком крупных игровых релизов. Полки магазинов ломились от новинок, а от покупателей не было отбоя. Доходило до того, что к концу сезона кошельки походили на выпотрошеные туши.'
+        title: "Battlefield 4",
+        text: 'Текст для картинки 1.'
       },
       {
         img: 'assets/img/game4.png',
@@ -62,10 +62,7 @@ export default class DashboardHead extends Component {
           {data.map((game, index) => (
             <li
               key={index}
-              onClick={() => {
-                  selectedIndex = index;
-                  console.log('Selected game:', data[selectedIndex].title  + ' ' + data[selectedIndex].text)
-                }}
+              onClick={() => this.onImageClick(game.index)}
             >
               <img src={game.img} />
             </li>
