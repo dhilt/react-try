@@ -37,6 +37,8 @@ export function getDashboardArticlesAsyncEndFail(error) {
 }
 
 export function selectHeaderImage(data) {
-  type: SELECT_HEADER_IMAGE,
-  data
+  return {
+    type: SELECT_HEADER_IMAGE,
+    data
+  }
 }

@@ -62,7 +62,7 @@ export default class DashboardHead extends Component {
           {data.map((game, index) => (
             <li
               key={index}
-              onClick={this.onImageClick(index)}
+              onClick={() => this.onImageClick(index)}
             >
               <img src={game.img} />
             </li>
