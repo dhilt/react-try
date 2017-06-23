@@ -14,15 +14,29 @@ export default class MyDatepickerInput extends React.Component {
   constructor() {
     super();
     this.onDateChanged = this.onDateChanged.bind(this);
+    this.onBlurDateChanged = this.onBlurDateChanged.bind(this);
     this.state = {
       date: moment()
     };
   }
 
+  validateDate(date) {
+    let isValid = null;
+    let matches = date.toISOString().split(/-|T|:/);
+    if (matches == null)
+      isValid = false;
+    let d = matches[2];
+    let m = matches[1] - 1;
+    let y = matches[0];
+    let composedDate = new Date(y, m, d);
+    isValid = composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y;
+    return isValid;
+  }
+
   getValidationObject(value) {
     return {
       required: () => !!value,
-      dateFormat: () => !!value && value.getYear() && value.getMonth() && value.getHours()
+      dateFormat: () => !!value && this.validateDate(value)
     }
   }
 
@@ -32,6 +46,10 @@ export default class MyDatepickerInput extends React.Component {
     let dateValue = date ? date._d : null;
     dispatch(actions.change(model, dateValue));
     dispatch(actions.validate(model, this.getValidationObject(dateValue)));
+  }
+
+  onBlurDateChanged(date) {
+//    this.onDateChanged(date);
   }
 
   componentWillMount() {
@@ -49,10 +67,11 @@ export default class MyDatepickerInput extends React.Component {
 
     return (
       <DatePicker
-        dateFormat="DD MMM YYYY"
+        dateFormat="DD/MM/YYYY"
         todayButton="Today"
         selected={this.state.date}
         onChange={this.onDateChanged}
+        onBlur={this.onBlurDateChanged}
       />
     );
   }

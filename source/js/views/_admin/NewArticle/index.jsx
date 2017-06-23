@@ -36,10 +36,10 @@ export default class NewArticle extends Component {
           className='ArticleForm'
         >
           <label>Date:</label>
-          <MyDatepickerInput model="newArticle.date" />
-          <Errors className='errors' model='newArticle.date' show={{touched: true, pristine: false}} messages={{
+          <MyDatepickerInput model='newArticle.date' />
+          <Errors className='errors' model='newArticle.date' messages={{
             required: 'Date is required /',
-            dateFormat: ' Date is invalid '}} />
+            dateFormat: ' Date is invalid! '}} />
 
           <label>Title:</label>
           <Control.text model='newArticle.title'
