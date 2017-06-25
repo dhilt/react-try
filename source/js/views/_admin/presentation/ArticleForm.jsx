@@ -1,50 +1,77 @@
-import React, { Component } from 'react';
-import { Form, Control, Errors } from 'react-redux-form/immutable';
-import MyDatepickerInput from './datepicker';
+import React, { Component } from 'react'
+import { Form, Control, Errors } from 'react-redux-form/immutable'
+import MyDatepickerInput from './datepicker'
+
+let getErrors = (token, options) => {
+  let result = {}
+  if(options.required) {
+    result.required = token + ' is required'
+  }
+  if(options.minLength) {
+    result.minLength = 'Must be ' + options.minLength + ' characters or more'
+  }
+  if(options.dateFormat) {
+    result.dateFormat = token + ' is invalid!'
+  }
+  return result
+}
 
 export const ArticleForm = props => {
+  const model = String(props.model)
   return (
     <Form
-      model={String(props.model)}
-      className='ArticleForm'
-    >
-      <label>Date:</label>
-      <MyDatepickerInput model={props.model + '.date'} />
-      <Errors className='errors' model={props.model + '.date'} messages={{
-        required: 'Date is required /',
-        dateFormat: ' Date is invalid! '}} />
+      model={String(model)}
+      className='ArticleForm'>
 
-      <label>Title:</label>
-      <Control.text model={props.model + '.title'}
-        validators={{required: (val) => val && val.length, length: (val) => val && val.length > 10}}
-        errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 10}} />
-      <Errors className='errors' model={props.model + '.title'} show={{touched: true, pristine: false}} messages={{
-        required: 'Text is required /',
-        minLength: ' Must be 10 characters or more '}} />
+      <label>Date</label>
+      <MyDatepickerInput model={model + '.date'} />
+      <Errors className='errors'
+        model={model + '.date'}
+        messages={getErrors('Date', { required: true, dateFormat: true})}/>
 
-      <label>Description:</label>
-      <Control.text model={props.model + '.description'}
-        validators={{required: (val) => val && val.length, length: (val) => val && val.length > 10}}
-        errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 10}} />
-      <Errors className='errors' model={props.model + '.description'} show={{touched: true, pristine: false}} messages={{
-        required: 'Text is required /',
-        minLength: ' Must be 10 characters or more '}} />
+      <label>Title</label>
+      <Control.text model={model + '.title'}
+        validators={{
+          required: (val) => !!val,
+          minLength: (val) => val && val.length > 10
+        }}/>
+      <Errors className='errors'
+        model={model + '.title'}
+        show={{touched: true, pristine: false}}
+        messages={getErrors('Title', { required: true, minLength: 10})}/>
 
-      <label>Image:</label>
-      <Control.text model={props.model + '.image'}
-        validators={{required: (val) => val && val.length, length: (val) => val && val.length > 5}}
-        errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 5}} />
-      <Errors className='errors' model={props.model + '.image'} show={{touched: true, pristine: false}} messages={{
-        required: 'Text is required /',
-        minLength: ' Must be 5 characters or more '}} />
+      <label>Description</label>
+      <Control.text model={model + '.description'}
+        validators={{
+          required: (val) => !!val,
+          minLength: (val) => val && val.length > 10
+        }}/>
+      <Errors className='errors'
+        model={model + '.description'}
+        show={{touched: true, pristine: false}}
+        messages={getErrors('Description', { required: true, minLength: 10})}/>
 
-      <label>Text:</label>
-      <Control.text model={props.model + '.text'}
-        validators={{required: (val) => val && val.length, length: (val) => val && val.length > 100}}
-        errors={{required: (val) => !val || !val.length, minLength: (val) => !val || val.length < 100}} />
-      <Errors className='errors' model={props.model + '.text'} show={{touched: true, pristine: false}} messages={{
-        required: 'Text is required /',
-        minLength: ' Must be 100 characters or more '}} />
+      <label>Image</label>
+      <Control.text model={model + '.image'}
+        validators={{
+          required: (val) => !!val,
+          minLength: (val) => val && val.length > 5
+        }}/>
+      <Errors className='errors'
+        model={model + '.image'}
+        show={{touched: true, pristine: false}}
+        messages={getErrors('Image', { required: true, minLength: 5})}/>
+
+      <label>Text</label>
+      <Control.text model={model + '.text'}
+        validators={{
+          required: (val) => !!val,
+          minLength: (val) => val && val.length > 50
+        }}/>
+      <Errors className='errors'
+        model={model + '.text'}
+        show={{touched: true, pristine: false}}
+        messages={getErrors('Text', { required: true, minLength: 50})}/>
 
       <button
         onClick={props.onSubmit}
@@ -53,5 +80,5 @@ export const ArticleForm = props => {
           Сохранить!
       </button>
     </Form>
-  );
+  )
 }
