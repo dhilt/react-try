@@ -10,6 +10,7 @@ import About from 'views/About';
 import NotFound from 'views/NotFound';
 
 import NewArticle from 'views/_admin/NewArticle';
+import EditArticle from 'views/_admin/EditArticle';
 
 const publicPath = '/';
 const adminPath = '/admin/';
@@ -22,7 +23,8 @@ export const routeCodes = {
 };
 
 export const routeCodesAdmin = {
-  NEWARTICLE: `${ adminPath }articles/new`
+  NEWARTICLE: `${ adminPath }articles/new`,
+  EDITARTICLE: `${ adminPath }articles/edit`
 };
 
 export default class Routes extends Component {
@@ -39,6 +41,7 @@ export default class Routes extends Component {
               <Route path={ routeCodes.ARTICLES } component={ Articles } />
               <Route path={ routeCodes.ARTICLE } component={ Article } />
               <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
+              <Route path={ routeCodesAdmin.EDITARTICLE } component={ EditArticle } />
               <Route component={ NotFound } />
             </Switch>
           </div>

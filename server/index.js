@@ -136,10 +136,10 @@ app.get('/api/articles/:id', (req, res) => {
   });
 });
 
-app.post('/api/articles/create', (req, res) => {
+app.post('/api/articles', (req, res) => {
   doAuthorize(req, res)
     .then(user => {
-      let article = req.body.article;
+      const article = req.body.article;
       if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
         return res.send({ status: 'error', error: 'Missed some data!' });
       }
@@ -153,6 +153,34 @@ app.post('/api/articles/create', (req, res) => {
         res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: user.id, userName: user.login });
       })
     });
+});
+
+app.put('/api/articles/:id', (req, res) => {
+  doAuthorize(req, res).then(user => {
+    const idArticle = req.params.id;
+    const article = req.body.article;
+    db.get('SELECT * FROM Article WHERE id = ?', idArticle, (err, row) => {
+      if (!row) {
+        return res.send({ status: 'error', error: 'Article with this id doesn\'t exist'});
+      } else if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+        return res.send({ status: 'error', error: 'Missed some data!' });
+      } else {
+        const stmt = db.prepare('UPDATE Article SET title = ?, text = ?, description = ?, createdAt = ?, image = ?, userId = ?, userName = ? WHERE id = ?');
+        stmt.run(article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, user.id, user.login, idArticle);
+        stmt.finalize();
+        res.send({
+          id: idArticle,
+          title: article.title,
+          text: article.text,
+          description: article.description,
+          createdAt: new Date(article.date).toISOString(),
+          image: article.image,
+          userId: user.id,
+          userName: user.login
+        });
+      }
+    });
+  });
 });
 
 app.listen(APP_PORT, () => {

@@ -14,7 +14,7 @@ export function createNewArticleAsync() {
       text: getState().admin.newArticle.get('text')
     };
     dispatch(createNewArticleAsyncStart());
-    asyncRequest('articles/create', { article: article })
+    asyncRequest('articles', 'post', { article: article })
       .then(result => dispatch(createNewArticleAsyncEndSuccess(result)))
       .catch(error => dispatch(createNewArticleAsyncEndFail(error)));
   }

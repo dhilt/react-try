@@ -7,6 +7,7 @@ import { storeHelper } from 'helpers/store';
 
 import common from './common';
 import newArticle from './newArticle';
+import editArticle from './editArticle';
 
 export let adminReducers = combineReducers({
   common
@@ -17,6 +18,7 @@ export function setAdminReducer() {
     common,
     ...createForms({
       newArticle,
+      editArticle
     }),
   });  
 }
