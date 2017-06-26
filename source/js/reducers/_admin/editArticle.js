@@ -3,10 +3,12 @@ import { Map } from 'immutable';
 import {
   EDIT_ARTICLE_ASYNC_START,
   EDIT_ARTICLE_ASYNC_END_SUCCESS,
-  EDIT_ARTICLE_ASYNC_END_FAIL
+  EDIT_ARTICLE_ASYNC_END_FAIL,
+  SET_EDIT_PAGE_SOURCE
 } from 'actions/_admin/editArticle';
 
 const initialState = Map({
+  source: null,
   pending: false,
   serverResult: {},
   date: null,
@@ -32,6 +34,11 @@ const actionsMap = {
     return state.merge({
       pending: false,
       serverResult: action.error
+    })
+  },
+  [SET_EDIT_PAGE_SOURCE]: (state, action) => {
+    return state.merge({
+      source: action.data
     })
   }
 };

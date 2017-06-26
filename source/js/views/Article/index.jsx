@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getArticleAsync } from 'actions/article';
+import { setEditPageSource } from 'actions/_admin/editArticle';
 
 @connect(state => ({
   data: state.article.get('data'),
   pending: state.article.get('pending'),
-  error: state.article.get('error')
+  error: state.article.get('error'),
+  role: state.auth.get('userInfo').get('role')
 }))
 export default class Article extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
     data: PropTypes.object,
     pending: PropTypes.bool,
-    error: PropTypes.string
+    error: PropTypes.string,
+    role: PropTypes.number
   }
 
   constructor() {
@@ -43,7 +47,7 @@ export default class Article extends Component {
   }
 
   render() {
-    let { data, pending, error } = this.props;
+    let { data, pending, error, role } = this.props;
 
     return !data ? (
       pending ? (
@@ -58,6 +62,7 @@ export default class Article extends Component {
       ) : (
       <div>
         {this.makeArticle(data)}
+        {role === 1 && <Link onClick={() => this.props.dispatch(setEditPageSource())} to='/admin/articles/edit'>{'Править статью +'}</Link>}
       </div>
     );
   }
