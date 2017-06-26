@@ -1,10 +1,10 @@
 import { asyncRequest } from '../../helpers/request';
 
-export const EDIT_EXIST_ARTICLE_ASYNC_START = 'EDIT_EXIST_ARTICLE_ASYNC_START';
-export const EDIT_EXIST_ARTICLE_ASYNC_END_SUCCESS = 'EDIT_EXIST_ARTICLE_ASYNC_END_SUCCESS';
-export const EDIT_EXIST_ARTICLE_ASYNC_END_FAIL = 'EDIT_EXIST_ARTICLE_ASYNC_END_FAIL';
+export const EDIT_ARTICLE_ASYNC_START = 'EDIT_ARTICLE_ASYNC_START';
+export const EDIT_ARTICLE_ASYNC_END_SUCCESS = 'EDIT_ARTICLE_ASYNC_END_SUCCESS';
+export const EDIT_ARTICLE_ASYNC_END_FAIL = 'EDIT_ARTICLE_ASYNC_END_FAIL';
 
-export function editExistArticleAsync() {
+export function editArticleAsync() {
   return (dispatch, getState) => {
     const article = {
       date: getState().admin.editArticle.get('date'),
@@ -13,30 +13,33 @@ export function editExistArticleAsync() {
       image: getState().admin.editArticle.get('image'),
       text: getState().admin.editArticle.get('text')
     };
-    dispatch(editExistArticleAsyncStart());
+    dispatch(editArticleAsyncStart());
+
+    // todo : need to get original article id (admin.editArticle.source.id)
     const query = 'articles/' + getState().admin.editArticle.get('idArticle');
-    asyncRequest(query, 'put', { article: article })
-      .then(result => dispatch(editExistArticleAsyncEndSuccess(result)))
-      .catch(error => dispatch(editExistArticleAsyncEndFail(error)));
+
+    asyncRequest(query, 'put', { article })
+      .then(result => dispatch(editArticleAsyncEndSuccess(result)))
+      .catch(error => dispatch(editArticleAsyncEndFail(error)));
   }
 }
 
-export function editExistArticleAsyncStart() {
+export function editArticleAsyncStart() {
   return {
-    type: EDIT_EXIST_ARTICLE_ASYNC_START
+    type: EDIT_ARTICLE_ASYNC_START
   }
 }
 
-export function editExistArticleAsyncEndSuccess(data) {
+export function editArticleAsyncEndSuccess(data) {
   return {
-    type: EDIT_EXIST_ARTICLE_ASYNC_END_SUCCESS,
+    type: EDIT_ARTICLE_ASYNC_END_SUCCESS,
     data
   }
 }
 
-export function editExistArticleAsyncEndFail(error) {
+export function editArticleAsyncEndFail(error) {
   return {
-    type: EDIT_EXIST_ARTICLE_ASYNC_END_FAIL,
+    type: EDIT_ARTICLE_ASYNC_END_FAIL,
     error
   }
 }

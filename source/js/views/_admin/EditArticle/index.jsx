@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Control, Errors } from 'react-redux-form/immutable';
 
-import { editExistArticleAsync } from 'actions/_admin/editArticle';
+import { editArticleAsync } from 'actions/_admin/editArticle';
 import { ArticleForm } from '../presentation/ArticleForm';
 
 @connect(state => ({
@@ -19,7 +18,7 @@ export default class EditArticle extends Component {
 
   handleSubmit() {
     const { dispatch } = this.props;
-    dispatch(editExistArticleAsync());
+    dispatch(editArticleAsync());
   }
 
   render() {
@@ -29,18 +28,7 @@ export default class EditArticle extends Component {
 
     return (
       <div>
-        <h2>Route for editing articles...(only for admin)</h2>
-
-        <div className='formEditIdArticle'>
-          <label>Edit Article Id:</label>
-          <Control.text model='editArticle.idArticle'
-            validators={{required: (val) => val && val.length, numberValid: (val) => val && !isNaN(parseFloat(val)) && isFinite(val)}}
-            errors={{required: (val) => !val || !val.length, numberValid: (val) => !val || isNaN(parseFloat(val)) || !isFinite(val)}} />
-          <Errors className='errors' model='editArticle.idArticle' show={{touched: true, pristine: false}} messages={{
-            required: 'Number is required /',
-            numberValid: ' Number is invalid '}} />
-        </div>
-
+        <h2>Edit Article...(admin only)</h2>
         <ArticleForm
           onSubmit={this.handleSubmit}
           model={'editArticle'}

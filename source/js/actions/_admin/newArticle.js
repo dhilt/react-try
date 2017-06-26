@@ -1,10 +1,10 @@
 import { asyncRequest } from '../../helpers/request';
 
-export const CREATE_NEW_ARTICLE_ASYNC_START = 'CREATE_NEW_ARTICLE_ASYNC_START';
-export const CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS = 'CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS';
-export const CREATE_NEW_ARTICLE_ASYNC_END_FAIL = 'CREATE_NEW_ARTICLE_ASYNC_END_FAIL';
+export const CREATE_ARTICLE_ASYNC_START = 'CREATE_ARTICLE_ASYNC_START';
+export const CREATE_ARTICLE_ASYNC_END_SUCCESS = 'CREATE_ARTICLE_ASYNC_END_SUCCESS';
+export const CREATE_ARTICLE_ASYNC_END_FAIL = 'CREATE_ARTICLE_ASYNC_END_FAIL';
 
-export function createNewArticleAsync() {
+export function createArticleAsync() {
   return (dispatch, getState) => {
     const article = {
       date: getState().admin.newArticle.get('date'),
@@ -13,29 +13,29 @@ export function createNewArticleAsync() {
       image: getState().admin.newArticle.get('image'),
       text: getState().admin.newArticle.get('text')
     };
-    dispatch(createNewArticleAsyncStart());
-    asyncRequest('articles', 'post', { article: article })
-      .then(result => dispatch(createNewArticleAsyncEndSuccess(result)))
-      .catch(error => dispatch(createNewArticleAsyncEndFail(error)));
+    dispatch(createArticleAsyncStart());
+    asyncRequest('articles', 'post', { article })
+      .then(result => dispatch(createArticleAsyncEndSuccess(result)))
+      .catch(error => dispatch(createArticleAsyncEndFail(error)));
   }
 }
 
-export function createNewArticleAsyncStart() {
+export function createArticleAsyncStart() {
   return {
-    type: CREATE_NEW_ARTICLE_ASYNC_START
+    type: CREATE_ARTICLE_ASYNC_START
   }
 }
 
-export function createNewArticleAsyncEndSuccess(data) {
+export function createArticleAsyncEndSuccess(data) {
   return {
-    type: CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS,
+    type: CREATE_ARTICLE_ASYNC_END_SUCCESS,
     data
   }
 }
 
-export function createNewArticleAsyncEndFail(error) {
+export function createArticleAsyncEndFail(error) {
   return {
-    type: CREATE_NEW_ARTICLE_ASYNC_END_FAIL,
+    type: CREATE_ARTICLE_ASYNC_END_FAIL,
     error
   }
 }

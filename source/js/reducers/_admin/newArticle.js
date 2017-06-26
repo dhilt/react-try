@@ -1,9 +1,9 @@
 import { Map } from 'immutable';
 
 import {
-  CREATE_NEW_ARTICLE_ASYNC_START,
-  CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS,
-  CREATE_NEW_ARTICLE_ASYNC_END_FAIL
+  CREATE_ARTICLE_ASYNC_START,
+  CREATE_ARTICLE_ASYNC_END_SUCCESS,
+  CREATE_ARTICLE_ASYNC_END_FAIL
 } from 'actions/_admin/newArticle';
 
 const initialState = Map({
@@ -17,18 +17,18 @@ const initialState = Map({
 });
 
 const actionsMap = {
-  [CREATE_NEW_ARTICLE_ASYNC_START]: (state) => {
+  [CREATE_ARTICLE_ASYNC_START]: (state) => {
     return state.merge({
       pending: true
     })
   },
-  [CREATE_NEW_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
+  [CREATE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       pending: false,
       serverResult: action.data
     })
   },
-  [CREATE_NEW_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
+  [CREATE_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       pending: false,
       serverResult: action.error

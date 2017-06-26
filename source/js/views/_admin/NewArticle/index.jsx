@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { createNewArticleAsync } from 'actions/_admin/newArticle';
+import { createArticleAsync } from 'actions/_admin/newArticle';
 import { ArticleForm } from '../presentation/ArticleForm';
 
 @connect(state => ({
@@ -18,7 +18,7 @@ export default class NewArticle extends Component {
 
   handleSubmit() {
     const { dispatch } = this.props;
-    dispatch(createNewArticleAsync());
+    dispatch(createArticleAsync());
   }
 
   render() {
@@ -28,7 +28,7 @@ export default class NewArticle extends Component {
 
     return (
       <div>
-        <h2>Route for creating articles...(only for admin)</h2>
+        <h2>Create new Article...(admin only)</h2>
         <ArticleForm
           onSubmit={this.handleSubmit}
           model={'newArticle'}
