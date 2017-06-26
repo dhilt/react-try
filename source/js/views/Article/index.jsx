@@ -23,7 +23,7 @@ export default class Article extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(getArticleAsync(this.props.params.id));
+    this.props.dispatch(getArticleAsync(this.props.match.params.id));
   }
 
   makeArticle(article) {

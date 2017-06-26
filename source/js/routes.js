@@ -38,7 +38,7 @@ export default class Routes extends Component {
               <Route exact path={ publicPath } component={ Dashboard } />
               <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
               <Route path={ routeCodes.ABOUT } component={ About } />
-              <Route path={ routeCodes.ARTICLES } component={ Articles } />
+              <Route exact path={ routeCodes.ARTICLES } component={ Articles } />
               <Route path={ routeCodes.ARTICLE } component={ Article } />
               <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
               <Route path={ routeCodesAdmin.EDITARTICLE } component={ EditArticle } />
