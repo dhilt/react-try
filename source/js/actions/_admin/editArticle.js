@@ -54,13 +54,9 @@ export function setEditPageSource() {
       text: getState().article.get('data').get('text'),
       image: getState().article.get('data').get('image'),
     };
-    dispatch(setEditPage(article));
-  }
-}
-
-export function setEditPage(data) {
-  return {
-    type: SET_EDIT_PAGE_SOURCE,
-    data
+    dispatch({
+      type: SET_EDIT_PAGE_SOURCE,
+      data: article
+    });
   }
 }
