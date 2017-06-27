@@ -14,7 +14,7 @@ const initialState = Map({
     list: []
   }),
   head: Map({
-    selectedIndex: null
+    selectedIndex: undefined
   })
 });
 
