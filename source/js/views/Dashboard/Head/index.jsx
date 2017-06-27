@@ -20,7 +20,17 @@ export default class DashboardHead extends Component {
     this.props.dispatch(selectHeaderImage(index));
   }
 
+  getTextBlock(game) {
+    return (
+      <div>
+        <h2>{game.title}</h2>
+        <p>{game.text}</p>
+      </div>
+    )
+  }
+
   render() {
+    const { selectedIndex } = this.props;
     const data = [
       {
         img: 'assets/img/game1.png',
@@ -54,8 +64,6 @@ export default class DashboardHead extends Component {
       }
     ];
 
-    var selectedIndex;
-
     return(
       <div className='DashboardHead'>
         <div className='games-list'>
@@ -64,17 +72,13 @@ export default class DashboardHead extends Component {
               key={index}
               onClick={() => this.onImageClick(index)}
             >
-            { this.props.selectedIndex ? titletBlock : null }
-            { this.props.selectedIndex ? textBlock : null }
               <img src={game.img} />
             </li>
           ))}
         </div>
-
-        <div>
-          <h2><titleBlock /></h2>
-          <p><textBlock /></p>
-        </div>
+        {
+          selectedIndex >= 0 ? this.getTextBlock(data[selectedIndex]) : null
+        }
       </div>
     );
   }
