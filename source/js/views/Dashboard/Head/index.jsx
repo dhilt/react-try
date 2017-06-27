@@ -58,15 +58,22 @@ export default class DashboardHead extends Component {
 
     return(
       <div className='DashboardHead'>
-        <div className='GamesList'>
+        <div className='games-list'>
           {data.map((game, index) => (
             <li
               key={index}
               onClick={() => this.onImageClick(index)}
             >
+            { this.props.selectedIndex ? titletBlock : null }
+            { this.props.selectedIndex ? textBlock : null }
               <img src={game.img} />
             </li>
           ))}
+        </div>
+
+        <div>
+          <h2><titleBlock /></h2>
+          <p><textBlock /></p>
         </div>
       </div>
     );
