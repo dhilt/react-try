@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { editArticleAsync } from 'actions/_admin/editArticle';
-import { ArticleForm } from '../presentation/ArticleForm';
+import { ArticleForm } from '../ArticleForm';
 
 @connect(state => ({
   editArticle: state.admin.editArticle,

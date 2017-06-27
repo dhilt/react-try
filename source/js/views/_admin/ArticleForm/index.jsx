@@ -1,6 +1,17 @@
 import React, { Component } from 'react'
 import { Form, Control, Errors } from 'react-redux-form/immutable'
-import MyDatepickerInput from './datepicker'
+import MyDatepickerInput from '../datepicker'
+
+let getValidators = (options) => {
+  let result = {}
+  if(options.required) {
+    result.required = (val) => !!val
+  }
+  if(options.minLength) {
+    result.minLength = (val) => val && val.length > 10
+  }
+  return result  
+}
 
 let getErrors = (token, options) => {
   let result = {}
@@ -31,10 +42,7 @@ export const ArticleForm = props => {
 
       <label>Title</label>
       <Control.text model={model + '.title'}
-        validators={{
-          required: (val) => !!val,
-          minLength: (val) => val && val.length > 10
-        }}/>
+        validators={getValidators({ required: true, minLength: 10})}/>
       <Errors className='errors'
         model={model + '.title'}
         show={{touched: true, pristine: false}}
@@ -42,10 +50,7 @@ export const ArticleForm = props => {
 
       <label>Description</label>
       <Control.text model={model + '.description'}
-        validators={{
-          required: (val) => !!val,
-          minLength: (val) => val && val.length > 10
-        }}/>
+        validators={getValidators({ required: true, minLength: 10})}/>
       <Errors className='errors'
         model={model + '.description'}
         show={{touched: true, pristine: false}}
@@ -53,32 +58,28 @@ export const ArticleForm = props => {
 
       <label>Image</label>
       <Control.text model={model + '.image'}
-        validators={{
-          required: (val) => !!val,
-          minLength: (val) => val && val.length > 5
-        }}/>
+        validators={getValidators({ required: true, minLength: 5})}/>
       <Errors className='errors'
         model={model + '.image'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Image', { required: true, minLength: 5})}/>
 
       <label>Text</label>
-      <Control.text model={model + '.text'}
-        validators={{
-          required: (val) => !!val,
-          minLength: (val) => val && val.length > 50
-        }}/>
+      <Control.textarea model={model + '.text'}
+        validators={getValidators({ required: true, minLength: 50})}/>
       <Errors className='errors'
         model={model + '.text'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Text', { required: true, minLength: 50})}/>
 
-      <button
-        onClick={props.onSubmit}
-        disabled={props.pending || props.pristine || !props.valid}
-        type='submit'>
-          Сохранить!
-      </button>
+      <div>
+        <button
+          onClick={props.onSubmit}
+          disabled={props.pending || props.pristine || !props.valid}
+          type='submit'>
+            Сохранить!
+        </button>
+      </div>
     </Form>
   )
 }
