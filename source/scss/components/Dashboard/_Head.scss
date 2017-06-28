@@ -18,4 +18,27 @@
       height: 100px;
     }
   }
+  .text-block {
+    margin-top: 100px;
+    background-color: #30b5d7;
+    width: 42%;
+    float: right;
+    margin-top: -13px;
+    margin-right: 208px;
+  h2 {
+    font-weight: bold;
+    color: black;
+    line-height: 30px;
+    font-size: 22px;
+    padding: 0 20px;
+    margin-bottom: 10px;
+  }
+  p {
+    color: #ffffff;
+    padding: 0 20px;
+    line-height: 20px;
+    font-size: 15px;
+    font-weight: 100;
+  }
+}
 }

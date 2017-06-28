@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { selectHeaderImage } from 'actions/dashboard';
+import { TextBlock } from './TextBlock';
 
 @connect(state => ({
   selectedIndex: state.dashboard.get('head').get('selectedIndex')
@@ -20,14 +21,6 @@ export default class DashboardHead extends Component {
     this.props.dispatch(selectHeaderImage(index));
   }
 
-  getTextBlock(game) {
-    return (
-      <div>
-        <h2>{game.title}</h2>
-        <p>{game.text}</p>
-      </div>
-    )
-  }
 
   render() {
     const { selectedIndex } = this.props;
@@ -40,27 +33,27 @@ export default class DashboardHead extends Component {
       {
         img: 'assets/img/game2.png',
         title: "Mass Effect: Andromeda",
-        text: 'Текст для картинки 2.'
+        text: 'Текст для Mass Effect: Andromeda.'
       },
       {
         img: 'assets/img/game3.png',
-        title: "Battlefield 4",
-        text: 'Текст для картинки 1.'
+        title: "Remember Me",
+        text: 'Текст для Remember Me.'
       },
       {
         img: 'assets/img/game4.png',
-        title: "Заголовок для картинки 4",
-        text: 'Текст для картинки 4.'
+        title: "Battlefield 4",
+        text: 'Текст для Battlefield 4.'
       },
       {
         img: 'assets/img/game5.png',
-        title: "Заголовок для картинки 5",
-        text: 'Текст для картинки 5.'
+        title: "Fable 3",
+        text: "Текст для Fable 3."
       },
       {
         img: 'assets/img/game6.png',
-        title: "Remember Me",
-        text: 'Текст для картинки 6.'
+        title: "Call of Duty 4: Modern Warfare",
+        text: 'Текст для Call of Duty 4: Modern Warfare.'
       }
     ];
 
@@ -77,7 +70,7 @@ export default class DashboardHead extends Component {
           ))}
         </div>
         {
-          selectedIndex >= 0 ? this.getTextBlock(data[selectedIndex]) : null
+          selectedIndex >= 0 ? <TextBlock game = {data[selectedIndex]} /> : null
         }
       </div>
     );
