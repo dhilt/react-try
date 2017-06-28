@@ -6,13 +6,7 @@ export const CREATE_ARTICLE_ASYNC_END_FAIL = 'CREATE_ARTICLE_ASYNC_END_FAIL';
 
 export function createArticleAsync() {
   return (dispatch, getState) => {
-    const article = {
-      date: getState().admin.newArticle.get('date'),
-      title: getState().admin.newArticle.get('title'),
-      description: getState().admin.newArticle.get('description'),
-      image: getState().admin.newArticle.get('image'),
-      text: getState().admin.newArticle.get('text')
-    };
+    const article = getState().admin.newArticle.get('article').toJS();
     dispatch(createArticleAsyncStart());
     asyncRequest('articles', 'post', { article })
       .then(result => dispatch(createArticleAsyncEndSuccess(result)))

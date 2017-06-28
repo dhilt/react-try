@@ -37,7 +37,7 @@ export default class EditArticle extends Component {
   }
 
   render() {
-    let { editArticleForm, pending, editArticle } = this.props;
+    let { editArticleForm, pending } = this.props;
     let pristine = editArticleForm.$form && editArticleForm.$form.pristine;
     let valid = editArticleForm.$form && editArticleForm.$form.valid;
 

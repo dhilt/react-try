@@ -11,15 +11,23 @@ import {
 } from 'actions/_admin/editArticle';
 
 export const initialState = Map({
-  source: null,
+  source: Map({
+    date: null,
+    title: '',
+    description: '',
+    image: '',
+    text: ''
+  }),
   pending: false,
-  pendingGet: false,
+  pendingInit: false,
   serverResult: {},
-  date: null,
-  title: '',
-  description: '',
-  image: '',
-  text: ''
+  article: Map({
+    date: null,
+    title: '',
+    description: '',
+    image: '',
+    text: ''
+  })
 });
 
 const actionsMap = {
@@ -48,18 +56,18 @@ const actionsMap = {
   },
   [GET_EXIST_ARTICLE_ASYNC_START]: (state) => {
     return state.merge({
-      pendingGet: true
+      pendingInit: true
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
-      pendingGet: false,
+      pendingInit: false,
       source: action.data
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
-      pendingGet: false,
+      pendingInit: false,
       serverResult: action.error
     })
   }

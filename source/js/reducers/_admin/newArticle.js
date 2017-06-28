@@ -9,11 +9,13 @@ import {
 export const initialState = Map({
   pending: false,
   serverResult: {},
-  date: null,
-  title: '',
-  description: '',
-  image: '',
-  text: ''
+  article: Map({
+    date: null,
+    title: '',
+    description: '',
+    image: '',
+    text: ''
+  })
 });
 
 const actionsMap = {

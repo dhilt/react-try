@@ -10,13 +10,7 @@ export const GET_EXIST_ARTICLE_ASYNC_END_FAIL = 'GET_EXIST_ARTICLE_ASYNC_END_FAI
 
 export function editArticleAsync() {
   return (dispatch, getState) => {
-    const article = {
-      date: getState().admin.editArticle.get('date'),
-      title: getState().admin.editArticle.get('title'),
-      description: getState().admin.editArticle.get('description'),
-      image: getState().admin.editArticle.get('image'),
-      text: getState().admin.editArticle.get('text')
-    };
+    const article = getState().admin.editArticle.get('article').toJS();
     dispatch(editArticleAsyncStart());
     const query = 'articles/' + getState().admin.editArticle.get('source').get('id');
     asyncRequest(query, 'put', { article })

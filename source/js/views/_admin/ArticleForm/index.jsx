@@ -29,46 +29,47 @@ let getErrors = (token, options) => {
 
 export const ArticleForm = props => {
   const model = String(props.model)
+  const localModel = model + '.article'
   return (
     <Form
       model={String(model)}
       className='ArticleForm'>
 
       <label>Date</label>
-      <MyDatepickerInput model={model + '.date'} />
+      <MyDatepickerInput model={localModel + '.date'} />
       <Errors className='errors'
-        model={model + '.date'}
+        model={localModel + '.date'}
         messages={getErrors('Date', { required: true, dateFormat: true})}/>
 
       <label>Title</label>
-      <Control.text model={model + '.title'}
+      <Control.text model={localModel + '.title'}
         validators={getValidators({ required: true, minLength: 10})}/>
       <Errors className='errors'
-        model={model + '.title'}
+        model={localModel + '.title'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Title', { required: true, minLength: 10})}/>
 
       <label>Description</label>
-      <Control.text model={model + '.description'}
+      <Control.text model={localModel + '.description'}
         validators={getValidators({ required: true, minLength: 10})}/>
       <Errors className='errors'
-        model={model + '.description'}
+        model={localModel + '.description'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Description', { required: true, minLength: 10})}/>
 
       <label>Image</label>
-      <Control.text model={model + '.image'}
+      <Control.text model={localModel + '.image'}
         validators={getValidators({ required: true, minLength: 5})}/>
       <Errors className='errors'
-        model={model + '.image'}
+        model={localModel + '.image'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Image', { required: true, minLength: 5})}/>
 
       <label>Text</label>
-      <Control.textarea model={model + '.text'}
+      <Control.textarea model={localModel + '.text'}
         validators={getValidators({ required: true, minLength: 50})}/>
       <Errors className='errors'
-        model={model + '.text'}
+        model={localModel + '.text'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Text', { required: true, minLength: 50})}/>
 

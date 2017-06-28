@@ -64,14 +64,12 @@ export default class MyDatepickerInput extends React.Component {
   }
 
   componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(actions.change('newArticle.date', this.state.date._d));
-    dispatch(actions.setValidity('newArticle.date', this.getValidationObject(this.state.date._d)));
+    const { model, dispatch } = this.props;
+    dispatch(actions.change(model, this.state.date._d));
+    dispatch(actions.setValidity(model, this.getValidationObject(this.state.date._d)));
   }
 
   render() {
-    let { model, dispatch } = this.props;
-
     return (
       <DatePicker
         dateFormat={this.format}

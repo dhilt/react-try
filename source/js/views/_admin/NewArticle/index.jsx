@@ -22,7 +22,7 @@ export default class NewArticle extends Component {
   }
 
   render() {
-    let { newArticleForm, pending, newArticle } = this.props;
+    let { newArticleForm, pending } = this.props;
     let pristine = newArticleForm.$form && newArticleForm.$form.pristine;
     let valid = newArticleForm.$form && newArticleForm.$form.valid;
 
