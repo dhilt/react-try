@@ -24,7 +24,7 @@ export const routeCodes = {
 
 export const routeCodesAdmin = {
   NEWARTICLE: `${ adminPath }articles/new`,
-  EDITARTICLE: `${ adminPath }articles/edit`
+  EDITARTICLE: `${ adminPath }articles/:id`
 };
 
 export default class Routes extends Component {

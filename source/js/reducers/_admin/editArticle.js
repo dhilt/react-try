@@ -27,7 +27,8 @@ const actionsMap = {
   [EDIT_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       pending: false,
-      serverResult: action.data
+      serverResult: action.data,
+      source: action.data
     })
   },
   [EDIT_ARTICLE_ASYNC_END_FAIL]: (state, action) => {

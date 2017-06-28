@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Form, Control, Errors, actions } from 'react-redux-form/immutable'
 
 import { editArticleAsync } from 'actions/_admin/editArticle';
 import { ArticleForm } from '../ArticleForm';
@@ -14,11 +15,22 @@ export default class EditArticle extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetButton = this.resetButton.bind(this);
   }
 
   handleSubmit() {
     const { dispatch } = this.props;
     dispatch(editArticleAsync());
+  }
+
+  resetButton() {
+    this.props.dispatch(actions.change('editArticle.text', 'Some text!'));
+    // Восстановление данных из admin.editArticle.source
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount!');
+    // Заполнение исходными данными из admin.editArticle.source
   }
 
   render() {
@@ -35,6 +47,7 @@ export default class EditArticle extends Component {
           pending={pending}
           pristine={pristine}
           valid={valid} />
+        <button className='ArticleFormResetButton' onClick={this.resetButton}>{'Сбросить'}</button>
       </div>
     );
   }

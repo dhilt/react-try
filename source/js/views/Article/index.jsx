@@ -62,7 +62,7 @@ export default class Article extends Component {
       ) : (
       <div>
         {this.makeArticle(data)}
-        {role === 1 && <Link onClick={() => this.props.dispatch(setEditPageSource())} to='/admin/articles/edit'>{'Править статью +'}</Link>}
+        {role === 1 && <Link onClick={() => this.props.dispatch(setEditPageSource())} to={'/admin/articles/' + data.get('id')}>{'Править статью +'}</Link>}
       </div>
     );
   }
