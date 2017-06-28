@@ -4,12 +4,16 @@ import {
   EDIT_ARTICLE_ASYNC_START,
   EDIT_ARTICLE_ASYNC_END_SUCCESS,
   EDIT_ARTICLE_ASYNC_END_FAIL,
-  SET_EDIT_PAGE_SOURCE
+  SET_EDIT_PAGE_SOURCE,
+  GET_EXIST_ARTICLE_ASYNC_START,
+  GET_EXIST_ARTICLE_ASYNC_END_SUCCESS,
+  GET_EXIST_ARTICLE_ASYNC_END_FAIL
 } from 'actions/_admin/editArticle';
 
 const initialState = Map({
   source: null,
   pending: false,
+  pendingGet: false,
   serverResult: {},
   date: null,
   title: '',
@@ -40,6 +44,23 @@ const actionsMap = {
   [SET_EDIT_PAGE_SOURCE]: (state, action) => {
     return state.merge({
       source: action.data
+    })
+  },
+  [GET_EXIST_ARTICLE_ASYNC_START]: (state) => {
+    return state.merge({
+      pendingGet: true
+    })
+  },
+  [GET_EXIST_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
+    return state.merge({
+      pendingGet: false,
+      source: action.data
+    })
+  },
+  [GET_EXIST_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
+    return state.merge({
+      pendingGet: false,
+      serverResult: action.error
     })
   }
 };
