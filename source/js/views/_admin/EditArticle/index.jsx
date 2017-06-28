@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Control, Errors, actions } from 'react-redux-form/immutable'
+import { actions } from 'react-redux-form/immutable';
 
 import { editArticleAsync, getExistArticleAsync } from 'actions/_admin/editArticle';
 import { ArticleForm } from '../ArticleForm';
@@ -26,7 +26,6 @@ export default class EditArticle extends Component {
 
   resetButton() {
     this.props.dispatch(actions.change('editArticle.text', 'Some text!'));
-    // Восстановление данных из admin.editArticle.source
   }
 
   componentDidMount() {

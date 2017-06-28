@@ -10,7 +10,7 @@ import {
   GET_EXIST_ARTICLE_ASYNC_END_FAIL
 } from 'actions/_admin/editArticle';
 
-const initialState = Map({
+export const initialState = Map({
   source: null,
   pending: false,
   pendingGet: false,
