@@ -30,7 +30,7 @@ export default class EditArticle extends Component {
 
   componentDidMount() {
     console.log('componentDidMount!');
-    if (!this.props.source) {
+    if (!this.props.source.get('id')) {
       this.props.dispatch(getExistArticleAsync(this.props.match.params.id));
     }
     // Заполнение исходными данными из admin.editArticle.source

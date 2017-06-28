@@ -9,9 +9,9 @@ import common from './common';
 import { initialState as newArticleInitialState } from './newArticle';
 import { initialState as editArticleInitialState } from './editArticle';
 
-export let adminReducers = combineReducers({
-  common
-});
+// export let adminReducers = combineReducers({
+//   common
+// });
 
 export function setAdminReducer() {
   adminReducers = combineReducers({
@@ -22,3 +22,11 @@ export function setAdminReducer() {
     }),
   });  
 }
+
+export let adminReducers = combineReducers({
+  common,
+  ...createForms({
+    newArticle: newArticleInitialState,
+    editArticle: editArticleInitialState
+  }),
+});

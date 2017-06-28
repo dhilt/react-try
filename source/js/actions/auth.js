@@ -104,7 +104,7 @@ export function authorizeByTokenAsync() {
     asyncRequest('userInfo')
       .then(result => {
         dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo));
-        dispatch(setAdminReducerAction());
+        //dispatch(setAdminReducerAction());
       })
       .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)));
   }

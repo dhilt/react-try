@@ -51,7 +51,7 @@ const actionsMap = {
   },
   [SET_EDIT_PAGE_SOURCE]: (state, action) => {
     return state.merge({
-      source: action.data
+      source: Map(action.data)
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_START]: (state) => {
@@ -60,9 +60,20 @@ const actionsMap = {
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
+    let article = Map({
+        date: action.data.date,
+        title: action.data.title,
+        description: action.data.description,
+        image: action.data.image,
+        text: action.data.text,
+      });
+    console.log('====================');
+    console.log('====================');
+    console.log('====================');
+    console.log(article);
     return state.merge({
       pendingInit: false,
-      source: action.data
+      source: article
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
