@@ -8,7 +8,7 @@ let getValidators = (options) => {
     result.required = (val) => !!val
   }
   if(options.minLength) {
-    result.minLength = (val) => val && val.length > 10
+    result.minLength = (val) => val && val.length > options.minLength
   }
   return result  
 }
