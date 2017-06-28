@@ -4,7 +4,10 @@ import {
   GET_DASHBOARD_ARTICLES_ASYNC_START,
   GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS,
   GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL,
-  SELECT_HEADER_IMAGE
+  SELECT_HEADER_IMAGE,
+  GET_DASHBOARD_HEAD_DATA_ASYNC_START,
+  GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS,
+  GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL
 } from 'actions/dashboard';
 
 const initialState = Map({
@@ -14,7 +17,10 @@ const initialState = Map({
     list: []
   }),
   head: Map({
-    selectedIndex: undefined
+    selectedIndex: undefined,
+    pending: false,
+    error: '',
+    data: []
   })
 });
 
@@ -48,6 +54,31 @@ const actionsMap = {
     return state.merge({
       head: state.get('head').merge({
         selectedIndex: action.data
+      })
+    })
+  },
+  [GET_DASHBOARD_HEAD_DATA_ASYNC_START]: (state) => {
+    return state.merge({
+      games: state.get('games').merge({
+        pending: true
+      })
+    })
+  },
+  [GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS]: (state, action) => {
+    return state.merge({
+      games: state.get('games').merge({
+        pending: false,
+        error: '',
+        data: [...state.get('games').get('data'), ...action.data]
+      })
+    })
+  },
+  [GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL]: (state, action) => {
+    return state.merge({
+      games: state.merge({
+        pending: false,
+        error: action.error,
+        data: []
       })
     })
   }
