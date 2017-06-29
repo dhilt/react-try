@@ -14,9 +14,16 @@ export const GET_EXIST_ARTICLE_ASYNC_END_FAIL = 'GET_EXIST_ARTICLE_ASYNC_END_FAI
 
 export function editArticleAsync() {
   return (dispatch, getState) => {
-    const article = getState().admin.editArticle.get('article').toJS();
+    const article = {
+      date: getState()._adminForms.editArticleModel.get('date').toISOString(),
+      title: getState()._adminForms.editArticleModel.get('title'),
+      description: getState()._adminForms.editArticleModel.get('description'),
+      image: getState()._adminForms.editArticleModel.get('image'),
+      text: getState()._adminForms.editArticleModel.get('text')
+    };
+//    const article = getState().admin.editArticle.get('article').toJS();
     dispatch(editArticleAsyncStart());
-    const query = 'articles/' + getState().admin.editArticle.get('source').get('id');
+    const query = 'articles/' + getState()._adminForms.editArticleModel.get('id');
     asyncRequest(query, 'put', { article })
       .then(result => dispatch(editArticleAsyncEndSuccess(result)))
       .catch(error => dispatch(editArticleAsyncEndFail(error)));

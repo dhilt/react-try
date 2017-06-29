@@ -6,7 +6,8 @@ import { ArticleForm } from '../ArticleForm';
 
 @connect(state => ({
   newArticle: state._adminNewArticle,
-  newArticleForm: state.forms._adminNewArticle,
+  newArticleForm: state._adminForms.forms.newArticleModel,
+  newArticleModel: state._adminForms.newArticleModel,
   pending: state._adminNewArticle.get('pending')
 }))
 export default class NewArticle extends Component {
@@ -22,7 +23,8 @@ export default class NewArticle extends Component {
   }
 
   render() {
-    let { newArticleForm, pending } = this.props;
+    let { newArticle, newArticleModel, newArticleForm } = this.props;
+    let pending = newArticle.get('pending');
     let pristine = newArticleForm.$form && newArticleForm.$form.pristine;
     let valid = newArticleForm.$form && newArticleForm.$form.valid;
 
@@ -30,8 +32,9 @@ export default class NewArticle extends Component {
       <div>
         <h2>Create new Article...(admin only)</h2>
         <ArticleForm
+          data={''}
           onSubmit={this.handleSubmit}
-          model={'_adminNewArticle'}
+          model={'newArticleModel'}
           pending={pending}
           pristine={pristine}
           valid={valid} />
