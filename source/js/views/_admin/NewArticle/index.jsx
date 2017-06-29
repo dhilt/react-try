@@ -5,9 +5,9 @@ import { createArticleAsync } from 'actions/_admin/newArticle';
 import { ArticleForm } from '../ArticleForm';
 
 @connect(state => ({
-  newArticle: state.admin.newArticle,
-  newArticleForm: state.admin.forms.newArticle,
-  pending: state.admin.newArticle.get('pending')
+  newArticle: state._adminNewArticle,
+  newArticleForm: state.forms._adminNewArticle,
+  pending: state._adminNewArticle.get('pending')
 }))
 export default class NewArticle extends Component {
 
@@ -31,7 +31,7 @@ export default class NewArticle extends Component {
         <h2>Create new Article...(admin only)</h2>
         <ArticleForm
           onSubmit={this.handleSubmit}
-          model={'newArticle'}
+          model={'_adminNewArticle'}
           pending={pending}
           pristine={pristine}
           valid={valid} />

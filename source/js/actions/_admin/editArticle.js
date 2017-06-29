@@ -1,4 +1,8 @@
+import { Map } from 'immutable';
+import { actions } from 'react-redux-form/immutable';
+
 import { asyncRequest } from '../../helpers/request';
+import { validators, validatorsVal } from 'helpers/validators'
 
 export const EDIT_ARTICLE_ASYNC_START = 'EDIT_ARTICLE_ASYNC_START';
 export const EDIT_ARTICLE_ASYNC_END_SUCCESS = 'EDIT_ARTICLE_ASYNC_END_SUCCESS';
@@ -41,29 +45,21 @@ export function editArticleAsyncEndFail(error) {
 
 export function setEditPageSource() {
   return (dispatch, getState) => {
-    const article = {
-      id: getState().article.get('data').get('id'),
-      userId: getState().article.get('data').get('userId'),
-      userName: getState().article.get('data').get('userName'),
-      createdAt: getState().article.get('data').get('createdAt'),
-      title: getState().article.get('data').get('title'),
-      description: getState().article.get('data').get('description'),
-      text: getState().article.get('data').get('text'),
-      image: getState().article.get('data').get('image'),
-    };
+    const article = getState().article.get('data')
     dispatch({
       type: SET_EDIT_PAGE_SOURCE,
-      data: article
-    });
+      data: article.toJS()
+    })
+    dispatch(resetForm(article))
   }
 }
 
 export function getExistArticleAsync(id) {
   return (dispatch) => {
-    dispatch(getExistArticleAsyncStart());
+    dispatch(getExistArticleAsyncStart())
     asyncRequest('articles/' + id)
       .then(result => dispatch(getExistArticleAsyncEndSuccess(result.article)))
-      .catch(error => dispatch(getExistArticleAsyncEndFail(error)));
+      .catch(error => dispatch(getExistArticleAsyncEndFail(error)))
   }
 }
 
@@ -74,9 +70,12 @@ export function getExistArticleAsyncStart() {
 }
 
 export function getExistArticleAsyncEndSuccess(data) {
-  return {
-    type: GET_EXIST_ARTICLE_ASYNC_END_SUCCESS,
-    data
+  return (dispatch) => {
+    dispatch(resetForm(Map(data)))
+    dispatch({
+      type: GET_EXIST_ARTICLE_ASYNC_END_SUCCESS,
+      data
+    })
   }
 }
 
@@ -84,5 +83,16 @@ export function getExistArticleAsyncEndFail(error) {
   return {
     type: GET_EXIST_ARTICLE_ASYNC_END_FAIL,
     error
+  }
+}
+
+export function resetForm(data) {
+  return (dispatch) => {
+    dispatch(actions.change('editArticleModel', data))
+    Object.keys(validatorsVal).forEach(field => {
+      setTimeout(() => 
+        dispatch(actions.validate('editArticleModel.' + field, validatorsVal[field](data.get(field))))
+      )
+    });    
   }
 }

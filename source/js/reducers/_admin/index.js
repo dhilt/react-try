@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import { createForms } from 'react-redux-form/immutable';
+import { createForms, combineForms } from 'react-redux-form/immutable';
 import { Map } from 'immutable';
 
 import setRootReducer from '../';
 import { storeHelper } from 'helpers/store';
 
 import common from './common';
-import { initialState as newArticleInitialState } from './newArticle';
-import { initialState as editArticleInitialState } from './editArticle';
+import newArticle, { initialState as newArticleInitialState } from './newArticle';
+import editArticle, { initialArticleModel } from './editArticle';
 
 // export let adminReducers = combineReducers({
 //   common
@@ -18,15 +18,17 @@ export function setAdminReducer() {
     common,
     ...createForms({
       newArticle: newArticleInitialState,
-      editArticle: editArticleInitialState
+      editArticle: initialArticleModel
     }),
-  });  
+  });
 }
 
-export let adminReducers = combineReducers({
-  common,
-  ...createForms({
-    newArticle: newArticleInitialState,
-    editArticle: editArticleInitialState
+export let adminReducers = {
+  _adminCommon: common,
+  _adminForms: combineForms({
+    newArticleModel: newArticleInitialState,
+    editArticleModel: initialArticleModel
   }),
-});
+  _adminNewArticle: newArticle,
+  _adminEditArticle: editArticle
+}

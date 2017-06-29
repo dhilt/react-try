@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Control, Errors } from 'react-redux-form/immutable'
-import MyDatepickerInput from '../datepicker'
 
-let getValidators = (options) => {
-  let result = {}
-  if(options.required) {
-    result.required = (val) => !!val
-  }
-  if(options.minLength) {
-    result.minLength = (val) => val && val.length > options.minLength
-  }
-  return result  
-}
+import MyDatepickerInput from '../datepicker'
+import { validators, validatorsVal } from 'helpers/validators'
 
 let getErrors = (token, options) => {
   let result = {}
@@ -29,47 +20,42 @@ let getErrors = (token, options) => {
 
 export const ArticleForm = props => {
   const model = String(props.model)
-  const localModel = model + '.article'
   return (
     <Form
       model={String(model)}
       className='ArticleForm'>
 
       <label>Date</label>
-      <MyDatepickerInput model={localModel + '.date'} />
+      <MyDatepickerInput model={model + '.date'} value={props.data.date} validators={validatorsVal.date}/>
       <Errors className='errors'
-        model={localModel + '.date'}
+        model={model + '.date'}
         messages={getErrors('Date', { required: true, dateFormat: true})}/>
 
       <label>Title</label>
-      <Control.text model={localModel + '.title'}
-        validators={getValidators({ required: true, minLength: 10})}/>
+      <Control.text model={model + '.title'}  value={props.data.title} validators={validators.title}/>
       <Errors className='errors'
-        model={localModel + '.title'}
+        model={model + '.title'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Title', { required: true, minLength: 10})}/>
 
       <label>Description</label>
-      <Control.text model={localModel + '.description'}
-        validators={getValidators({ required: true, minLength: 10})}/>
+      <Control.text model={model + '.description'} value={props.data.description} validators={validators.description}/>
       <Errors className='errors'
-        model={localModel + '.description'}
+        model={model + '.description'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Description', { required: true, minLength: 10})}/>
 
       <label>Image</label>
-      <Control.text model={localModel + '.image'}
-        validators={getValidators({ required: true, minLength: 5})}/>
+      <Control.text model={model + '.image'} value={props.data.image} validators={validators.description}/>
       <Errors className='errors'
-        model={localModel + '.image'}
+        model={model + '.image'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Image', { required: true, minLength: 5})}/>
 
       <label>Text</label>
-      <Control.textarea model={localModel + '.text'}
-        validators={getValidators({ required: true, minLength: 50})}/>
+      <Control.textarea model={model + '.text'} value={props.data.text} validators={validators.description}/>
       <Errors className='errors'
-        model={localModel + '.text'}
+        model={model + '.text'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Text', { required: true, minLength: 50})}/>
 

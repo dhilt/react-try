@@ -12,7 +12,7 @@ let setRootReducer = () =>
     articles,
     article,
     auth,
-    admin: adminReducers
+    ...adminReducers
   })
 
 export default setRootReducer

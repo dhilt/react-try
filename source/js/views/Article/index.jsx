@@ -24,10 +24,19 @@ export default class Article extends Component {
   constructor() {
     super();
     this.makeArticle = this.makeArticle.bind(this);
+    this.goToArticlePage = this.goToArticlePage.bind(this);
   }
 
   componentWillMount() {
     this.props.dispatch(getArticleAsync(this.props.match.params.id));
+  }
+
+  goToArticlePage(e) {
+    e.preventDefault();
+    this.props.dispatch(setEditPageSource());
+    let location = this.props.history.location;
+    location.pathname = e.target.pathname;
+    this.props.history.push(location);
   }
 
   makeArticle(article) {
@@ -62,7 +71,7 @@ export default class Article extends Component {
       ) : (
       <div>
         {this.makeArticle(data)}
-        {role === 1 && <Link onClick={() => this.props.dispatch(setEditPageSource())} to={'/admin/articles/' + data.get('id')}>{'Править статью +'}</Link>}
+        {role === 1 && <a onClick={this.goToArticlePage} href={'/admin/articles/' + data.get('id')}>{'Править статью +'}</a>}
       </div>
     );
   }

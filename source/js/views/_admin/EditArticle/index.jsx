@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form/immutable';
 
-import { editArticleAsync, getExistArticleAsync } from 'actions/_admin/editArticle';
+import { editArticleAsync, getExistArticleAsync, resetForm } from 'actions/_admin/editArticle';
 import { ArticleForm } from '../ArticleForm';
+import { validators, validatorsVal } from 'helpers/validators'
 
 @connect(state => ({
-  editArticle: state.admin.editArticle,
-  editArticleForm: state.admin.forms.editArticle,
-  pending: state.admin.editArticle.get('pending'),
-  source: state.admin.editArticle.get('source')
+  editArticle: state._adminEditArticle,
+  editArticleForm: state._adminForms.forms.editArticleModel,
+  editArticleModel: state._adminForms.editArticleModel
 }))
 export default class EditArticle extends Component {
 
@@ -25,19 +25,20 @@ export default class EditArticle extends Component {
   }
 
   resetButton() {
-    this.props.dispatch(actions.change('editArticle.text', 'Some text!'));
+    const { dispatch, editArticle } = this.props;
+    dispatch(resetForm(editArticle.get('source')));
   }
 
   componentDidMount() {
-    console.log('componentDidMount!');
-    if (!this.props.source.get('id')) {
-      this.props.dispatch(getExistArticleAsync(this.props.match.params.id));
+    let { dispatch, editArticle } = this.props;
+    if(!editArticle.get('source').get('id')) {
+      dispatch(getExistArticleAsync(this.props.match.params.id)); 
     }
-    // Заполнение исходными данными из admin.editArticle.source
   }
 
   render() {
-    let { editArticleForm, pending } = this.props;
+    let { editArticle, editArticleModel, editArticleForm } = this.props;
+    let pending = editArticle.get('pending');
     let pristine = editArticleForm.$form && editArticleForm.$form.pristine;
     let valid = editArticleForm.$form && editArticleForm.$form.valid;
 
@@ -45,8 +46,9 @@ export default class EditArticle extends Component {
       <div>
         <h2>Edit Article...(admin only)</h2>
         <ArticleForm
+          data={editArticleModel.toJS()}
           onSubmit={this.handleSubmit}
-          model={'editArticle'}
+          model={'editArticleModel'}
           pending={pending}
           pristine={pristine}
           valid={valid} />
