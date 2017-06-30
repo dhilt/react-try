@@ -18,6 +18,11 @@ const ARTICLES = {
   dashboardTextCut: 150
 };
 
+const GAMES = {
+  defaultCount: 10,
+  dashboardCount: 6
+};
+
 app.use(bodyParser.json());
 
 let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -153,6 +158,23 @@ app.post('/api/articles/create', (req, res) => {
         res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: user.id, userName: user.login });
       })
     });
+});
+
+app.get('/api/games', (req, res) => {
+  const dashboard = req.query.hasOwnProperty('dashboard');
+  let count = Number(req.query.count) || GAMES.defaultCount;
+  let orderBy = 'createdAt';
+
+  if (dashboard) {
+    count = GAMES.dashboardCount;
+  }
+
+  const ordering = (orderBy ? ' ORDER BY ' + orderBy + '' : '');
+  db.all('SELECT * FROM Game' + ordering + ' LIMIT ?', [count], (err, row) => {
+    if (err)
+      return res.send({ status: 'error', error: err });
+    res.send({ games: row });
+  });
 });
 
 app.listen(APP_PORT, () => {
