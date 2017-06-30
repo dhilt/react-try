@@ -5,6 +5,7 @@ import {
   GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS,
   GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL,
   SELECT_HEADER_IMAGE,
+  CLOSE_HEADER_IMAGE,
   GET_DASHBOARD_HEAD_DATA_ASYNC_START,
   GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS,
   GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL
@@ -17,7 +18,7 @@ const initialState = Map({
     list: []
   }),
   head: Map({
-    selectedIndex: undefined,
+    selectedIndex: -1,
     pending: false,
     error: '',
     data: []
@@ -54,6 +55,13 @@ const actionsMap = {
     return state.merge({
       head: state.get('head').merge({
         selectedIndex: action.data
+      })
+    })
+  },
+  [CLOSE_HEADER_IMAGE]: (state, action) => {
+    return state.merge({
+      head: state.get('head').merge({
+        selectedIndex: initialState.get('head').get('selectedIndex')
       })
     })
   },
