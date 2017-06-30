@@ -8,7 +8,8 @@ import {
 
 export const initialState = Map({
   pending: false,
-  serverResult: {}
+  serverResult: null,
+  error: null
 });
 
 const actionsMap = {
@@ -20,13 +21,14 @@ const actionsMap = {
   [CREATE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       pending: false,
-      serverResult: action.data
+      serverResult: action.data,
+      error: null
     })
   },
   [CREATE_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       pending: false,
-      serverResult: action.error
+      error: action.error
     })
   }
 };

@@ -44,12 +44,13 @@ export default class MyDatepickerInput extends React.Component {
   }
 
   render() {
+    let dateValue = moment(this.props.value)
     return (
       <DatePicker
         dateFormat={this.format}
         todayButton="Today"
         ref="datePicker"
-        selected={this.state.date}
+        selected={dateValue || this.state.date}
         onChange={this.onDateChanged}
         onBlur={this.onBlurDateChanged}
       />

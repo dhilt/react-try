@@ -16,7 +16,7 @@ const initialState = Map({
   source: Map(articleModel),
   pending: false,
   pendingInit: false,
-  serverResult: {}
+  error: null
 })
 
 const actionsMap = {
@@ -28,19 +28,19 @@ const actionsMap = {
   [EDIT_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       pending: false,
-      serverResult: action.data,
+      error: null,
       source: action.data
     })
   },
   [EDIT_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       pending: false,
-      serverResult: action.error
+      error: action.error
     })
   },
   [SET_EDIT_PAGE_SOURCE]: (state, action) => {
     return state.merge({
-      source: Map(action.data)
+      source: action.data
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_START]: (state) => {
@@ -49,16 +49,16 @@ const actionsMap = {
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
-    let article = Map(action.data);
     return state.merge({
       pendingInit: false,
-      source: article
+      error: null,
+      source: action.data
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
       pendingInit: false,
-      serverResult: action.error
+      error: action.error
     })
   }
 };
