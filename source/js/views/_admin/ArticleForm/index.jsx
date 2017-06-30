@@ -46,14 +46,14 @@ export const ArticleForm = props => {
         messages={getErrors('Description', { required: true, minLength: 10})}/>
 
       <label>Image</label>
-      <Control.text model={model + '.image'} value={props.data.image} validators={validators.description}/>
+      <Control.text model={model + '.image'} value={props.data.image} validators={validators.image}/>
       <Errors className='errors'
         model={model + '.image'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Image', { required: true, minLength: 5})}/>
 
       <label>Text</label>
-      <Control.textarea model={model + '.text'} value={props.data.text} validators={validators.description}/>
+      <Control.textarea model={model + '.text'} value={props.data.text} validators={validators.text}/>
       <Errors className='errors'
         model={model + '.text'}
         show={{touched: true, pristine: false}}

@@ -10,15 +10,7 @@ import {
   GET_EXIST_ARTICLE_ASYNC_END_FAIL
 } from 'actions/_admin/editArticle';
 
-let articleModel = {
-  date: null,
-  title: '',
-  description: '',
-  image: '',
-  text: ''
-};
-
-export let initialArticleModel = Map(articleModel);
+import { articleModel } from 'helpers/models';
 
 const initialState = Map({
   source: Map(articleModel),

@@ -6,8 +6,10 @@ import setRootReducer from '../';
 import { storeHelper } from 'helpers/store';
 
 import common from './common';
-import newArticle, { initialState as newArticleInitialState } from './newArticle';
-import editArticle, { initialArticleModel } from './editArticle';
+import newArticle from './newArticle';
+import editArticle from './editArticle';
+
+import { articleModel } from 'helpers/models';
 
 // export let adminReducers = combineReducers({
 //   common
@@ -17,8 +19,8 @@ export function setAdminReducer() {
   adminReducers = combineReducers({
     common,
     ...createForms({
-      newArticle: newArticleInitialState,
-      editArticle: initialArticleModel
+      newArticle: Map(articleModel),
+      editArticle: Map(articleModel)
     }),
   });
 }
@@ -26,8 +28,8 @@ export function setAdminReducer() {
 export let adminReducers = {
   _adminCommon: common,
   _adminForms: combineForms({
-    newArticleModel: newArticleInitialState,
-    editArticleModel: initialArticleModel
+    newArticleModel: Map(articleModel),
+    editArticleModel: Map(articleModel)
   }),
   _adminNewArticle: newArticle,
   _adminEditArticle: editArticle

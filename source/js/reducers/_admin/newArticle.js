@@ -8,14 +8,7 @@ import {
 
 export const initialState = Map({
   pending: false,
-  serverResult: {},
-  article: Map({
-    date: null,
-    title: '',
-    description: '',
-    image: '',
-    text: ''
-  })
+  serverResult: {}
 });
 
 const actionsMap = {
