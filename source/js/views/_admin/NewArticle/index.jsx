@@ -7,8 +7,7 @@ import { ArticleForm } from '../ArticleForm';
 @connect(state => ({
   newArticle: state._adminNewArticle,
   newArticleForm: state._adminForms.forms.newArticleModel,
-  newArticleModel: state._adminForms.newArticleModel,
-  pending: state._adminNewArticle.get('pending')
+  newArticleModel: state._adminForms.newArticleModel
 }))
 export default class NewArticle extends Component {
 

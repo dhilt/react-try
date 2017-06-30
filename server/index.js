@@ -140,7 +140,7 @@ app.post('/api/articles', (req, res) => {
   doAuthorize(req, res)
     .then(user => {
       const article = req.body.article;
-      if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+      if (!article || !article.createdAt || !article.title || !article.description || !article.image || !article.text) {
         return res.send({ status: 'error', error: 'Missed some data!' });
       }
       db.get('SELECT COUNT(id) FROM Article', (err, total) => {
@@ -148,9 +148,9 @@ app.post('/api/articles', (req, res) => {
           return res.send({ status: 'error', error: err });
         }
         const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, user.id, user.login);
+        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login);
         stmt.finalize();
-        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.date).toISOString(), image: article.image, userId: user.id, userName: user.login });
+        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.createdAt).toISOString(), image: article.image, userId: user.id, userName: user.login });
       })
     });
 });
@@ -162,18 +162,18 @@ app.put('/api/articles/:id', (req, res) => {
     db.get('SELECT * FROM Article WHERE id = ?', idArticle, (err, row) => {
       if (!row) {
         return res.send({ status: 'error', error: 'Article with this id doesn\'t exist'});
-      } else if (!article || !article.date || !article.title || !article.description || !article.image || !article.text) {
+      } else if (!article || !article.createdAt || !article.title || !article.description || !article.image || !article.text) {
         return res.send({ status: 'error', error: 'Missed some data!' });
       } else {
         const stmt = db.prepare('UPDATE Article SET title = ?, text = ?, description = ?, createdAt = ?, image = ?, userId = ?, userName = ? WHERE id = ?');
-        stmt.run(article.title, article.text, article.description, new Date(article.date).toISOString(), article.image, user.id, user.login, idArticle);
+        stmt.run(article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login, idArticle);
         stmt.finalize();
         res.send({
           id: idArticle,
           title: article.title,
           text: article.text,
           description: article.description,
-          createdAt: new Date(article.date).toISOString(),
+          createdAt: new Date(article.createdAt).toISOString(),
           image: article.image,
           userId: user.id,
           userName: user.login
