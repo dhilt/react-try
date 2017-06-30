@@ -26,9 +26,9 @@ export const ArticleForm = props => {
       className='ArticleForm'>
 
       <label>Date</label>
-      <MyDatepickerInput model={model + '.date'} value={props.data.date} validators={validatorsVal.date}/>
+      <MyDatepickerInput model={model + '.createdAt'} value={props.data.createdAt} validators={validatorsVal.createdAt}/>
       <Errors className='errors'
-        model={model + '.date'}
+        model={model + '.createdAt'}
         messages={getErrors('Date', { required: true, dateFormat: true})}/>
 
       <label>Title</label>

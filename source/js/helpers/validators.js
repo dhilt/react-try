@@ -6,11 +6,13 @@ let validate = {
   minLength: (options) => (val) => val && val.length > options.minLength,
 
   date: (date) => {
-    let isValid = false
-    if (!(date instanceof Date)) {
+    if (date instanceof Date) {
+      date = date.toISOString()
+    }
+    if (typeof date !== "string") {
       return false
     }
-    let matches = date.toISOString().split(/-|T|:/)
+    let matches = date.split(/-|T|:/)
     if (!matches) {
       return false
     }
@@ -37,7 +39,7 @@ let getValidators = (options, val) => {
 }
 
 export const validators = {
-  date: getValidators({ required: true, dateFormat: true }),
+  createdAt: getValidators({ required: true, dateFormat: true }),
   title: getValidators({ required: true, minLength: 10 }),
   description: getValidators({ required: true, minLength: 10 }),
   image: getValidators({ required: true, minLength: 5 }),
@@ -45,7 +47,7 @@ export const validators = {
 }
 
 export const validatorsVal = {
-  date: (val) => getValidators({ required: true, dateFormat: true }, val),
+  createdAt: (val) => getValidators({ required: true, dateFormat: true }, val),
   title: (val) => getValidators({ required: true, minLength: 10 }, val),
   description: (val) => getValidators({ required: true, minLength: 10 }, val),
   image: (val) => getValidators({ required: true, minLength: 5 }, val),

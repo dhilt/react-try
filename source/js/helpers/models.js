@@ -1,5 +1,5 @@
 export let articleModel = {
-  date: null,
+  createdAt: null,
   title: '',
   description: '',
   image: '',

@@ -50,7 +50,6 @@ const actionsMap = {
   },
   [GET_EXIST_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     let article = Map(action.data);
-    initialArticleModel = article;
     return state.merge({
       pendingInit: false,
       source: article
