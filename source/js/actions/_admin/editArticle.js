@@ -72,11 +72,11 @@ export function getExistArticleAsyncStart() {
 export function getExistArticleAsyncEndSuccess(data) {
   return (dispatch) => {
     let articleMap = Map(data)
-    dispatch(resetForm(articleMap))
     dispatch({
       type: GET_EXIST_ARTICLE_ASYNC_END_SUCCESS,
       data: articleMap
     })
+    dispatch(resetForm(articleMap))
   }
 }
 
