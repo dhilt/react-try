@@ -19,7 +19,7 @@ export default class EditArticle extends Component {
     this.resetButton = this.resetButton.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let { dispatch, editArticle } = this.props
     if(!editArticle.get('source').get('id')) {
       dispatch(getExistArticleAsync(this.props.match.params.id))
@@ -45,15 +45,15 @@ export default class EditArticle extends Component {
   render() {
     let { editArticle, editArticleModel, editArticleForm } = this.props
     let pending = editArticle.get('pending')
-    let pendingInit = editArticle.get('pendingInit')
+    let sourceApplied = editArticle.get('sourceApplied')
+    //let sourceArticleId = editArticle.get('source').get('id')
     let pristine = editArticleForm.$form && editArticleForm.$form.pristine
     let valid = editArticleForm.$form && editArticleForm.$form.valid
-    //pendingInit = false
     return (
       <div>
         <h2>Edit Article...(admin only)</h2>
         {
-          pendingInit ? (
+          !sourceApplied ? (
             <div>waiting...</div>
           ) : (
             <div>
@@ -63,7 +63,6 @@ export default class EditArticle extends Component {
                 onSubmit={this.handleSubmit}
                 model={'editArticleModel'}
                 pending={pending}
-                pendingInit={pendingInit}
                 pristine={pristine}
                 valid={valid} />
               <button className='ArticleFormResetButton' onClick={this.resetButton}>

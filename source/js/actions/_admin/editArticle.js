@@ -11,6 +11,7 @@ export const SET_EDIT_PAGE_SOURCE = 'SET_EDIT_PAGE_SOURCE'
 export const GET_EXIST_ARTICLE_ASYNC_START = 'GET_EXIST_ARTICLE_ASYNC_START'
 export const GET_EXIST_ARTICLE_ASYNC_END_SUCCESS = 'GET_EXIST_ARTICLE_ASYNC_END_SUCCESS'
 export const GET_EXIST_ARTICLE_ASYNC_END_FAIL = 'GET_EXIST_ARTICLE_ASYNC_END_FAIL'
+export const EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED = 'EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED'
 
 export function editArticleAsync() {
   return (dispatch, getState) => {
@@ -91,9 +92,12 @@ export function resetForm(articleMap) {
   return (dispatch) => {
     dispatch(actions.change('editArticleModel', articleMap))
     Object.keys(validatorsVal).forEach(field => {
-      setTimeout(() =>
+      setTimeout(() => {
         dispatch(actions.validate('editArticleModel.' + field, validatorsVal[field](articleMap.get(field))))
-      )
+        dispatch({
+          type: EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED
+        })
+      })
     })
   }
 }

@@ -7,15 +7,17 @@ import {
   SET_EDIT_PAGE_SOURCE,
   GET_EXIST_ARTICLE_ASYNC_START,
   GET_EXIST_ARTICLE_ASYNC_END_SUCCESS,
-  GET_EXIST_ARTICLE_ASYNC_END_FAIL
+  GET_EXIST_ARTICLE_ASYNC_END_FAIL,
+  EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED
 } from 'actions/_admin/editArticle';
 
 import { articleModel } from 'helpers/models';
 
 const initialState = Map({
   source: Map(articleModel),
+  sourcePending: false,
+  sourceApplied: false,
   pending: false,
-  pendingInit: false,
   error: null
 })
 
@@ -45,20 +47,25 @@ const actionsMap = {
   },
   [GET_EXIST_ARTICLE_ASYNC_START]: (state) => {
     return state.merge({
-      pendingInit: true
+      sourcePending: true
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
-      pendingInit: false,
+      sourcePending: false,
       error: null,
       source: action.data
     })
   },
   [GET_EXIST_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
-      pendingInit: false,
+      sourcePending: false,
       error: action.error
+    })
+  },
+  [EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED]: (state, action) => {
+    return state.merge({
+      sourceApplied: true
     })
   }
 };
