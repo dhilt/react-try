@@ -89,14 +89,16 @@ export function getExistArticleAsyncEndFail(error) {
 }
 
 export function resetForm(articleMap) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(actions.change('editArticleModel', articleMap))
-    Object.keys(validatorsVal).forEach(field => {
-      setTimeout(() => {
+    const sourceAppliedCount = getState()._adminEditArticle.get('sourceAppliedCount')
+    setTimeout(() => {
+      dispatch({
+        type: EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED,
+        data: sourceAppliedCount + 1
+      })
+      Object.keys(validatorsVal).forEach(field => {
         dispatch(actions.validate('editArticleModel.' + field, validatorsVal[field](articleMap.get(field))))
-        dispatch({
-          type: EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED
-        })
       })
     })
   }

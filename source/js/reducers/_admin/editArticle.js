@@ -16,7 +16,7 @@ import { articleModel } from 'helpers/models';
 const initialState = Map({
   source: Map(articleModel),
   sourcePending: false,
-  sourceApplied: false,
+  sourceAppliedCount: 0,
   pending: false,
   error: null
 })
@@ -65,7 +65,7 @@ const actionsMap = {
   },
   [EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED]: (state, action) => {
     return state.merge({
-      sourceApplied: true
+      sourceAppliedCount: action.data
     })
   }
 };

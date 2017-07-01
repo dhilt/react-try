@@ -45,15 +45,14 @@ export default class EditArticle extends Component {
   render() {
     let { editArticle, editArticleModel, editArticleForm } = this.props
     let pending = editArticle.get('pending')
-    let sourceApplied = editArticle.get('sourceApplied')
-    //let sourceArticleId = editArticle.get('source').get('id')
+    let sourceAppliedCount = editArticle.get('sourceAppliedCount')
     let pristine = editArticleForm.$form && editArticleForm.$form.pristine
     let valid = editArticleForm.$form && editArticleForm.$form.valid
     return (
       <div>
         <h2>Edit Article...(admin only)</h2>
         {
-          !sourceApplied ? (
+          !sourceAppliedCount ? (
             <div>waiting...</div>
           ) : (
             <div>

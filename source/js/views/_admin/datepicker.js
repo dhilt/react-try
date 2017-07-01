@@ -12,7 +12,7 @@ export default class MyDatepickerInput extends React.Component {
     this.state = { date: moment() }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let dateValue = moment(this.props.value)
     if(dateValue.isValid()) {
       this.setState({ date: dateValue })
@@ -24,6 +24,8 @@ export default class MyDatepickerInput extends React.Component {
     if (date && !invalid) {
       this.setState({ date: date })
       date = date.toISOString()
+    } else {
+      this.setState({ date: null })
     }
     onDateChanged(date, model, validators)
   }
