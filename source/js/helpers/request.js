@@ -9,6 +9,7 @@ let getConfig = (payload, methodQuery) => {
     config.headers['authorization'] = token
   }
   if (payload && methodQuery) {
+    config.method = methodQuery
     config.body = JSON.stringify(payload)
     config.headers['Accept'] = 'application/json'
     config.headers['Content-Type'] = 'application/json'
@@ -17,7 +18,6 @@ let getConfig = (payload, methodQuery) => {
   } else {
     config.method = 'get'
   }
-  config.method = methodQuery
   return config
 }
 
