@@ -16,7 +16,7 @@ import { openConfirmationModal, closeConfirmationModal } from 'actions/_admin/co
   pending: state.article.get('pending'),
   error: state.article.get('error'),
   role: state.auth.get('userInfo').get('role'),
-  isOpenModal: state._adminConfirmation.get('isOpenModal')
+  isOpenModal: state._adminConfirmation && state._adminConfirmation.get('isOpenModal') || false
 }))
 export default class Article extends Component {
   static propTypes = {
