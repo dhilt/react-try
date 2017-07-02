@@ -161,7 +161,7 @@ app.put('/api/articles/:id', (req, res) => {
     const article = req.body.article;
     db.get('SELECT * FROM Article WHERE id = ?', idArticle, (err, row) => {
       if (!row) {
-        return res.send({ status: 'error', error: 'Article with this id doesn\'t exist'});
+        return res.send({ status: 'error', error: 'Article with this id doesn\'t exist' });
       } else if (!article || !article.createdAt || !article.title || !article.description || !article.image || !article.text) {
         return res.send({ status: 'error', error: 'Missed some data!' });
       } else {
@@ -180,6 +180,25 @@ app.put('/api/articles/:id', (req, res) => {
         });
       }
     });
+  });
+});
+
+app.delete('/api/articles/:id', (req, res) => {
+  doAuthorize(req, res).then(user => {
+    if (user.id !== 1) {
+      return res.send({ status: 'error', error: 'Access error!' });
+    } else {
+      const idArticle = Number(req.params.id);
+      db.get('SELECT * FROM Article WHERE id = ?', idArticle, (err, row) => {
+        if (err || !idArticle) {
+          return res.send({ status: 'error', error: 'Article with this id doesn\'t exist' });
+        }
+        else {
+          db.run('DELETE FROM Article WHERE id = ?', idArticle);
+          return res.send({ status: 'ok', msg: 'Article was deleted.' });
+        }
+      });
+    }
   });
 });
 

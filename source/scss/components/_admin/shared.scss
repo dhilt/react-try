@@ -1,0 +1,21 @@
+.adminPanelCreateAndRemoveArticles {
+  height: 40px;
+  a {
+    display: block;
+    float: left;
+    text-decoration: none;
+    color: aqua;
+    background-color: cornflowerblue;
+    line-height: 33px;
+    border-radius: 13px;
+    width: 180px;
+    text-align: center;
+    cursor: pointer;
+  }
+  a:first-child {
+    margin-left: 5%;
+  }
+  a:nth-child(2) {
+    margin-left: 15px;
+  }
+}
