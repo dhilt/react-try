@@ -4,19 +4,15 @@ let getConfig = (payload, methodQuery) => {
   let config = {
     headers: {}
   }
-  let token = localStorage.getItem('token')
+  const token = localStorage.getItem('token')
   if (token) {
     config.headers['authorization'] = token
   }
-  if (payload && methodQuery) {
-    config.method = methodQuery
+  config.method = methodQuery || 'get'
+  if (payload) {
     config.body = JSON.stringify(payload)
     config.headers['Accept'] = 'application/json'
     config.headers['Content-Type'] = 'application/json'
-  } else if (methodQuery) {
-    config.method = methodQuery
-  } else {
-    config.method = 'get'
   }
   return config
 }
