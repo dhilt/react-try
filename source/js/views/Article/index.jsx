@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
+import { ArticleContents } from 'views/Article/article'
+import { ArticleControls } from 'views/Article/controls'
 
-import { ConfirmationModal } from 'views/_admin/confirmation';
-
-import { getArticleAsync } from 'actions/article';
-import { setEditPageSource } from 'actions/_admin/editArticle';
-import { removeArticleAsync } from 'actions/_admin/removeArticle';
-import { openConfirmationModal, closeConfirmationModal } from 'actions/_admin/confirmation';
+import { getArticleAsync } from 'actions/article'
+import { setEditPageSource } from 'actions/_admin/editArticle'
+import { removeArticleAsync } from 'actions/_admin/removeArticle'
+import { openConfirmationModal, closeConfirmationModal } from 'actions/_admin/confirmation'
 
 @connect(state => ({
   data: state.article.get('data'),
   pending: state.article.get('pending'),
   error: state.article.get('error'),
   role: state.auth.get('userInfo').get('role'),
-  isOpenModal: state._adminConfirmation && state._adminConfirmation.get('isOpenModal') || false
+  isOpenModal: state._adminConfirmation && state._adminConfirmation.get('isOpenModal') || false,
+  isRemovedArticle: state._adminRemoveArticle && state._adminRemoveArticle.get('isRemovedArticle') || false
 }))
 export default class Article extends Component {
   static propTypes = {
@@ -28,13 +29,11 @@ export default class Article extends Component {
   }
 
   constructor() {
-    super();
-    this.renderArticle = this.renderArticle.bind(this);
-    this.goToArticlePage = this.goToArticlePage.bind(this);
+    super()
+    this.goToArticlePage = this.goToArticlePage.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.removeArticle = this.removeArticle.bind(this)
-    this.state = { isRemovedArticle: false }
   }
 
   componentWillMount() {
@@ -49,42 +48,6 @@ export default class Article extends Component {
     this.props.history.push(location);
   }
 
-  renderArticle(article) {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const time = new Date(article.get('createdAt'));
-    const articleYear = time.getFullYear();
-    const articleMonth = time.getMonth();
-    const articleDay = time.getDate();
-    return <div>
-       <p className='titleArticle'>{article.get('title')}</p>
-       <p className='dateArticle'>Date: {articleDay} {months[articleMonth]}, {articleYear}</p>
-       <p className='authorArticle'>Author: {article.get('userName')}</p>
-       <p className='descriptionArticle'>{article.get('description')}</p>
-       <img className='imageArticle' src={article.get('image')} />
-       <p className='textArticle'>{article.get('text')}</p>
-     </div>
-  }
-
-  renderControls(props, isRemovedArticle) {
-    let { data, role, isOpenModal } = props
-    if(role !== 1) {
-      return null;
-    }
-    return (
-      <div className='adminPanelCreateAndRemoveArticles'>
-        <a onClick={this.goToArticlePage} href={'/admin/articles/' + data.get('id')}>{'Править статью +'}</a>
-        <a onClick={this.openModal}>{'Удалить статью -'}</a>
-        <ConfirmationModal
-          isOpenModal={isOpenModal}
-          closeModal={this.closeModal}
-          confirmEvent={this.removeArticle}
-          dialogTitle={'Confirm removing article'}
-          textButtonOk={'Yes, remove article!'}
-          textButtonCancel={'No, hide this modal!'} />
-        { isRemovedArticle && <Redirect to={'/articles'}/> }
-    </div>)
-  }
-
   openModal() {
     this.props.dispatch(openConfirmationModal())
   }
@@ -95,12 +58,10 @@ export default class Article extends Component {
 
   removeArticle() {
     this.props.dispatch(removeArticleAsync(this.props.data.get('id')))
-    this.setState({ isRemovedArticle: true })
   }
 
   render() {
-    let { data, pending, error, role, isOpenModal } = this.props
-    let { isRemovedArticle } = this.state
+    let { data, pending, error, role, isOpenModal, isRemovedArticle } = this.props
 
     return (<div className='wrapArticle'> {
       !data ? (
@@ -111,8 +72,16 @@ export default class Article extends Component {
           )
         ) : (
         <div>
-          {this.renderArticle(data)}
-          {this.renderControls(this.props, isRemovedArticle)}
+          <ArticleContents article={data} />
+          <ArticleControls
+            id={data.get('id')}
+            role={role}
+            isOpenModal={isOpenModal}
+            isRemovedArticle={isRemovedArticle}
+            goToArticlePage={this.goToArticlePage}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+            removeArticle={this.removeArticle} />
         </div>
       )
     }

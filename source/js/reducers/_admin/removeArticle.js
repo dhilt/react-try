@@ -8,6 +8,7 @@ import {
 
 const initialState = Map({
   pending: false,
+  isRemovedArticle: false,
   serverResult: null
 });
 
@@ -20,6 +21,7 @@ const actionsMap = {
   [REMOVE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       pending: false,
+      isRemovedArticle: true,
       serverResult: action.data
     })
   },
