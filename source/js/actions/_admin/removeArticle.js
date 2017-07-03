@@ -20,16 +20,9 @@ export function removeArticleAsyncStart() {
 }
 
 export function removeArticleAsyncEndSuccess(result) {
-  if (result.status == 'ok') {
-    return {
-      type: REMOVE_ARTICLE_ASYNC_END_SUCCESS,
-      data: result.msg
-    }
-  } else {
-    return {
-      type: REMOVE_ARTICLE_ASYNC_END_FAIL,
-      data: result.error
-    }
+  return {
+    type: REMOVE_ARTICLE_ASYNC_END_SUCCESS,
+    data: result.msg
   }
 }
 
