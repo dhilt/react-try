@@ -29,7 +29,7 @@ export default class Article extends Component {
 
   constructor() {
     super();
-    this.makeArticle = this.makeArticle.bind(this);
+    this.renderArticle = this.renderArticle.bind(this);
     this.goToArticlePage = this.goToArticlePage.bind(this);
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -49,20 +49,40 @@ export default class Article extends Component {
     this.props.history.push(location);
   }
 
-  makeArticle(article) {
+  renderArticle(article) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const time = new Date(article.get('createdAt'));
     const articleYear = time.getFullYear();
     const articleMonth = time.getMonth();
     const articleDay = time.getDate();
-    return <div className='wrapArticle'>
-             <p className='titleArticle'>{article.get('title')}</p>
-             <p className='dateArticle'>Date: {articleDay} {months[articleMonth]}, {articleYear}</p>
-             <p className='authorArticle'>Author: {article.get('userName')}</p>
-             <p className='descriptionArticle'>{article.get('description')}</p>
-             <img className='imageArticle' src={article.get('image')} />
-             <p className='textArticle'>{article.get('text')}</p>
-           </div>
+    return <div>
+       <p className='titleArticle'>{article.get('title')}</p>
+       <p className='dateArticle'>Date: {articleDay} {months[articleMonth]}, {articleYear}</p>
+       <p className='authorArticle'>Author: {article.get('userName')}</p>
+       <p className='descriptionArticle'>{article.get('description')}</p>
+       <img className='imageArticle' src={article.get('image')} />
+       <p className='textArticle'>{article.get('text')}</p>
+     </div>
+  }
+
+  renderControls(props, isRemovedArticle) {
+    let { data, role, isOpenModal } = props
+    if(role !== 1) {
+      return null;
+    }
+    return (
+      <div className='adminPanelCreateAndRemoveArticles'>
+        <a onClick={this.goToArticlePage} href={'/admin/articles/' + data.get('id')}>{'Править статью +'}</a>
+        <a onClick={this.openModal}>{'Удалить статью -'}</a>
+        <ConfirmationModal
+          isOpenModal={isOpenModal}
+          closeModal={this.closeModal}
+          confirmEvent={this.removeArticle}
+          dialogTitle={'Confirm removing article'}
+          textButtonOk={'Yes, remove article!'}
+          textButtonCancel={'No, hide this modal!'} />
+        { isRemovedArticle && <Redirect to={'/articles'}/> }
+    </div>)
   }
 
   openModal() {
@@ -82,35 +102,20 @@ export default class Article extends Component {
     let { data, pending, error, role, isOpenModal } = this.props
     let { isRemovedArticle } = this.state
 
-    return !data ? (
-      pending ? (
-        <div className='wrapArticle'>
-          <div className='ArticlePreloader'></div>
-        </div>
+    return (<div className='wrapArticle'> {
+      !data ? (
+        pending ? (
+            <div className='ArticlePreloader'></div>
+          ) : (
+            <p>{error}</p>
+          )
         ) : (
-        <div className='wrapArticle'>
-          <p>{error}</p>
+        <div>
+          {this.renderArticle(data)}
+          {this.renderControls(this.props, isRemovedArticle)}
         </div>
-        )
-      ) : (
-      <div>
-        {this.makeArticle(data)}
-
-        {role === 1 &&
-          <div className='adminPanelCreateAndRemoveArticles'>
-            <a onClick={this.goToArticlePage} href={'/admin/articles/' + data.get('id')}>{'Править статью +'}</a>
-            <a onClick={this.openModal}>{'Удалить статью -'}</a>
-            <ConfirmationModal
-              isOpenModal={isOpenModal}
-              closeModal={this.closeModal}
-              confirmEvent={this.removeArticle}
-              dialogTitle={'Confirm removing article'}
-              textButtonOk={'Yes, remove article!'}
-              textButtonCancel={'No, hide this modal!'} />
-            { isRemovedArticle && <Redirect to={'/articles'}/> }
-          </div>
-        }
-      </div>
-    );
+      )
+    }
+    </div>)
   }
 }
