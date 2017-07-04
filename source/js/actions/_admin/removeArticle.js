@@ -6,11 +6,11 @@ export const REMOVE_ARTICLE_ASYNC_END_FAIL = 'REMOVE_ARTICLE_ASYNC_END_FAIL'
 export const OPEN_CONFIRMATION_MODAL = 'OPEN_CONFIRMATION_MODAL'
 export const CLOSE_CONFIRMATION_MODAL = 'CLOSE_CONFIRMATION_MODAL'
 
-export function removeArticleAsync(id) {
+export function removeArticleAsync(id, history) {
   return (dispatch) => {
     dispatch(removeArticleAsyncStart());
     asyncRequest('articles/' + id, 'delete')
-      .then(result => dispatch(removeArticleAsyncEndSuccess(result)))
+      .then(result => dispatch(removeArticleAsyncEndSuccess(result, history)))
       .catch(error => dispatch(removeArticleAsyncEndFail(error)))
   }
 }
@@ -21,13 +21,14 @@ export function removeArticleAsyncStart() {
   }
 }
 
-export function removeArticleAsyncEndSuccess(result) {
+export function removeArticleAsyncEndSuccess(result, history) {
   return (dispatch) => {
-    dispatch(closeConfirmationModal())
     dispatch({
       type: REMOVE_ARTICLE_ASYNC_END_SUCCESS,
       data: result.msg
     })
+    dispatch(closeConfirmationModal())
+    history.push('/articles')
   }
 }
 

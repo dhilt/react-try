@@ -58,7 +58,7 @@ export default class Article extends Component {
   }
 
   removeArticle() {
-    this.props.dispatch(removeArticleAsync(this.props.data.get('id')))
+    this.props.dispatch(removeArticleAsync(this.props.data.get('id'), this.props.history))
   }
 
   render() {
