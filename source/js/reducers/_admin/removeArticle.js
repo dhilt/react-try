@@ -36,12 +36,14 @@ const actionsMap = {
   },
   [OPEN_CONFIRMATION_MODAL]: (state) => {
     return state.merge({
-      isOpenModal: true
+      isOpenModal: true,
+      serverResult: null
     })
   },
   [CLOSE_CONFIRMATION_MODAL]: (state) => {
     return state.merge({
-      isOpenModal: false
+      isOpenModal: false,
+      serverResult: null
     })
   }
 };

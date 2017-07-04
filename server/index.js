@@ -190,12 +190,14 @@ app.delete('/api/articles/:id', (req, res) => {
     } else {
       const idArticle = Number(req.params.id);
       db.get('SELECT * FROM Article WHERE id = ?', idArticle, (err, row) => {
-        if (err || !idArticle) {
+        if (err || !idArticle || !row) {
           return res.send({ status: 'error', error: 'Article with this id doesn\'t exist' });
         }
         else {
           db.run('DELETE FROM Article WHERE id = ?', idArticle);
-          return res.send({ status: 'ok', msg: 'Article was deleted.' });
+          setTimeout(() => {
+            return res.send({ status: 'ok', msg: 'Article was deleted.' });
+          }, 1500)
         }
       });
     }

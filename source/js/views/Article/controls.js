@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 export const ArticleControls = props => {
 
-  let { id, role, isOpenModal, isRemovedArticle } = props
+  let { id, role, isOpenModal, isRemovedArticle, pending, serverResult } = props
   if(role !== 1) {
     return null;
   }
@@ -17,9 +17,10 @@ export const ArticleControls = props => {
           cancel={props.cancel}
           confirm={props.confirm}
           dialogTitle={'Confirm removing article'}
+          message={serverResult}
+          pending={pending}
           textButtonOk={'Yes, remove article!'}
           textButtonCancel={'No, hide this modal!'} />
-        { isRemovedArticle && <Redirect to={'/articles'}/> }
     </div>
   )
 }

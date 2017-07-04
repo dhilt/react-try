@@ -16,7 +16,9 @@ import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } fro
   error: state.article.get('error'),
   role: state.auth.get('userInfo').get('role'),
   isOpenModal: state._adminRemoveArticle && state._adminRemoveArticle.get('isOpenModal') || false,
-  isRemovedArticle: state._adminRemoveArticle && state._adminRemoveArticle.get('isRemovedArticle') || false
+  isRemovedArticle: state._adminRemoveArticle && state._adminRemoveArticle.get('isRemovedArticle') || false,
+  modalPending: state._adminRemoveArticle && state._adminRemoveArticle.get('pending') || false,
+  serverResult: state._adminRemoveArticle && state._adminRemoveArticle.get('serverResult') || false
 }))
 export default class Article extends Component {
   static propTypes = {
@@ -60,7 +62,7 @@ export default class Article extends Component {
   }
 
   render() {
-    let { data, pending, error, role, isOpenModal, isRemovedArticle } = this.props
+    let { data, pending, error, role, isOpenModal, isRemovedArticle, modalPending, serverResult } = this.props
 
     return (<div className='wrapArticle'> {
       !data ? (
@@ -77,6 +79,8 @@ export default class Article extends Component {
             role={role}
             isOpenModal={isOpenModal}
             isRemovedArticle={isRemovedArticle}
+            pending={modalPending}
+            serverResult={serverResult}
             goToArticlePage={this.goToArticlePage}
             openModal={this.openModal}
             cancel={this.closeModal}
