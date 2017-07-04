@@ -14,8 +14,8 @@ export const ArticleControls = props => {
         <a onClick={props.openModal}>{'Удалить статью -'}</a>
         <ConfirmationModal
           isOpenModal={isOpenModal}
-          closeModal={props.closeModal}
-          confirmEvent={props.removeArticle}
+          cancel={props.cancel}
+          confirm={props.confirm}
           dialogTitle={'Confirm removing article'}
           textButtonOk={'Yes, remove article!'}
           textButtonCancel={'No, hide this modal!'} />

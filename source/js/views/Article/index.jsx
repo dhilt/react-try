@@ -8,15 +8,14 @@ import { ArticleControls } from 'views/Article/controls'
 
 import { getArticleAsync } from 'actions/article'
 import { setEditPageSource } from 'actions/_admin/editArticle'
-import { removeArticleAsync } from 'actions/_admin/removeArticle'
-import { openConfirmationModal, closeConfirmationModal } from 'actions/_admin/confirmation'
+import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } from 'actions/_admin/removeArticle'
 
 @connect(state => ({
   data: state.article.get('data'),
   pending: state.article.get('pending'),
   error: state.article.get('error'),
   role: state.auth.get('userInfo').get('role'),
-  isOpenModal: state._adminConfirmation && state._adminConfirmation.get('isOpenModal') || false,
+  isOpenModal: state._adminRemoveArticle && state._adminRemoveArticle.get('isOpenModal') || false,
   isRemovedArticle: state._adminRemoveArticle && state._adminRemoveArticle.get('isRemovedArticle') || false
 }))
 export default class Article extends Component {
@@ -80,8 +79,8 @@ export default class Article extends Component {
             isRemovedArticle={isRemovedArticle}
             goToArticlePage={this.goToArticlePage}
             openModal={this.openModal}
-            closeModal={this.closeModal}
-            removeArticle={this.removeArticle} />
+            cancel={this.closeModal}
+            confirm={this.removeArticle} />
         </div>
       )
     }

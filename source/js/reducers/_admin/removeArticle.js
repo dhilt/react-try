@@ -3,12 +3,15 @@ import { Map } from 'immutable';
 import {
   REMOVE_ARTICLE_ASYNC_START,
   REMOVE_ARTICLE_ASYNC_END_SUCCESS,
-  REMOVE_ARTICLE_ASYNC_END_FAIL
+  REMOVE_ARTICLE_ASYNC_END_FAIL,
+  OPEN_CONFIRMATION_MODAL,
+  CLOSE_CONFIRMATION_MODAL
 } from 'actions/_admin/removeArticle';
 
 const initialState = Map({
   pending: false,
   isRemovedArticle: false,
+  isOpenModal: false,
   serverResult: null
 });
 
@@ -29,6 +32,16 @@ const actionsMap = {
     return state.merge({
       pending: false,
       serverResult: action.error
+    })
+  },
+  [OPEN_CONFIRMATION_MODAL]: (state) => {
+    return state.merge({
+      isOpenModal: true
+    })
+  },
+  [CLOSE_CONFIRMATION_MODAL]: (state) => {
+    return state.merge({
+      isOpenModal: false
     })
   }
 };
