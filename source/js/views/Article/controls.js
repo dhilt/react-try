@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ConfirmationModal } from 'views/_admin/confirmation'
-import { Redirect } from 'react-router-dom'
 
 export const ArticleControls = props => {
 

@@ -1,13 +1,21 @@
 .Paging {
-
+  margin-left: 1%;
   padding: 20px;
+  display: inline-block;
 
   button {
     margin: 0 3px;
     cursor: pointer;
+    background-color: #7A839F;
+    color: aliceblue;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   .active {
     cursor: default;
+    background-color: #A1AAC6;
   }
 }
