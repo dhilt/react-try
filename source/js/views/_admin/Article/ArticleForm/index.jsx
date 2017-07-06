@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Control, Errors } from 'react-redux-form/immutable'
 
-import MyDatepickerInput from '../datepicker'
+import MyDatepickerInput from '../../datepicker'
 import { validators, validatorsVal } from 'helpers/validators'
 
 let getErrors = (token, options) => {

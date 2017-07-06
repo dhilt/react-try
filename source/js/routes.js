@@ -9,8 +9,8 @@ import Article from 'views/Article';
 import About from 'views/About';
 import NotFound from 'views/NotFound';
 
-import NewArticle from 'views/_admin/NewArticle';
-import EditArticle from 'views/_admin/EditArticle';
+import NewArticle from 'views/_admin/Article/NewArticle';
+import EditArticle from 'views/_admin/Article/EditArticle';
 
 const publicPath = '/';
 const adminPath = '/admin/';
