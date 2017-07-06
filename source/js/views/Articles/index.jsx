@@ -4,12 +4,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Paging from './Paging'
-import { ArticlesControlPanel } from './articlesControlPanel'
+import ArticlesControlPanel from 'views/_admin/Articles/ArticlesControlPanel'
 
 import { setPage } from 'actions/articles'
-import { writeIdArticle } from 'actions/_admin/articlesControlPanel'
-import { getExistArticleAsync } from 'actions/_admin/editArticle'
-import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } from 'actions/_admin/removeArticle'
 import { getLocationPage, persistPage } from 'helpers/page'
 
 @connect(state => ({
@@ -19,12 +16,7 @@ import { getLocationPage, persistPage } from 'helpers/page'
   total: state.articles.get('total'),
   page: state.articles.get('page'),
   count: state.articles.get('count'),
-  role: state.auth.get('userInfo').get('role'),
-  idArticle: state._adminArticlesControlPanel && state._adminArticlesControlPanel.get('idArticle') || '',
-  isValid: state._adminArticlesControlPanel && state._adminArticlesControlPanel.get('isValid') || false,
-  removeArticleIsOpenModal: state._adminRemoveArticle && state._adminRemoveArticle.get('isOpenModal') || false,
-  removeArticlePending: state._adminRemoveArticle && state._adminRemoveArticle.get('pending') || false,
-  removeArticleServerResult: state._adminRemoveArticle && state._adminRemoveArticle.get('serverResult') || false
+  role: state.auth.get('userInfo').get('role')
 }))
 export default class Articles extends Component {
   static propTypes = {
@@ -39,12 +31,6 @@ export default class Articles extends Component {
 
   constructor() {
     super()
-    this.adminPanelWriteId = this.adminPanelWriteId.bind(this)
-    this.adminPanelNewArticle = this.adminPanelNewArticle.bind(this)
-    this.adminPanelEditArticle = this.adminPanelEditArticle.bind(this)
-    this.adminPanelRemoveArticle = this.adminPanelRemoveArticle.bind(this)
-    this.adminPanelOpenConfirmationModal = this.adminPanelOpenConfirmationModal.bind(this)
-    this.adminPanelCloseConfirmationModal = this.adminPanelCloseConfirmationModal.bind(this)
   }
 
   componentWillMount() {
@@ -74,31 +60,6 @@ export default class Articles extends Component {
     }
   }
 
-  adminPanelWriteId(event) {
-    this.props.dispatch(writeIdArticle(event.target.value))
-  }
-
-  adminPanelNewArticle() {
-    this.props.history.push('/admin/articles/new');
-  }
-
-  adminPanelEditArticle() {
-    this.props.dispatch(getExistArticleAsync(this.props.idArticle));
-    this.props.history.push('/admin/articles/' + this.props.idArticle);
-  }
-
-  adminPanelRemoveArticle() {
-    this.props.dispatch(removeArticleAsync(this.props.idArticle, this.props.history))
-  }
-
-  adminPanelOpenConfirmationModal() {
-    this.props.dispatch(openConfirmationModal())
-  }
-
-  adminPanelCloseConfirmationModal() {
-    this.props.dispatch(closeConfirmationModal())
-  }
-
   render() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let Articles = this.props.listArticles.map((article, index) => {
@@ -112,24 +73,11 @@ export default class Articles extends Component {
                 <span>{article.get('description')}&nbsp;</span>
              </div>
     })
-
     return (
       <div className='Articles'>
         <Paging history={this.props.history} />
         {this.props.role === 1 && !this.props.pending &&
-          <ArticlesControlPanel
-            isValid={this.props.isValid}
-            idArticle={this.props.idArticle}
-            changeId={this.adminPanelWriteId}
-            makeNewArticle={this.adminPanelNewArticle}
-            editArticle={this.adminPanelEditArticle}
-
-            openConfirmationModal={this.adminPanelOpenConfirmationModal}
-            cancelRemoveArticle={this.adminPanelCloseConfirmationModal}
-            confirmRemoveArticle={this.adminPanelRemoveArticle}
-            isOpenConfirmationModal={this.props.removeArticleIsOpenModal}
-            pending={this.props.removeArticlePending}
-            serverResult={this.props.removeArticleServerResult} />}
+          <ArticlesControlPanel history={this.props.history} />}
         <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
       </div>
     )
