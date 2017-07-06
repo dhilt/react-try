@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'react-redux-form/immutable'
 
+import { cleanUpListArticles } from 'actions/articles'
 import { createArticleAsync } from 'actions/_admin/newArticle'
 import { ArticleForm } from '../ArticleForm'
 
@@ -27,6 +28,7 @@ export default class NewArticle extends Component {
   handleSubmit() {
     const { dispatch } = this.props
     dispatch(createArticleAsync())
+    dispatch(cleanUpListArticles())
   }
 
   render() {

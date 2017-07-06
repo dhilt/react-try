@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { ConfirmationModal } from 'views/_admin/confirmation'
 
-import { setPage } from 'actions/articles'
 import { writeIdArticle } from 'actions/_admin/articlesControlPanel'
 import { getExistArticleAsync } from 'actions/_admin/editArticle'
 import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } from 'actions/_admin/removeArticle'

@@ -143,14 +143,14 @@ app.post('/api/articles', (req, res) => {
       if (!article || !article.createdAt || !article.title || !article.description || !article.image || !article.text) {
         return res.send({ status: 'error', error: 'Missed some data!' });
       }
-      db.get('SELECT COUNT(id) FROM Article', (err, total) => {
+      db.get('SELECT max(id) FROM Article', (err, newId) => {
         if (err) {
           return res.send({ status: 'error', error: err });
         }
         const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(total['COUNT(id)'] + 1, article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login);
+        stmt.run(newId['max(id)'] + 1, article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login);
         stmt.finalize();
-        res.send({ id: total['COUNT(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.createdAt).toISOString(), image: article.image, userId: user.id, userName: user.login });
+        res.send({ id: newId['max(id)'] + 1, title: article.title, text: article.text, description: article.description, createdAt: new Date(article.createdAt).toISOString(), image: article.image, userId: user.id, userName: user.login });
       })
     });
 });
