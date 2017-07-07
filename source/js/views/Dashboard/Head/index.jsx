@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { selectHeaderImage, closeHeaderImage } from 'actions/dashboard';
+import { clickOnHeaderImage } from 'actions/dashboard';
 import { TextBlock } from './TextBlock';
 
 @connect(state => ({
@@ -15,17 +15,11 @@ export default class DashboardHead extends Component {
     super();
 
     this.onImageClick = this.onImageClick.bind(this);
-    // this.closeImage = this.closeImage.bind(this);
   }
 
   onImageClick(index) {
-    this.props.dispatch(selectHeaderImage(index));
+    this.props.dispatch(clickOnHeaderImage(index));
   }
-
-  // closeImage(index) {
-  //   this.props.dispatch(closeHeaderImage(index));
-  // }
-
 
   render() {
     const { selectedIndex } = this.props;
@@ -70,7 +64,7 @@ export default class DashboardHead extends Component {
               key={index}
               onClick={() => this.onImageClick(index)}
             >
-              <img activeClassName="active" src={game.img} />
+              <img src={game.img}  />
             </li>
           ))}
         </div>

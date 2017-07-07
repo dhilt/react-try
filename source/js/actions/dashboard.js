@@ -5,7 +5,7 @@ export const GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS = 'GET_DASHBOARD_ARTICLES_
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL = 'GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL';
 
 export const SELECT_HEADER_IMAGE = 'SELECT_HEADER_IMAGE';
-export const CLOSE_HEADER_IMAGE = 'CLOSE_HEADER_IMAGE';
+export const RESET_HEADER_IMAGE = 'CLOSE_HEADER_IMAGE';
 
 export const GET_DASHBOARD_HEAD_DATA_ASYNC_START = 'GET_DASHBOARD_HEAD_DATA_ASYNC_START';
 export const GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS = 'GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS';
@@ -42,6 +42,22 @@ export function getDashboardArticlesAsyncEndFail(error) {
   }
 }
 
+export function clickOnHeaderImage(index) {
+  return (dispatch, getState) => {
+    let currentIndex = getState().dashboard.get('head').get('selectedIndex');
+    if (index === currentIndex) {
+      dispatch (
+        resetHeaderImage()
+      )
+    }
+    else {
+      dispatch (
+        selectHeaderImage(index)
+      )
+    }
+  }
+}
+
 export function selectHeaderImage(data) {
   return {
     type: SELECT_HEADER_IMAGE,
@@ -49,10 +65,9 @@ export function selectHeaderImage(data) {
   }
 }
 
-export function closeHeaderImage(data) {
+export function resetHeaderImage() {
   return {
-    type: CLOSE_HEADER_IMAGE,
-    data
+    type: RESET_HEADER_IMAGE
   }
 }
 
