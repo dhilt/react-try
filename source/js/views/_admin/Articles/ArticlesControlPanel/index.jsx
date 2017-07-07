@@ -8,7 +8,6 @@ import { getExistArticleAsync } from 'actions/_admin/editArticle'
 import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } from 'actions/_admin/removeArticle'
 
 @connect(state => ({
-  role: state.auth.get('userInfo').get('role'),
   idArticle: state._adminArticlesControlPanel.get('idArticle'),
   isValid: state._adminArticlesControlPanel.get('isValid'),
   removeArticleIsOpenModal: state._adminRemoveArticle.get('isOpenModal'),
@@ -54,9 +53,6 @@ export default class ArticlesControlPanel extends Component {
 
   render() {
     let { role, idArticle, isValid, removeArticleIsOpenModal, removeArticlePending, removeArticleServerResult } = this.props
-    if (role !== 1) {
-      return null
-    }
     return (
       <div className='ArticlesControlPanel'>
       <button type='button' onClick={this.makeNewArticle}>{'Создать статью'}</button>

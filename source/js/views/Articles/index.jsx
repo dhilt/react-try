@@ -76,7 +76,7 @@ export default class Articles extends Component {
     return (
       <div className='Articles'>
         <Paging history={this.props.history} />
-        {this.props.role === 1 && !this.props.pending &&
+        {this.props.role === 1 &&
           <ArticlesControlPanel history={this.props.history} />}
         <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
       </div>
