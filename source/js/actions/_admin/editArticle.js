@@ -4,7 +4,6 @@ import { actions } from 'react-redux-form/immutable'
 import { asyncRequest } from '../../helpers/request'
 import { validators, validatorsVal } from 'helpers/validators'
 
-import { updateArticles } from 'actions/articles'
 import { updateDashboardArticles } from 'actions/dashboard'
 
 export const EDIT_ARTICLE_ASYNC_START = 'EDIT_ARTICLE_ASYNC_START'
@@ -40,7 +39,6 @@ export function editArticleAsyncEndSuccess(data) {
       data
     })
     dispatch(updateDashboardArticles(data))
-    dispatch(updateArticles(data))
   }
 }
 

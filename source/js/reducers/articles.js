@@ -5,9 +5,12 @@ import {
   GET_ARTICLES_ASYNC_END_SUCCESS,
   GET_ARTICLES_ASYNC_END_FAIL,
   SET_ARTICLES_PAGE,
-  CLEAN_UP_LIST_ARTICLES,
-  UPDATE_ARTICLES
+  CLEAN_UP_LIST_ARTICLES
 } from 'actions/articles';
+
+import {
+  EDIT_ARTICLE_ASYNC_END_SUCCESS
+} from 'actions/_admin/editArticle';
 
 const initialState = Map({
   listArticles: [],
@@ -49,9 +52,9 @@ const actionsMap = {
       listArticles: []
     })
   },
-  [UPDATE_ARTICLES]: (state, action) => {
+  [EDIT_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
-      listArticles: action.data
+      listArticles: state.get('listArticles').map(a => a.get('id') == action.data.id ? Map(action.data) : a)
     })
   }
 };
