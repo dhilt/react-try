@@ -5,7 +5,8 @@ import {
   GET_ARTICLES_ASYNC_END_SUCCESS,
   GET_ARTICLES_ASYNC_END_FAIL,
   SET_ARTICLES_PAGE,
-  CLEAN_UP_LIST_ARTICLES
+  CLEAN_UP_LIST_ARTICLES,
+  UPDATE_ARTICLES
 } from 'actions/articles';
 
 const initialState = Map({
@@ -46,6 +47,11 @@ const actionsMap = {
   [CLEAN_UP_LIST_ARTICLES]: (state) => {
     return state.merge({
       listArticles: []
+    })
+  },
+  [UPDATE_ARTICLES]: (state, action) => {
+    return state.merge({
+      listArticles: action.data
     })
   }
 };

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'react-redux-form/immutable'
 
-import { getArticleAsync } from 'actions/article'
 import { editArticleAsync, getExistArticleAsync, resetForm } from 'actions/_admin/editArticle'
 import { ArticleForm } from '../ArticleForm'
 
@@ -36,7 +35,6 @@ export default class EditArticle extends Component {
   handleSubmit() {
     const { dispatch, editArticle } = this.props
     dispatch(editArticleAsync())
-    dispatch(getArticleAsync(editArticle.get('source').get('id')))
   }
 
   resetButton() {

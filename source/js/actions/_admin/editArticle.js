@@ -4,6 +4,9 @@ import { actions } from 'react-redux-form/immutable'
 import { asyncRequest } from '../../helpers/request'
 import { validators, validatorsVal } from 'helpers/validators'
 
+import { updateArticles } from 'actions/articles'
+import { updateDashboardArticles } from 'actions/dashboard'
+
 export const EDIT_ARTICLE_ASYNC_START = 'EDIT_ARTICLE_ASYNC_START'
 export const EDIT_ARTICLE_ASYNC_END_SUCCESS = 'EDIT_ARTICLE_ASYNC_END_SUCCESS'
 export const EDIT_ARTICLE_ASYNC_END_FAIL = 'EDIT_ARTICLE_ASYNC_END_FAIL'
@@ -31,9 +34,13 @@ export function editArticleAsyncStart() {
 }
 
 export function editArticleAsyncEndSuccess(data) {
-  return {
-    type: EDIT_ARTICLE_ASYNC_END_SUCCESS,
-    data
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_ARTICLE_ASYNC_END_SUCCESS,
+      data
+    })
+    dispatch(updateDashboardArticles(data))
+    dispatch(updateArticles(data))
   }
 }
 

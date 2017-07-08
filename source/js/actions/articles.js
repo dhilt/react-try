@@ -6,6 +6,7 @@ export const GET_ARTICLES_ASYNC_END_SUCCESS = 'GET_ARTICLES_ASYNC_END_SUCCESS'
 export const GET_ARTICLES_ASYNC_END_FAIL = 'GET_ARTICLES_ASYNC_END_FAIL'
 export const SET_ARTICLES_PAGE = 'SET_ARTICLES_PAGE'
 export const CLEAN_UP_LIST_ARTICLES = 'CLEAN_UP_LIST_ARTICLES'
+export const UPDATE_ARTICLES = 'UPDATE_ARTICLES'
 
 export function getArticlesAsync() {
   return (dispatch, getState) => {
@@ -54,5 +55,23 @@ export function setPage(page, hystory) {
 export function cleanUpListArticles() {
   return {
     type: CLEAN_UP_LIST_ARTICLES
+  }
+}
+
+export function updateArticles(article) {
+  return (dispatch, getState) => {
+    if (getState().articles.get('listArticles').length == 0) {
+      return null
+    }
+    let listArticles = getState().articles.get('listArticles').toJS()
+    listArticles.forEach((item, index, array) => {
+      if (item.id == article.id) {
+        array[index] = article
+      }
+    })
+    dispatch({
+      type: UPDATE_ARTICLES,
+      data: listArticles
+    })
   }
 }

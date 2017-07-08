@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { ConfirmationModal } from 'views/_admin/confirmation'
 
-import { cleanUpListArticles } from 'actions/articles'
 import { setEditPageSource } from 'actions/_admin/editArticle'
 import { openConfirmationModal, closeConfirmationModal, removeArticleAsync } from 'actions/_admin/removeArticle'
 
@@ -40,7 +39,6 @@ export default class ArticleControls extends React.Component {
 
   removeArticle() {
     this.props.dispatch(removeArticleAsync(this.props.article.get('id'), this.props.history))
-    this.props.dispatch(cleanUpListArticles())
   }
 
   render() {

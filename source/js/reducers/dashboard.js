@@ -3,7 +3,9 @@ import { Map } from 'immutable';
 import {
   GET_DASHBOARD_ARTICLES_ASYNC_START,
   GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS,
-  GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL
+  GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL,
+  UPDATE_DASHBOARD_ARTICLES,
+  CLEAN_UP_DASHBOARD_ARTICLES
 } from 'actions/dashboard';
 
 const initialState = Map({
@@ -36,6 +38,20 @@ const actionsMap = {
       articles: state.get('articles').merge({
         pending: false,
         error: action.error,
+        list: []
+      })
+    })
+  },
+  [UPDATE_DASHBOARD_ARTICLES]: (state, action) => {
+    return state.merge({
+      articles: state.get('articles').merge({
+        list: action.data
+      })
+    })
+  },
+  [CLEAN_UP_DASHBOARD_ARTICLES]: (state) => {
+    return state.merge({
+      articles: state.get('articles').merge({
         list: []
       })
     })
