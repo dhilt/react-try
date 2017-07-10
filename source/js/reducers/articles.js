@@ -4,13 +4,20 @@ import {
   GET_ARTICLES_ASYNC_START,
   GET_ARTICLES_ASYNC_END_SUCCESS,
   GET_ARTICLES_ASYNC_END_FAIL,
-  SET_ARTICLES_PAGE,
-  CLEAN_UP_LIST_ARTICLES
+  SET_ARTICLES_PAGE
 } from 'actions/articles';
 
 import {
   EDIT_ARTICLE_ASYNC_END_SUCCESS
-} from 'actions/_admin/editArticle';
+} from 'actions/_admin/editArticle'
+
+import {
+  REMOVE_ARTICLE_ASYNC_END_SUCCESS
+} from 'actions/_admin/removeArticle'
+
+import {
+  CREATE_ARTICLE_ASYNC_END_SUCCESS
+} from 'actions/_admin/newArticle'
 
 const initialState = Map({
   listArticles: [],
@@ -47,14 +54,19 @@ const actionsMap = {
       page: action.page
     })
   },
-  [CLEAN_UP_LIST_ARTICLES]: (state) => {
-    return state.merge({
-      listArticles: []
-    })
-  },
   [EDIT_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       listArticles: state.get('listArticles').map(a => a.get('id') == action.data.id ? Map(action.data) : a)
+    })
+  },
+  [REMOVE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
+    return state.merge({
+      listArticles: state.get('listArticles').toJS().find(item => item.id == action.id) ? [] : state.get('listArticles')
+    })
+  },
+  [CREATE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
+    return state.merge({
+      listArticles: []
     })
   }
 };

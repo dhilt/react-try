@@ -3,10 +3,20 @@ import { Map } from 'immutable';
 import {
   GET_DASHBOARD_ARTICLES_ASYNC_START,
   GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS,
-  GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL,
-  UPDATE_DASHBOARD_ARTICLES,
-  CLEAN_UP_DASHBOARD_ARTICLES
+  GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL
 } from 'actions/dashboard';
+
+import {
+  EDIT_ARTICLE_ASYNC_END_SUCCESS
+} from 'actions/_admin/editArticle'
+
+import {
+  REMOVE_ARTICLE_ASYNC_END_SUCCESS
+} from 'actions/_admin/removeArticle'
+
+import {
+  CREATE_ARTICLE_ASYNC_END_SUCCESS
+} from 'actions/_admin/newArticle'
 
 const initialState = Map({
   articles: Map({
@@ -42,14 +52,21 @@ const actionsMap = {
       })
     })
   },
-  [UPDATE_DASHBOARD_ARTICLES]: (state, action) => {
+  [EDIT_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       articles: state.get('articles').merge({
-        list: action.data
+        list: state.get('articles').get('list').map(a => a.get('id') == action.data.id ? Map(action.data) : a)
       })
     })
   },
-  [CLEAN_UP_DASHBOARD_ARTICLES]: (state) => {
+  [REMOVE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
+    return state.merge({
+      articles: state.get('articles').merge({
+        list: state.get('articles').get('list').toJS().find(item => item.id == action.id) ? [] : state.get('articles').get('list')
+      })
+    })
+  },
+  [CREATE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       articles: state.get('articles').merge({
         list: []

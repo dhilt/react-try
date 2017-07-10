@@ -5,7 +5,6 @@ export const GET_ARTICLES_ASYNC_START = 'GET_ARTICLES_ASYNC_START'
 export const GET_ARTICLES_ASYNC_END_SUCCESS = 'GET_ARTICLES_ASYNC_END_SUCCESS'
 export const GET_ARTICLES_ASYNC_END_FAIL = 'GET_ARTICLES_ASYNC_END_FAIL'
 export const SET_ARTICLES_PAGE = 'SET_ARTICLES_PAGE'
-export const CLEAN_UP_LIST_ARTICLES = 'CLEAN_UP_LIST_ARTICLES'
 
 export function getArticlesAsync() {
   return (dispatch, getState) => {
@@ -48,11 +47,5 @@ export function setPage(page, hystory) {
       page
     })
     dispatch(getArticlesAsync())
-  }
-}
-
-export function cleanUpListArticles() {
-  return {
-    type: CLEAN_UP_LIST_ARTICLES
   }
 }

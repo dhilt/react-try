@@ -1,8 +1,5 @@
 import { asyncRequest } from '../../helpers/request'
 
-import { cleanUpListArticles } from 'actions/articles'
-import { cleanUpDashboardArticles } from 'actions/dashboard'
-
 export const CREATE_ARTICLE_ASYNC_START = 'CREATE_ARTICLE_ASYNC_START'
 export const CREATE_ARTICLE_ASYNC_END_SUCCESS = 'CREATE_ARTICLE_ASYNC_END_SUCCESS'
 export const CREATE_ARTICLE_ASYNC_END_FAIL = 'CREATE_ARTICLE_ASYNC_END_FAIL'
@@ -24,13 +21,9 @@ export function createArticleAsyncStart() {
 }
 
 export function createArticleAsyncEndSuccess(data) {
-  return (dispatch) => {
-    dispatch({
-      type: CREATE_ARTICLE_ASYNC_END_SUCCESS,
-      data
-    })
-    dispatch(cleanUpListArticles())
-    dispatch(cleanUpDashboardArticles())
+  return {
+    type: CREATE_ARTICLE_ASYNC_END_SUCCESS,
+    data
   }
 }
 
