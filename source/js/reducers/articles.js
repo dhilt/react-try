@@ -4,7 +4,12 @@ import {
   GET_ARTICLES_ASYNC_START,
   GET_ARTICLES_ASYNC_END_SUCCESS,
   GET_ARTICLES_ASYNC_END_FAIL,
-  SET_ARTICLES_PAGE
+  SET_ARTICLES_PAGE,
+  SET_FILTER_BEGIN_DATE,
+  SET_FILTER_END_DATE,
+  SET_FILTER_AUTHOR,
+  SET_FILTER_TITLE,
+  CLEAN_UP_FILTER
 } from 'actions/articles';
 
 import {
@@ -25,7 +30,13 @@ const initialState = Map({
   error: null,
   total: null,
   page: 0,
-  count: 20
+  count: 20,
+  filter: Map({
+    title: '',
+    author: '',
+    dateFrom: '',
+    dateTo: ''
+  })
 });
 
 const actionsMap = {
@@ -52,6 +63,44 @@ const actionsMap = {
   [SET_ARTICLES_PAGE]: (state, action) => {
     return state.merge({
       page: action.page
+    })
+  },
+  [SET_FILTER_BEGIN_DATE]: (state, action) => {
+    return state.merge({
+      filter: state.get('filter').merge({
+        dateFrom: action.date
+      })
+    })
+  },
+  [SET_FILTER_END_DATE]: (state, action) => {
+    return state.merge({
+      filter: state.get('filter').merge({
+        dateTo: action.date
+      })
+    })
+  },
+  [SET_FILTER_AUTHOR]: (state, action) => {
+    return state.merge({
+      filter: state.get('filter').merge({
+        author: action.author
+      })
+    })
+  },
+  [SET_FILTER_TITLE]: (state, action) => {
+    return state.merge({
+      filter: state.get('filter').merge({
+        title: action.title
+      })
+    })
+  },
+  [CLEAN_UP_FILTER]: (state) => {
+    return state.merge({
+      filter: state.get('filter').merge({
+        author: '',
+        title: '',
+        dateFrom: '',
+        dateTo: ''
+      })
     })
   },
   [EDIT_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {

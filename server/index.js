@@ -97,17 +97,28 @@ app.post('/api/login', (req, res) => {
 app.get('/api/articles', (req, res) => {
   const dashboard = req.query.hasOwnProperty('dashboard');
   let count = Number(req.query.count) || ARTICLES.defaultCount;
-  let offset = Number(req.query.offset) || 0;
-  let orderBy = 'createdAt';
-  let orderDir = 'DESC';
+  const offset = Number(req.query.offset) || 0;
+  const title = req.query.title || '';
+  const author = req.query.author || '';
+  const dateFrom = req.query.dateFrom || '';
+  const dateTo = req.query.dateTo || '';
+  const orderBy = 'createdAt';
+  const orderDir = 'DESC';
 
   if (dashboard) {
     count = ARTICLES.dashboardCount;
   }
 
   const ordering = (orderBy ? ' ORDER BY ' + orderBy + ' ' : '') + (orderBy && orderDir ? orderDir : '');
+  let selection = 'WHERE ' + (title ? 'title LIKE "%' + title + '%" ' : '') +
+        (author ? (author && title ? 'AND ' : '') + 'userName LIKE "%' + author + '%" ' : '') +
+        (dateFrom && dateTo ? 'AND createdAt BETWEEN "' + dateFrom + '" AND "' + dateTo + '" ' : '');
 
-  db.all('SELECT * FROM Article ' + ordering + ' LIMIT ? OFFSET ?', [count, offset], (err, row) => {
+  if (selection == 'WHERE ') {
+    selection = '';
+  }
+
+  db.all('SELECT * FROM Article ' + selection + ordering + ' LIMIT ? OFFSET ?', [count, offset], (err, row) => {
     if (err)
       return res.send({ status: 'error', error: err });
 
@@ -118,7 +129,7 @@ app.get('/api/articles', (req, res) => {
       );
     }
 
-    db.get('SELECT COUNT(id) FROM Article', (err, total) => {
+    db.get('SELECT COUNT(id) FROM Article ' + selection, (err, total) => {
       setTimeout(() => res.send({ articles: row, total: total['COUNT(id)'] }), DEV_DELAY);
     })
   });
