@@ -62,7 +62,7 @@ const actionsMap = {
   [REMOVE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
       articles: state.get('articles').merge({
-        list: state.get('articles').get('list').toJS().find(item => item.id == action.id) ? [] : state.get('articles').get('list')
+        list: state.get('articles').get('list').find(item => item.get('id') == action.id) ? [] : state.get('articles').get('list')
       })
     })
   },
