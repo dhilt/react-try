@@ -80,7 +80,7 @@ export default class ArticlesControlPanel extends Component {
   }
 
   onChangeBeginDate(date) {
-    const beginDate = date._d.getFullYear() + '/' + (date._d.getMonth() + 1) + '/' + date._d.getDate()
+    const beginDate = date._d.toISOString().slice(0,10)
     this.props.dispatch(setFilterBeginDate(beginDate, this.props.history))
     this.setState({
       beginDate: date
@@ -88,7 +88,7 @@ export default class ArticlesControlPanel extends Component {
   }
 
   onChangeEndDate(date) {
-    const endDate = date._d.getFullYear() + '/' + (date._d.getMonth() + 1) + '/' + date._d.getDate()
+    const endDate = date._d.toISOString().slice(0,10)
     this.props.dispatch(setFilterEndDate(endDate, this.props.history))
     this.setState({
       endDate: date

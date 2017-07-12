@@ -98,10 +98,10 @@ app.get('/api/articles', (req, res) => {
   const dashboard = req.query.hasOwnProperty('dashboard');
   let count = Number(req.query.count) || ARTICLES.defaultCount;
   const offset = Number(req.query.offset) || 0;
-  const title = req.query.title || '';
-  const author = req.query.author || '';
-  const dateFrom = req.query.dateFrom || '';
-  const dateTo = req.query.dateTo || '';
+  const title = req.query.title ? '%' + req.query.title + '%' : '%%';
+  const author = req.query.author ? '%' + req.query.author + '%' : '%%';
+  const dateFrom = req.query.dateFrom ? req.query.dateFrom : '1970-01-01';
+  const dateTo = req.query.dateTo ? req.query.dateTo : 'date("now")';
   const orderBy = 'createdAt';
   const orderDir = 'DESC';
 
@@ -110,27 +110,20 @@ app.get('/api/articles', (req, res) => {
   }
 
   const ordering = (orderBy ? ' ORDER BY ' + orderBy + ' ' : '') + (orderBy && orderDir ? orderDir : '');
-  let selection = 'WHERE ' + (title ? 'title LIKE "%' + title + '%" ' : '') +
-        (author ? (author && title ? 'AND ' : '') + 'userName LIKE "%' + author + '%" ' : '') +
-        (dateFrom && dateTo ? 'AND createdAt BETWEEN "' + dateFrom + '" AND "' + dateTo + '" ' : '');
 
-  if (selection == 'WHERE ') {
-    selection = '';
-  }
-
-  db.all('SELECT * FROM Article ' + selection + ordering + ' LIMIT ? OFFSET ?', [count, offset], (err, row) => {
+  db.all('SELECT * FROM Article WHERE userName LIKE ? AND title LIKE ? AND createdAt BETWEEN ? AND ? ' + ordering + ' LIMIT ? OFFSET ?', [author, title, dateFrom, dateTo, count, offset], (err, rows) => {
     if (err)
       return res.send({ status: 'error', error: err });
 
     if (dashboard) {
       // режем текст на 150 символов
-      row.forEach(item =>
+      rows.forEach(item =>
         item.text = item.text.slice(0, ARTICLES.dashboardTextCut)
       );
     }
 
-    db.get('SELECT COUNT(id) FROM Article ' + selection, (err, total) => {
-      setTimeout(() => res.send({ articles: row, total: total['COUNT(id)'] }), DEV_DELAY);
+    db.get('SELECT COUNT(id) FROM Article WHERE userName LIKE ? AND title LIKE ? AND createdAt BETWEEN ? AND ? ', [author, title, dateFrom, dateTo], (err, total) => {
+      setTimeout(() => res.send({ articles: rows, total: total['COUNT(id)'] }), DEV_DELAY);
     })
   });
 });
