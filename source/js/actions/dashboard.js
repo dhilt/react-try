@@ -46,28 +46,16 @@ export function clickOnHeaderImage(index) {
   return (dispatch, getState) => {
     let currentIndex = getState().dashboard.get('head').get('selectedIndex');
     if (index === currentIndex) {
-      dispatch (
-        resetHeaderImage()
-      )
+      dispatch ({
+        type: RESET_HEADER_IMAGE
+      })
     }
     else {
-      dispatch (
-        selectHeaderImage(index)
-      )
+      dispatch ({
+        type: SELECT_HEADER_IMAGE,
+        data: index
+      })
     }
-  }
-}
-
-export function selectHeaderImage(data) {
-  return {
-    type: SELECT_HEADER_IMAGE,
-    data
-  }
-}
-
-export function resetHeaderImage() {
-  return {
-    type: RESET_HEADER_IMAGE
   }
 }
 
