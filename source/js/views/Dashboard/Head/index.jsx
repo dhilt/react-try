@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { clickOnHeaderImage } from 'actions/dashboard';
+import { clickOnHeaderImage, getDashboardHeadDataAsync } from 'actions/dashboard';
 import { TextBlock } from './TextBlock';
 
 @connect(state => ({
-  selectedIndex: state.dashboard.get('head').get('selectedIndex')
+  selectedIndex: state.dashboard.get('head').get('selectedIndex'),
+  pending: state.dashboard.get('head').get('pending'),
+  error: state.dashboard.get('head').get('error'),
+  games: state.dashboard.get('head').get('games')
 }))
 
 
 export default class DashboardHead extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    pending: PropTypes.bool,
+    error: PropTypes.string,
+    games: PropTypes.array
+  }
+
   constructor() {
     super();
 
@@ -19,6 +29,12 @@ export default class DashboardHead extends Component {
 
   onImageClick(index) {
     this.props.dispatch(clickOnHeaderImage(index));
+  }
+
+  componentWillMount() {
+    if(!this.props.games.size) {
+      this.props.dispatch(getDashboardHeadDataAsync());
+    }
   }
 
   render() {
@@ -64,7 +80,9 @@ export default class DashboardHead extends Component {
               key={index}
               onClick={() => this.onImageClick(index)}
             >
-              <img src={game.img}  />
+              <img
+                src={game.img}
+                className={selectedIndex === index ? 'active' : '' } />
             </li>
           ))}
         </div>
