@@ -10,6 +10,7 @@ import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } fro
 import { setFilterAuthor, setFilterTitle, setFilterBeginDate, setFilterEndDate, cleanUpFilter } from 'actions/articles'
 
 @connect(state => ({
+  filter: state.articles.get('filter'),
   idArticle: state._adminArticlesControlPanel.get('idArticle'),
   isValid: state._adminArticlesControlPanel.get('isValid'),
   removeArticleIsOpenModal: state._adminRemoveArticle.get('isOpenModal'),
@@ -20,12 +21,6 @@ export default class ArticlesControlPanel extends Component {
 
   constructor() {
     super()
-    this.state = {
-      beginDate: '',
-      endDate: '',
-      author: '',
-      title: ''
-    }
 
     this.onChangeId = this.onChangeId.bind(this)
     this.makeNewArticle = this.makeNewArticle.bind(this)
@@ -67,32 +62,20 @@ export default class ArticlesControlPanel extends Component {
 
   onChangeUserName(event) {
     this.props.dispatch(setFilterAuthor(event.target.value, this.props.history))
-    this.setState({
-      author: event.target.value
-    })
   }
 
   onChangeTitle(event) {
     this.props.dispatch(setFilterTitle(event.target.value, this.props.history))
-    this.setState({
-      title: event.target.value
-    })
   }
 
   onChangeBeginDate(date) {
-    const beginDate = date._d.toISOString().slice(0,10)
-    this.props.dispatch(setFilterBeginDate(beginDate, this.props.history))
-    this.setState({
-      beginDate: date
-    })
+    date.time = date._d.toISOString().slice(0,8) + (String(date._d.getDate()).length == 2 ? date._d.getDate() : '0' + date._d.getDate())
+    this.props.dispatch(setFilterBeginDate(date, this.props.history))
   }
 
   onChangeEndDate(date) {
-    const endDate = date._d.toISOString().slice(0,10)
-    this.props.dispatch(setFilterEndDate(endDate, this.props.history))
-    this.setState({
-      endDate: date
-    })
+    date.time = date._d.toISOString().slice(0,8) + (String(date._d.getDate()).length == 2 ? date._d.getDate() : '0' + date._d.getDate())
+    this.props.dispatch(setFilterEndDate(date, this.props.history))
   }
 
   cleanFilter() {
@@ -107,6 +90,7 @@ export default class ArticlesControlPanel extends Component {
 
   render() {
     let { role, idArticle, isValid, removeArticleIsOpenModal, removeArticlePending, removeArticleServerResult } = this.props
+    let { author, title, dateFrom, dateTo } = this.props.filter.toJS()
     return (
       <div className='ArticlesControlPanel'>
       <button type='button' onClick={this.makeNewArticle}>{'Создать статью'}</button>
@@ -115,20 +99,20 @@ export default class ArticlesControlPanel extends Component {
       <input type='text' value={idArticle} onChange={this.onChangeId} placeholder='id of article...' className={!isValid ? 'invalidInput' : ''}></input>
       <div className='filter'>
         <label>{'Сортировать по: '}</label>
-        <input placeholder='UserName' onChange={this.onChangeUserName} value={this.state.author} />
-        <input placeholder='Title' onChange={this.onChangeTitle} value={this.state.title} />
+        <input placeholder='UserName' onChange={this.onChangeUserName} value={author} />
+        <input placeholder='Title' onChange={this.onChangeTitle} value={title} />
         <label>{'От: '}</label>
         <DatePicker
           dateFormat='YYYY/MM/DD'
           placeholderText='Date from'
-          selected={this.state.beginDate}
+          selected={dateFrom}
           onChange={this.onChangeBeginDate}
         />
         <label>{'До: '}</label>
         <DatePicker
           dateFormat='YYYY/MM/DD'
           placeholderText='Date to'
-          selected={this.state.endDate}
+          selected={dateTo}
           onChange={this.onChangeEndDate}
         />
         <button onClick={this.cleanFilter}>{'Сбросить фильтрацию'}</button>

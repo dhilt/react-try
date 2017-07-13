@@ -18,8 +18,8 @@ export function getArticlesAsync() {
     const filter = getState().articles.get('filter').toJS()
     const author = filter.author ? `&author=${filter.author}` : ''
     const title = filter.title ? `&title=${filter.title}` : ''
-    const dateFrom = filter.dateFrom ? `&dateFrom=${filter.dateFrom}` : ''
-    const dateTo = filter.dateTo ? `&dateTo=${filter.dateTo}` : ''
+    const dateFrom = filter.dateFrom ? `&dateFrom=${filter.dateFrom.time}` : ''
+    const dateTo = filter.dateTo ? `&dateTo=${filter.dateTo.time}` : ''
     const offset = Number(page * count)
     const query = `&offset=${offset}` + `&count=${count}` + author + title + dateFrom + dateTo
     dispatch(getArticlesAsyncStart())
