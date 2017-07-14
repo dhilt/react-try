@@ -69,12 +69,16 @@ export default class ArticlesControlPanel extends Component {
   }
 
   onChangeBeginDate(date) {
-    date.time = date._d.toISOString().slice(0,8) + (String(date._d.getDate()).length == 2 ? date._d.getDate() : '0' + date._d.getDate())
+    if (date) {
+      date.time = date._d.toISOString().slice(0,8) + (String(date._d.getDate()).length == 2 ? date._d.getDate() : '0' + date._d.getDate())
+    }
     this.props.dispatch(setFilterBeginDate(date, this.props.history))
   }
 
   onChangeEndDate(date) {
-    date.time = date._d.toISOString().slice(0,8) + (String(date._d.getDate()).length == 2 ? date._d.getDate() : '0' + date._d.getDate())
+    if (date) {
+      date.time = date._d.toISOString().slice(0,8) + (String(date._d.getDate()).length == 2 ? date._d.getDate() : '0' + date._d.getDate())
+    }
     this.props.dispatch(setFilterEndDate(date, this.props.history))
   }
 

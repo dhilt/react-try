@@ -100,8 +100,8 @@ app.get('/api/articles', (req, res) => {
   const offset = Number(req.query.offset) || 0;
   const title = req.query.title ? '%' + req.query.title + '%' : '%%';
   const author = req.query.author ? '%' + req.query.author + '%' : '%%';
-  const dateFrom = req.query.dateFrom ? req.query.dateFrom : '1970-01-01';
-  const dateTo = req.query.dateTo ? req.query.dateTo : 'date("now")';
+  const dateFrom = req.query.dateFrom ? req.query.dateFrom + 'T00:00:00' : '1970-01-01';
+  const dateTo = req.query.dateTo ? req.query.dateTo + 'T23:59:59' : 'date("now")';
   const orderBy = 'createdAt';
   const orderDir = 'DESC';
 
