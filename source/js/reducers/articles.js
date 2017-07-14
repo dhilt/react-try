@@ -109,9 +109,13 @@ const actionsMap = {
     })
   },
   [REMOVE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
-    return state.merge({
-      listArticles: state.get('listArticles').find(item => item.get('id') == action.id) ? [] : state.get('listArticles')
-    })
+    if (state.get('listArticles').find(item => item.get('id') == action.id)) {
+      return state.merge({
+        listArticles: []
+      })
+    } else {
+      return state
+    }
   },
   [CREATE_ARTICLE_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
