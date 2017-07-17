@@ -54,6 +54,9 @@ export default class Articles extends Component {
     if(nextProps.pending) {
       return
     }
+    if (!this.props.listArticles.size) {
+      dispatch(setPage(0, history))
+    }
     let urlPage = getLocationPage(history.location)
     let currentPage = urlPage ? urlPage - 1 : 0
     if(currentPage !== page) {
@@ -62,16 +65,24 @@ export default class Articles extends Component {
   }
 
   render() {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     let Articles = this.props.listArticles.map((article, index) => {
-      const time = new Date(article.get('createdAt'));
-      let articleYear = time.getFullYear();
-      let articleMonth = time.getMonth();
-      let articleDay = time.getUTCDate();
+      const time = new Date(article.get('createdAt'))
+      let articleYear = time.getFullYear()
+      let articleMonth = time.getMonth()
+      let articleDay = time.getUTCDate()
       return <div key={index} className='Article'>
-                <img src={article.get('image')} />
-                <div> {months[articleMonth]}, {articleDay} {articleYear} <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link> {article.get('userName')}</div>
-                <span>{article.get('description')}&nbsp;</span>
+               <img src={article.get('image')} />
+               <div className='headArticle'>
+                 <span>{months[articleMonth]}, {articleDay} {articleYear} </span>
+                 <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
+                 <span> {article.get('userName')} </span> 
+                 {this.props.role === 1 &&
+                   <ArticleControlPanel
+                     history={this.props.history}
+                     idArticle={article.get('id')}/>}
+               </div>
+               <span>{article.get('description')}&nbsp;</span>
              </div>
     })
     return (
@@ -79,8 +90,6 @@ export default class Articles extends Component {
         <Paging history={this.props.history} />
         {this.props.role === 1 &&
           <ArticlesControlPanel history={this.props.history} />}
-        {this.props.role === 1 &&
-          <ArticleControlPanel history={this.props.history} />}
         <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
       </div>
     )

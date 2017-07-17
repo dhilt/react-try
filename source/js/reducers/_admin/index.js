@@ -9,7 +9,6 @@ import common from './common'
 import newArticle from './newArticle'
 import editArticle from './editArticle'
 import removeArticle from './removeArticle'
-import articlesControlPanel from './articlesControlPanel'
 
 import { articleModel } from 'helpers/models'
 
@@ -35,6 +34,5 @@ export let adminReducers = {
   }),
   _adminNewArticle: newArticle,
   _adminEditArticle: editArticle,
-  _adminRemoveArticle: removeArticle,
-  _adminArticlesControlPanel: articlesControlPanel
+  _adminRemoveArticle: removeArticle
 }
