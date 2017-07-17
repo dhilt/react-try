@@ -45,3 +45,32 @@
     margin-right: 5px;
   }
 }
+
+.ArticleControlPanel {
+  display: block;
+  margin-left: 5%;
+  margin-bottom: 5px;
+  width: 450px;
+  border: 3px solid #7A839F;
+  border-radius: 2px;
+  
+  .disabledButton {
+    background-color: #95C6FF;
+    cursor: unset;
+  }
+
+  button {
+    color: aqua;
+    background-color: cornflowerblue;
+    border: 0px;
+    border-radius: 5px;
+    margin: 5px;
+    height: 30px;
+    cursor: pointer;
+  }
+  input {
+    border-radius: 5px;
+    width: 100px;
+    margin-right: 5px;
+  }
+}

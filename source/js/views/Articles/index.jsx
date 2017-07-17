@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import Paging from './Paging'
 import ArticlesControlPanel from 'views/_admin/Articles/ArticlesControlPanel'
+import ArticleControlPanel from 'views/_admin/Articles/ArticleControlPanel'
 
 import { setPage } from 'actions/articles'
 import { getLocationPage, persistPage } from 'helpers/page'
@@ -78,6 +79,8 @@ export default class Articles extends Component {
         <Paging history={this.props.history} />
         {this.props.role === 1 &&
           <ArticlesControlPanel history={this.props.history} />}
+        {this.props.role === 1 &&
+          <ArticleControlPanel history={this.props.history} />}
         <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
       </div>
     )
