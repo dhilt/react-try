@@ -32,7 +32,7 @@ export default class DashboardArticleList extends Component {
     let listArticles = this.props.list.map((article, index) => {
       const time = new Date(article.get('createdAt'));
       let articleMonth = time.getMonth();
-      let articleDay = time.getDate();
+      let articleDay = time.getUTCDate();
       return <div key={index} className='Article'>
                <div className='userInfoArticle'>
                  <div className='articleCreatedAt'>
