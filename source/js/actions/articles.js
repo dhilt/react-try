@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { asyncRequest } from '../helpers/request'
 import { persistPage } from '../helpers/page'
 
@@ -18,8 +19,8 @@ export function getArticlesAsync() {
     const filter = getState().articles.get('filter').toJS()
     const author = filter.author ? `&author=${filter.author}` : ''
     const title = filter.title ? `&title=${filter.title}` : ''
-    const dateFrom = filter.dateFrom ? `&dateFrom=${filter.dateFrom.time}` : ''
-    const dateTo = filter.dateTo ? `&dateTo=${filter.dateTo.time}` : ''
+    const dateFrom = filter.dateFrom ? `&dateFrom=${moment(filter.dateFrom).format('YYYY-MM-DD')}` : ''
+    const dateTo = filter.dateTo ? `&dateTo=${moment(filter.dateTo).format('YYYY-MM-DD')}` : ''
     const offset = Number(page * count)
     const query = `&offset=${offset}` + `&count=${count}` + author + title + dateFrom + dateTo
     dispatch(getArticlesAsyncStart())

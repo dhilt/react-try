@@ -30,7 +30,9 @@ export default class Paging extends Component {
     if(page < pagesCount - space - 1) {
       pages.push({ type: 'delimiter' });
     }
-    pages.push({ index: pagesCount - 1, type: 'button' });
+    if(pagesCount > 1) {
+      pages.push({ index: pagesCount - 1, type: 'button' });
+    }
 
     let activePage = pages.find(p => p.index === page);
     if(activePage) {
