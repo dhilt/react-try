@@ -5,8 +5,8 @@
   font-size: 15px;
 
   img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     margin-right: 7px;
     float: left;
   }
@@ -15,6 +15,15 @@
     margin-bottom: 15px;
     margin-right: 5px;
     clear: both;
+    .headArticle {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    span:last-child {
+      font-size: 15px;
+      font-weight: 500;
+      font-style: italic;
+    }
   }
 }
 

@@ -75,8 +75,8 @@ export default class Articles extends Component {
                <img src={article.get('image')} />
                <div className='headArticle'>
                  <span>{months[articleMonth]}, {articleDay} {articleYear} </span>
-                 <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
                  <span> {article.get('userName')} </span> 
+                 <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
                  {this.props.role === 1 &&
                    <ArticleControlPanel
                      history={this.props.history}
