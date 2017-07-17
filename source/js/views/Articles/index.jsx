@@ -66,7 +66,7 @@ export default class Articles extends Component {
       const time = new Date(article.get('createdAt'));
       let articleYear = time.getFullYear();
       let articleMonth = time.getMonth();
-      let articleDay = time.getDate();
+      let articleDay = time.getUTCDate();
       return <div key={index} className='Article'>
                 <img src={article.get('image')} />
                 <div> {months[articleMonth]}, {articleDay} {articleYear} <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link> {article.get('userName')}</div>
