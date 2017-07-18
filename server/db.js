@@ -38,14 +38,16 @@ function setupUsers(db) {
 
 function setupArticles(db) {
   db.serialize(() => {
-    db.run('CREATE TABLE Article (id INTEGER PRIMARY KEY, title TEXT, text TEXT, description TEXT, createdAt TEXT, image TEXT, userId INTEGER, userName TEXT)', (err) =>
+    db.run('CREATE TABLE Article (id INTEGER PRIMARY KEY, title TEXT, text TEXT, description TEXT, createdAt TEXT, image TEXT, userId INTEGER, userName TEXT, rateUp INTEGER, rateDown INTEGER)', (err) =>
       console.log(err || 'Article table was created.')
     );
 
-    const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     for (let i = 1; i <= ARTICLES_COUNT; i++) {
       let userId = faker.random.number(USERS_COUNT - 1);
-      stmt.run(i, faker.lorem.words(6), faker.lorem.paragraph(200), faker.lorem.paragraph(0), faker.date.past(0.5, new Date()).toISOString(), faker.image.abstract(), userId, logins[userId]);
+      let rateUp = Math.floor(Math.random() * 100),
+          rateDown = Math.floor(Math.random() * 100);
+      stmt.run(i, faker.lorem.words(6), faker.lorem.paragraph(200), faker.lorem.paragraph(0), faker.date.past(0.5, new Date()).toISOString(), faker.image.abstract(), userId, logins[userId], rateUp, rateDown);
     };
     stmt.finalize(() => console.log('Article table was populated.'));
   });

@@ -39,3 +39,49 @@
     width: 90%;
   }
 }
+
+.ratingPanel {
+  width: 250px;
+  height: 80px;
+  display: inline-block;
+//  float: right;
+}
+
+.likeButton {
+  cursor: pointer;
+  border: 0px;
+  width: 74px;
+  height: 74px;
+  background: url(../assets/img/like.png) no-repeat 0px 5px;
+  margin-left: 10px;
+}
+
+.dislikeButton {
+  cursor: pointer;
+  border: 0px;
+  width: 74px;
+  height: 74px;
+  background: url(../assets/img/dislike.png) no-repeat 0px 5px;
+}
+
+.likeButton:hover {
+  background: url(../assets/img/like.png) no-repeat 0px 0px;
+}
+
+.dislikeButton:hover {
+  background: url(../assets/img/dislike.png) no-repeat 0px 10px;
+}
+
+.positiveRating {
+  font-size: 30px;
+  font-weight: 800;
+  vertical-align: middle;
+  color: #25B51B;
+}
+
+.negativeRating {
+  font-size: 30px;
+  font-weight: 800;
+  vertical-align: middle;
+  color: #BD2929;
+}

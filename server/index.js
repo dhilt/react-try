@@ -187,6 +187,32 @@ app.put('/api/articles/:id', (req, res) => {
   });
 });
 
+app.put('/api/articles/:id/rate', (req, res) => {
+  doAuthorize(req, res).then(user => {
+    const isVoted = req.body.isVoted,
+          vote = req.body.vote,
+          idArticle = req.params.id;
+    db.get('SELECT rateUp, rateDown FROM Article WHERE id = ?', idArticle, (err, row) => {
+      if (vote == 1) {
+        const stmt = db.prepare('UPDATE Article SET rateUp = ? WHERE id = ?');
+        if (isVoted) {
+          stmt.run(row.rateUp - 1, idArticle)
+        } else {
+          stmt.run(row.rateUp + 1, idArticle)
+        }
+      } else if (vote == -1) {
+        const stmt = db.prepare('UPDATE Article SET rateDown = ? WHERE id = ?');
+        if (isVoted) {
+          stmt.run(row.rateDown - 1, idArticle)
+        } else {
+          stmt.run(row.rateDown + 1, idArticle)
+        }
+      }
+    });
+    res.send({ success: 'ok' })
+  });
+});
+
 app.delete('/api/articles/:id', (req, res) => {
   doAuthorize(req, res).then(user => {
     if (user.id !== 1) {

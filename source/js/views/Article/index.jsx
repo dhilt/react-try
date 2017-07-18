@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { ArticleContents } from 'views/Article/article'
+import RatingPanel from 'views/Article/ratingPanel'
 import ArticleControls from 'views/_admin/Article/ArticleControls'
 
 import { getArticleAsync } from 'actions/article'
@@ -40,6 +41,7 @@ export default class Article extends Component {
         ) : (
         <div>
           <ArticleContents article={data} />
+          <RatingPanel />
           { role === 1 && ( <ArticleControls history={history} /> ) }
         </div>
       )
