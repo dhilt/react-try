@@ -38,25 +38,45 @@ function setupUsers(db) {
 
 function setupArticles(db) {
   db.serialize(() => {
-    db.run('CREATE TABLE Article (id INTEGER PRIMARY KEY, title TEXT, text TEXT, description TEXT, createdAt TEXT, image TEXT, userId INTEGER, userName TEXT, rateUp INTEGER, rateDown INTEGER)', (err) =>
+    db.run('CREATE TABLE Article (id INTEGER PRIMARY KEY, title TEXT, text TEXT, description TEXT, createdAt TEXT, image TEXT, userId INTEGER, userName TEXT)', (err) =>
       console.log(err || 'Article table was created.')
     );
 
-    const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    const stmt = db.prepare('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     for (let i = 1; i <= ARTICLES_COUNT; i++) {
       let userId = faker.random.number(USERS_COUNT - 1);
-      let rateUp = Math.floor(Math.random() * 100),
-          rateDown = Math.floor(Math.random() * 100);
-      stmt.run(i, faker.lorem.words(6), faker.lorem.paragraph(200), faker.lorem.paragraph(0), faker.date.past(0.5, new Date()).toISOString(), faker.image.abstract(), userId, logins[userId], rateUp, rateDown);
+      stmt.run(i, faker.lorem.words(6), faker.lorem.paragraph(200), faker.lorem.paragraph(0), faker.date.past(0.5, new Date()).toISOString(), faker.image.abstract(), userId, logins[userId]);
     };
     stmt.finalize(() => console.log('Article table was populated.'));
   });
+}
+
+function setupVotes(db) {
+  db.serialize(() => {
+    db.run('CREATE TABLE Votes (userId INTEGER, id INTEGER, type INTEGER, value INTEGER, date TEXT)', (err) =>
+      console.log(err || 'Votes table was created.')  // type = 1 (Article), value = 1 or -1 (article vote)
+    );
+
+    const stmt = db.prepare('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)');
+    for (let i = 1; i <= USERS_COUNT; i++) {  // each user
+      for (let j = 1; j <= ARTICLES_COUNT; j++) { // vote for each article
+        const max = 2, min = -1;
+        let vote = Math.floor(Math.random() * (max - min)) + min;
+        while (vote == 0) {
+          vote = Math.floor(Math.random() * (max - min)) + min;
+        }
+        stmt.run(i, j, 1, vote, new Date().toISOString());
+      }
+    }
+    stmt.finalize(() => console.log('Votes table was populated.'));
+  })
 }
 
 function generateDB() {
   const db = new sqlite3.Database(DATABASE_PATH);
   setupUsers(db);
   setupArticles(db);
+  setupVotes(db);
   db.close();
 }
 

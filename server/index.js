@@ -130,13 +130,17 @@ app.get('/api/articles', (req, res) => {
 
 app.get('/api/articles/:id', (req, res) => {
   const id = req.params.id;
-  db.all('SELECT * FROM Article WHERE id = ?', id, (err, row) => {
+  db.get('SELECT * FROM Article WHERE Article.id = ?', id, (err, article) => {
     if (err)
       return res.send({ status: 'error', error: err });
-    if (!row.length)
+    if (!article)
       return res.send({ status: 'error', error: 'Article with this id doesn\'t exist' });
 
-    res.send({ status: 'ok', article: row[0] });
+    db.all('SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = -1 UNION ALL SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = 1', { $id: id }, (err, rate) => {
+      article.rateDown = 0 || rate[0]['COUNT(userId)'];
+      article.rateUp = 0 || rate[1]['COUNT(userId)'];
+      res.send({ status: 'ok', article: article });
+    })
   });
 });
 
@@ -189,27 +193,33 @@ app.put('/api/articles/:id', (req, res) => {
 
 app.put('/api/articles/:id/rate', (req, res) => {
   doAuthorize(req, res).then(user => {
-    const isVoted = req.body.isVoted,
-          vote = req.body.vote,
+    const vote = req.body.vote,
           idArticle = req.params.id;
-    db.get('SELECT rateUp, rateDown FROM Article WHERE id = ?', idArticle, (err, row) => {
-      if (vote == 1) {
-        const stmt = db.prepare('UPDATE Article SET rateUp = ? WHERE id = ?');
-        if (isVoted) {
-          stmt.run(row.rateUp - 1, idArticle)
+    if (vote != -1 && vote != 1 && vote != 0) {
+      return res.send({ status: 'error', error: 'Vote is undefined.' })
+    }
+
+    db.get('SELECT * FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id], (err, voteRow) => {
+      if (err) {
+        return res.send({ status: 'error', error: err})
+      }
+      if (!voteRow) {
+        db.run('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)', [user.id, idArticle, 1, vote, new Date().toISOString()]);
+        return res.send({ row: voteRow, msg: 'New vote' });
+      }
+      if (voteRow && voteRow.value == vote) {
+        return res.send({ status: 'ok', msg: 'Already have vote.'})
+      }
+      if (voteRow) {  // delete or rewrite vote of user
+        if (vote == 0) {
+          db.run('DELETE FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id]);
+          return res.send({ status: 'ok', msg: 'Vote was deleted.' });
         } else {
-          stmt.run(row.rateUp + 1, idArticle)
-        }
-      } else if (vote == -1) {
-        const stmt = db.prepare('UPDATE Article SET rateDown = ? WHERE id = ?');
-        if (isVoted) {
-          stmt.run(row.rateDown - 1, idArticle)
-        } else {
-          stmt.run(row.rateDown + 1, idArticle)
+          db.run('UPDATE Votes SET userId = ?, id = ?, type = ?, value = ?, date = ?', [user.id, idArticle, 1, vote, new Date().toISOString()]);
+          return res.send({ status: 'ok', msg: 'Revoted' });
         }
       }
     });
-    res.send({ success: 'ok' })
   });
 });
 
