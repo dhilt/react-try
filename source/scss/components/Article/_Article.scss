@@ -56,6 +56,15 @@
   margin-left: 10px;
 }
 
+.hasLikeButton {
+  cursor: pointer;
+  border: 0px;
+  width: 74px;
+  height: 74px;
+  background: url(../assets/img/hasLike.png) no-repeat 0px 5px;
+  margin-left: 10px;
+}
+
 .dislikeButton {
   cursor: pointer;
   border: 0px;
@@ -64,12 +73,28 @@
   background: url(../assets/img/dislike.png) no-repeat 0px 5px;
 }
 
+.hasDislikeButton {
+  cursor: pointer;
+  border: 0px;
+  width: 74px;
+  height: 74px;
+  background: url(../assets/img/hasDislike.png) no-repeat 0px 5px;
+}
+
 .likeButton:hover {
   background: url(../assets/img/like.png) no-repeat 0px 0px;
 }
 
+.hasLikeButton:hover {
+  background: url(../assets/img/hasLike.png) no-repeat 0px 0px;
+}
+
 .dislikeButton:hover {
   background: url(../assets/img/dislike.png) no-repeat 0px 10px;
+}
+
+.hasDislikeButton:hover {
+  background: url(../assets/img/hasDislike.png) no-repeat 0px 10px;
 }
 
 .positiveRating {

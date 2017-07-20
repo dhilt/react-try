@@ -60,11 +60,10 @@ function setupVotes(db) {
     const stmt = db.prepare('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)');
     for (let i = 1; i <= USERS_COUNT; i++) {  // each user
       for (let j = 1; j <= ARTICLES_COUNT; j++) { // vote for each article
-        const max = 2, min = -1;
-        let vote = Math.floor(Math.random() * (max - min)) + min;
-        while (vote == 0) {
-          vote = Math.floor(Math.random() * (max - min)) + min;
+        if (Math.random() < 0.33) {  // 1/3 for no vote
+          continue
         }
+        let vote = Math.random() >= 0.5 ? 1 : -1;
         stmt.run(i, j, 1, vote, new Date().toISOString());
       }
     }

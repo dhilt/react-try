@@ -4,11 +4,12 @@ import {
   GET_ARTICLE_ASYNC_START,
   GET_ARTICLE_ASYNC_END_SUCCESS,
   GET_ARTICLE_ASYNC_END_FAIL,
-  VOTE_UP,
-  VOTE_DOWN,
-  VOTE_ABORT,
-  VOTE_FAIL,
-  CLEAN_VOTE
+  SET_VOTE_ASYNC_START,
+  SET_VOTE_ASYNC_SUCCESS,
+  SET_VOTE_ASYNC_FAIL,
+  VOTE_ARTICLE_ASYNC_START,
+  VOTE_ARTICLE_ASYNC_SUCCESS,
+  VOTE_ARTICLE_ASYNC_FAIL
 } from 'actions/article'
 
 const initialState = Map({
@@ -16,6 +17,7 @@ const initialState = Map({
   pending: false,
   error: null,
   isVoted: 0,  // -1: voted down, 0: not yet voted, 1: voted up,
+  pendingVote: false,
   voteError: null
 })
 
@@ -39,47 +41,44 @@ const actionsMap = {
       data: null
     })
   },
-  [VOTE_UP]: (state, action) => {
+  [SET_VOTE_ASYNC_START]: (state) => {
     return state.merge({
-      data: state.get('data').merge({
-        rateUp: Number(state.get('data').get('rateUp')) + 1
-      }),
-      isVoted: 1
+      pendingVote: true
     })
   },
-  [VOTE_DOWN]: (state, action) => {
+  [SET_VOTE_ASYNC_SUCCESS]: (state, action) => {
     return state.merge({
-      data: state.get('data').merge({
-        rateDown: Number(state.get('data').get('rateDown')) + 1
-      }),
-      isVoted: -1
+      pendingVote: false,
+      isVoted: action.value,
+      voteError: null
     })
   },
-  [VOTE_ABORT]: (state, action) => {
-    if (action.vote == 1) {
-      return state.merge({
-        data: state.get('data').merge({
-          rateUp: Number(state.get('data').get('rateUp')) - 1
-        }),
-        isVoted: 0
-      })
-    } else if (action.vote == -1) {
-      return state.merge({
-        data: state.get('data').merge({
-          rateDown: Number(state.get('data').get('rateDown')) - 1
-        }),
-        isVoted: 0
-      })
-    }
-  },
-  [VOTE_FAIL]: (state, action) => {
+  [SET_VOTE_ASYNC_FAIL]: (state, action) => {
     return state.merge({
+      pendingVote: false,
       voteError: action.error
     })
   },
-  [CLEAN_VOTE]: (state) => {
+  [VOTE_ARTICLE_ASYNC_START]: (state) => {
     return state.merge({
-      isVoted: 0
+      pendingVote: true
+    })
+  },
+  [VOTE_ARTICLE_ASYNC_SUCCESS]: (state, action) => {
+    let changeLocalRate = +(action.vote - state.get('isVoted'))
+    return state.merge({
+      pendingVote: false,
+      voteError: null,
+      isVoted: action.vote,
+      data: state.get('data').merge({
+        rateUp: Number(state.get('data').get('rateUp') + changeLocalRate)
+      })
+    })
+  },
+  [VOTE_ARTICLE_ASYNC_FAIL]: (state, action) => {
+    return state.merge({
+      pendingVote: false,
+      voteError: action.error
     })
   }
 }

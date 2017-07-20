@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { voteUp, voteDown, ratingVote, cleanVote } from 'actions/article'
+import { checkUserVote, voteArticle } from 'actions/article'
 
 @connect(state => ({
   rateUp: state.article.get('data').get('rateUp'),
-  rateDown: state.article.get('data').get('rateDown')
+  rateDown: state.article.get('data').get('rateDown'),
+  isVoted: state.article.get('isVoted'),
+  pendingVote: state.article.get('pendingVote'),
+  role: state.auth.get('userInfo').get('role')
 }))
 export default class RatingPanel extends Component {
 
@@ -16,19 +19,23 @@ export default class RatingPanel extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(cleanVote())
+    this.props.dispatch(checkUserVote())
   }
 
   voteUp() {
-    this.props.dispatch(ratingVote(1))
+    if (this.props.role !== null) {
+      this.props.dispatch(voteArticle(1))
+    }
   }
 
   voteDown() {
-    this.props.dispatch(ratingVote(-1))
+    if (this.props.role !== null) {
+      this.props.dispatch(voteArticle(-1))
+    }
   }
 
   render() {
-    const { rateUp, rateDown } = this.props
+    const { rateUp, rateDown, isVoted, pendingVote } = this.props
     let rating = rateUp - rateDown
     if (Number(rateUp) > Number(rateDown)) {
       rating = '+' + rating
@@ -36,9 +43,11 @@ export default class RatingPanel extends Component {
 
     return (
       <div className='ratingPanel'>
-        <button type='button' onClick={this.voteDown} className='dislikeButton'></button>
+        <button type='button' disabled={pendingVote} onClick={this.voteDown}
+          className={isVoted === -1 ? 'hasDislikeButton' : 'dislikeButton'} />
         <span className={rateUp >= rateDown ? 'positiveRating' : 'negativeRating'}>{rating}</span>
-        <button type='button' onClick={this.voteUp} className='likeButton'></button>
+        <button type='button' disabled={pendingVote} onClick={this.voteUp}
+          className={isVoted === 1 ? 'hasLikeButton' : 'likeButton'} />
       </div>
     )
   }

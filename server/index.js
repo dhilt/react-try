@@ -193,9 +193,12 @@ app.put('/api/articles/:id', (req, res) => {
 
 app.put('/api/articles/:id/rate', (req, res) => {
   doAuthorize(req, res).then(user => {
-    const vote = req.body.vote,
-          idArticle = req.params.id;
-    if (vote != -1 && vote != 1 && vote != 0) {
+    if ((req.body.hasOwnProperty('vote') !== true)) {
+      res.send({ status: 'error', error: 'Haven\'t vote parameter.' })
+    }
+    const vote = Number(req.body.vote),
+          idArticle = Number(req.params.id);
+    if (vote !== -1 && vote !== 1 && vote !== 0) {
       return res.send({ status: 'error', error: 'Vote is undefined.' })
     }
 
@@ -203,21 +206,35 @@ app.put('/api/articles/:id/rate', (req, res) => {
       if (err) {
         return res.send({ status: 'error', error: err})
       }
-      if (!voteRow) {
+      if (!voteRow || !voteRow.value) {
         db.run('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)', [user.id, idArticle, 1, vote, new Date().toISOString()]);
-        return res.send({ row: voteRow, msg: 'New vote' });
+        return res.send({ status: 'ok', value: vote });
       }
-      if (voteRow && voteRow.value == vote) {
-        return res.send({ status: 'ok', msg: 'Already have vote.'})
-      }
-      if (voteRow) {  // delete or rewrite vote of user
-        if (vote == 0) {
+      else {
+        if (voteRow.value === vote || vote === 0) {
           db.run('DELETE FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id]);
-          return res.send({ status: 'ok', msg: 'Vote was deleted.' });
-        } else {
-          db.run('UPDATE Votes SET userId = ?, id = ?, type = ?, value = ?, date = ?', [user.id, idArticle, 1, vote, new Date().toISOString()]);
-          return res.send({ status: 'ok', msg: 'Revoted' });
+          return res.send({ status: 'ok', value: 0 })
         }
+        else if (voteRow.value !== vote) {
+          db.run('UPDATE Votes SET value = ?, date = ? WHERE userId = ? AND id = ? AND type = 1', [vote, new Date().toISOString(), user.id, idArticle]);
+          return res.send({ status: 'ok', value: vote });
+        }
+      }
+    });
+  });
+});
+
+app.get('/api/articles/:id/rate', (req, res) => {
+  doAuthorize(req, res).then(user => {
+    const idArticle = Number(req.params.id);
+    db.get('SELECT value FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id], (err, voteValue) => {
+      if (err) {
+        return res.send({ status: 'error', error: err })
+      }
+      if (!voteValue || !voteValue.value) {
+        return res.send({ status: 'ok', value: 0 })
+      } else {
+        return res.send({ status: 'ok', value: voteValue.value })
       }
     });
   });
