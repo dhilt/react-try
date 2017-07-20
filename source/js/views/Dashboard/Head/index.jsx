@@ -39,38 +39,7 @@ export default class DashboardHead extends Component {
 
   render() {
     const { selectedIndex } = this.props;
-    const data = [
-      {
-        img: 'assets/img/game1.png',
-        title: "Ненавязчивый анализ Mirror's EdgeBattlefield 4",
-        text: 'Еще совсем недавно осенью считалась главным поставщиком крупных игровых релизов. Полки магазинов ломились от новинок, а от покупателей не было отбоя. Доходило до того, что к концу сезона кошельки походили на выпотрошеные туши.'
-      },
-      {
-        img: 'assets/img/game2.png',
-        title: "Mass Effect: Andromeda",
-        text: 'Текст для Mass Effect: Andromeda.'
-      },
-      {
-        img: 'assets/img/game3.png',
-        title: "Remember Me",
-        text: 'Текст для Remember Me.'
-      },
-      {
-        img: 'assets/img/game4.png',
-        title: "Battlefield 4",
-        text: 'Текст для Battlefield 4.'
-      },
-      {
-        img: 'assets/img/game5.png',
-        title: "Fable 3",
-        text: "Текст для Fable 3."
-      },
-      {
-        img: 'assets/img/game6.png',
-        title: "Call of Duty 4: Modern Warfare",
-        text: 'Текст для Call of Duty 4: Modern Warfare.'
-      }
-    ];
+    const data = this.props.games;
 
     return(
       <div className='DashboardHead'>

@@ -21,7 +21,7 @@ const initialState = Map({
     selectedIndex: -1,
     pending: false,
     error: '',
-    data: []
+    games: []
   })
 });
 
@@ -67,17 +67,17 @@ const actionsMap = {
   },
   [GET_DASHBOARD_HEAD_DATA_ASYNC_START]: (state) => {
     return state.merge({
-      games: state.get('games').merge({
+      games: state.get('head').merge({
         pending: true
       })
     })
   },
   [GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
-      games: state.get('games').merge({
+      games: state.get('head').merge({
         pending: false,
         error: '',
-        data: [...state.get('games').get('data'), ...action.data]
+        games: [...action.data]
       })
     })
   },
@@ -86,7 +86,7 @@ const actionsMap = {
       games: state.merge({
         pending: false,
         error: action.error,
-        data: []
+        games: []
       })
     })
   }

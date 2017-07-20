@@ -60,8 +60,9 @@ function setupGames(db) {
 
     const stmt = db.prepare('INSERT INTO Game VALUES (?, ?, ?, ?, ?)');
     for (let i = 1; i <= GAMES_COUNT; i++) {
-      stmt.run(i, faker.lorem.words(3), faker.lorem.paragraph(2), faker.date.past(0.5, new Date()).toISOString(), faker.image.abstract());
-    };
+
+      stmt.run(i, faker.lorem.words(3), faker.lorem.paragraph(2), faker.date.past(0.5, new Date()).toISOString(), src = 'assets/img/game' + i + '.png');
+    }
     stmt.finalize(() => console.log('Games table was populated.'));
   });
 }
