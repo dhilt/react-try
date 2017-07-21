@@ -130,6 +130,7 @@ app.get('/api/articles', (req, res) => {
 
 app.get('/api/articles/:id', (req, res) => {
   const id = req.params.id;
+  const token = req.headers.authorization;
   db.get('SELECT * FROM Article WHERE Article.id = ?', id, (err, article) => {
     if (err)
       return res.send({ status: 'error', error: err });
@@ -139,7 +140,22 @@ app.get('/api/articles/:id', (req, res) => {
     db.all('SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = -1 UNION ALL SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = 1', { $id: id }, (err, rate) => {
       article.rateDown = 0 || rate[0]['COUNT(userId)'];
       article.rateUp = 0 || rate[1]['COUNT(userId)'];
-      res.send({ status: 'ok', article: article });
+      if (!token) {
+        res.send({ status: 'ok', article: article });
+      } else {
+        doAuthorize(req, res).then(user => {
+          db.get('SELECT value FROM Votes WHERE id = ? AND userId = ? AND type = 1', [id, user.id], (err, voteValue) => {
+            if (err) {
+              return res.send({ status: 'ok', article: article })
+            }
+            if (!voteValue || !voteValue.value) {
+              return res.send({ status: 'ok', article: article })
+            } else {
+              return res.send({ status: 'ok', article: article, rateUser: voteValue.value })
+            }
+          });
+        });
+      }
     })
   });
 });
@@ -219,22 +235,6 @@ app.put('/api/articles/:id/rate', (req, res) => {
           db.run('UPDATE Votes SET value = ?, date = ? WHERE userId = ? AND id = ? AND type = 1', [vote, new Date().toISOString(), user.id, idArticle]);
           return res.send({ status: 'ok', value: vote });
         }
-      }
-    });
-  });
-});
-
-app.get('/api/articles/:id/rate', (req, res) => {
-  doAuthorize(req, res).then(user => {
-    const idArticle = Number(req.params.id);
-    db.get('SELECT value FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id], (err, voteValue) => {
-      if (err) {
-        return res.send({ status: 'error', error: err })
-      }
-      if (!voteValue || !voteValue.value) {
-        return res.send({ status: 'ok', value: 0 })
-      } else {
-        return res.send({ status: 'ok', value: voteValue.value })
       }
     });
   });

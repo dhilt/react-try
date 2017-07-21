@@ -110,3 +110,20 @@
   vertical-align: middle;
   color: #BD2929;
 }
+
+.noMovingLikeButton {
+  cursor: default;
+  border: 0px;
+  width: 74px;
+  height: 74px;
+  background: url(../assets/img/like.png) no-repeat 0px 5px;
+  margin-left: 10px;
+}
+
+.noMovingDislikeButton {
+  cursor: default;
+  border: 0px;
+  width: 74px;
+  height: 74px;
+  background: url(../assets/img/dislike.png) no-repeat 0px 5px;
+}

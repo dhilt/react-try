@@ -4,9 +4,6 @@ import {
   GET_ARTICLE_ASYNC_START,
   GET_ARTICLE_ASYNC_END_SUCCESS,
   GET_ARTICLE_ASYNC_END_FAIL,
-  SET_VOTE_ASYNC_START,
-  SET_VOTE_ASYNC_SUCCESS,
-  SET_VOTE_ASYNC_FAIL,
   VOTE_ARTICLE_ASYNC_START,
   VOTE_ARTICLE_ASYNC_SUCCESS,
   VOTE_ARTICLE_ASYNC_FAIL
@@ -31,7 +28,8 @@ const actionsMap = {
     return state.merge({
       pending: false,
       error: '',
-      data: action.data
+      data: action.data.article,
+      isVoted: action.data.userVote || 0
     })
   },
   [GET_ARTICLE_ASYNC_END_FAIL]: (state, action) => {
@@ -39,24 +37,6 @@ const actionsMap = {
       pending: false,
       error: action.error,
       data: null
-    })
-  },
-  [SET_VOTE_ASYNC_START]: (state) => {
-    return state.merge({
-      pendingVote: true
-    })
-  },
-  [SET_VOTE_ASYNC_SUCCESS]: (state, action) => {
-    return state.merge({
-      pendingVote: false,
-      isVoted: action.value,
-      voteError: null
-    })
-  },
-  [SET_VOTE_ASYNC_FAIL]: (state, action) => {
-    return state.merge({
-      pendingVote: false,
-      voteError: action.error
     })
   },
   [VOTE_ARTICLE_ASYNC_START]: (state) => {
