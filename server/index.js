@@ -146,13 +146,9 @@ app.get('/api/articles/:id', (req, res) => {
         doAuthorize(req, res).then(user => {
           db.get('SELECT value FROM Votes WHERE id = ? AND userId = ? AND type = 1', [id, user.id], (err, voteValue) => {
             if (err) {
-              return res.send({ status: 'ok', article: article })
+              return res.send({ status: 'error', error: err })
             }
-            if (!voteValue || !voteValue.value) {
-              return res.send({ status: 'ok', article: article })
-            } else {
-              return res.send({ status: 'ok', article: article, rateUser: voteValue.value })
-            }
+            res.send({ status: 'ok', article: article, rateUser: voteValue ? voteValue.value : null })
           });
         });
       }
