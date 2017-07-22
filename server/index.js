@@ -5,6 +5,9 @@ const sqlite3 = require('sqlite3');
 const passwordHash = require('password-hash');
 const jwt = require('jsonwebtoken');
 
+const ArticlesController = require('./controllers/articles.controller');
+const VotesController = require('./controllers/votes.controller');
+
 const APP_PORT = 3003;
 const AUTH_TOKEN = {
   secretKey: 'MySecretKey',
@@ -131,29 +134,10 @@ app.get('/api/articles', (req, res) => {
 app.get('/api/articles/:id', (req, res) => {
   const id = req.params.id;
   const token = req.headers.authorization;
-  db.get('SELECT * FROM Article WHERE Article.id = ?', id, (err, article) => {
-    if (err)
-      return res.send({ status: 'error', error: err });
-    if (!article)
-      return res.send({ status: 'error', error: 'Article with this id doesn\'t exist' });
-
-    db.all('SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = -1 UNION ALL SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = 1', { $id: id }, (err, rate) => {
-      article.rateDown = 0 || rate[0]['COUNT(userId)'];
-      article.rateUp = 0 || rate[1]['COUNT(userId)'];
-      if (!token) {
-        res.send({ status: 'ok', article: article });
-      } else {
-        doAuthorize(req, res).then(user => {
-          db.get('SELECT value FROM Votes WHERE id = ? AND userId = ? AND type = 1', [id, user.id], (err, voteValue) => {
-            if (err) {
-              return res.send({ status: 'error', error: err })
-            }
-            res.send({ status: 'ok', article: article, rateUser: voteValue ? voteValue.value : null })
-          });
-        });
-      }
-    })
-  });
+  ArticlesController.getArticleById(id, token).then(
+    article => res.send({ status: 'ok', article: article.article, rateUser: article.rateUser }),
+    message => res.send({ status: 'error', error: message })
+  );
 });
 
 app.post('/api/articles', (req, res) => {
@@ -204,36 +188,15 @@ app.put('/api/articles/:id', (req, res) => {
 });
 
 app.put('/api/articles/:id/rate', (req, res) => {
-  doAuthorize(req, res).then(user => {
-    if ((req.body.hasOwnProperty('vote') !== true)) {
-      res.send({ status: 'error', error: 'Haven\'t vote parameter.' })
-    }
-    const vote = Number(req.body.vote),
-          idArticle = Number(req.params.id);
-    if (vote !== -1 && vote !== 1 && vote !== 0) {
-      return res.send({ status: 'error', error: 'Vote is undefined.' })
-    }
-
-    db.get('SELECT * FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id], (err, voteRow) => {
-      if (err) {
-        return res.send({ status: 'error', error: err})
-      }
-      if (!voteRow || !voteRow.value) {
-        db.run('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)', [user.id, idArticle, 1, vote, new Date().toISOString()]);
-        return res.send({ status: 'ok', value: vote });
-      }
-      else {
-        if (voteRow.value === vote || vote === 0) {
-          db.run('DELETE FROM Votes WHERE id = ? AND userId = ? AND type = 1', [idArticle, user.id]);
-          return res.send({ status: 'ok', value: 0 })
-        }
-        else if (voteRow.value !== vote) {
-          db.run('UPDATE Votes SET value = ?, date = ? WHERE userId = ? AND id = ? AND type = 1', [vote, new Date().toISOString(), user.id, idArticle]);
-          return res.send({ status: 'ok', value: vote });
-        }
-      }
-    });
-  });
+  const token = req.headers.authorization, idArticle = req.params.id, voteType = 1;
+  let vote = req.body.vote;
+  if ((req.body.hasOwnProperty('vote') !== true)) {
+    vote = undefined
+  }
+  VotesController.doVote(token, idArticle, vote, voteType).then(
+    success => res.send({ status: 'ok', value: success.value }),
+    message => res.send({ status: 'error', error: message })
+  );
 });
 
 app.delete('/api/articles/:id', (req, res) => {
