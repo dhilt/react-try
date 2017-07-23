@@ -46,7 +46,7 @@ app.put('/api/articles/:id', (req, res) => ArticlesController.updateArticle(req)
 );
 
 app.put('/api/articles/:id/rate', (req, res) => VotesController.doVote(req, 1)  // 1 - article type in database Votes
-  .then(result => res.send({ status: 'ok', value: result.value }))
+  .then(result => res.send({ status: 'ok', value: result }))
   .catch(error => res.send({ status: 'error', error }))
 );
 
