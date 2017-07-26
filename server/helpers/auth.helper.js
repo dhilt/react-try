@@ -32,7 +32,7 @@ let AuthHelper = {
     return jwt.sign(userObj, AUTH_TOKEN.secretKey, { expiresIn: AUTH_TOKEN.expiresIn })
   },
 
-  verifyToken: (password, hash) => {
+  verifyPassword: (password, hash) => {
     return passwordHash.verify(password, hash)
   }
 }

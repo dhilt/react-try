@@ -23,7 +23,7 @@ let AuthController = {
       if (!row) {
         return reject('Invalid login')
       }
-      if (!AuthHelper.verifyToken(password, row.hash)) {
+      if (!AuthHelper.verifyPassword(password, row.hash)) {
         return reject('Invalid password.')
       }
 //      const token = AuthHelper.signToken({id: row.id, login: row.login, role: row.role});

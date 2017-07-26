@@ -23,26 +23,32 @@ module.exports.doVote = (req, voteType) =>
     return Promise.resolve({ id, userId: user.id, type: voteType, value })
   })
   // search for existed vote
-  .then(params => 
-    db.get('SELECT * FROM Votes WHERE id = ? AND userId = ? AND type = ?', [params.id, params.userId, params.type])
-    .then(result => Promise.resolve({ params, result }),
-      err => {
-        throw `Can't vote. Database error`
-      })
+  .then(params =>
+    db.get('SELECT * FROM Votes WHERE id = ? AND userId = ? AND type = ?', [params.id, params.userId, params.type]).then(
+      result => Promise.resolve({ params, result }),
+      err => { throw `Can't vote. Database error` }
+    )
   )
   // process params vote
   .then(data => {
     let result = data.result
     let params = data.params
     if (!result || !result.value) {
-      db.run('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)', [params.userId, params.id, params.type, params.value, new Date().toISOString()])
+      return db.run('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)', [params.userId, params.id, params.type, params.value, new Date().toISOString()]).then(
+        result => Promise.resolve(params.value),
+        err => { throw `Can't vote. Database error (insert)` }
+      )
     }
     else if (result.value === params.value || params.value === 0) {
-      db.run('DELETE FROM Votes WHERE id = ? AND userId = ? AND type = ?', [params.id, params.userId, params.type])
-      params.value = 0;
+      return db.run('DELETE FROM Votes WHERE id = ? AND userId = ? AND type = ?', [params.id, params.userId, params.type]).then(
+        result => Promise.resolve(0),
+        err => { throw `Can't vote. Database error (delete)` }
+      )
     }
     else {
-      db.run('UPDATE Votes SET value = ?, date = ? WHERE userId = ? AND id = ? AND type = ?', [params.value, new Date().toISOString(), params.userId, params.id, params.type]); 
+      return db.run('UPDATE Votes SET value = ?, date = ? WHERE userId = ? AND id = ? AND type = ?', [params.value, new Date().toISOString(), params.userId, params.id, params.type]).then(
+        result => Promise.resolve(params.value),
+        err => { throw `Can't vote. Database error (update)` }
+      )
     }
-    return Promise.resolve(params.value)
-  });
+  })
