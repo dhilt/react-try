@@ -5,73 +5,33 @@ let db = new sqlite3.Database('server/development.db', sqlite3.OPEN_READWRITE, (
     throw ('No development.db found. Run "node db.js"...')
 })
 
-// patch db.get to make it promise-based if no callback passed
-const dbGet = db.get;
-db.get = function () {
-  // old syntax (callback last argument)
-  if(typeof arguments[arguments.length - 1] === 'function') {
-    dbGet.apply(this, arguments)
-    return
-  }
-  // new promise syntax
-  return new Promise((resolve, reject) => {
-    const cb = (error, result) => {
-      if(error) {
-        reject(error)
-      }
-      else {
-        resolve(result)
-      }
+let patchMethod = (func) => {
+  const dbFunc = func
+  return function () {
+    // old syntax (callback last argument)
+    if(typeof arguments[arguments.length - 1] === 'function') {
+      dbFunc.apply(this, arguments)
+      return
     }
-    const newArgs = [...arguments, cb]
-    dbGet.apply(this, newArgs)
-  })
+    // new promise syntax
+    return new Promise((resolve, reject) => {
+      const cb = (error, result) => {
+        if(error) {
+          reject(error)
+        }
+        else {
+          resolve(result)
+        }
+      }
+      const newArgs = [...arguments, cb]
+      dbFunc.apply(this, newArgs)
+    })
+  }
 }
 
-// patch db.run to make it promise-based if no callback passed
-const dbRun = db.run;
-db.run = function () {
-  // old syntax (callback last argument)
-  if(typeof arguments[arguments.length - 1] === 'function') {
-    dbRun.apply(this, arguments)
-    return
-  }
-  // new promise syntax
-  return new Promise((resolve, reject) => {
-    const cb = (error, result) => {
-      if(error) {
-        reject(error)
-      }
-      else {
-        resolve(result)
-      }
-    }
-    const newArgs = [...arguments, cb]
-    dbRun.apply(this, newArgs)
-  })
-}
-
-// patch db.all to make it promise-based if no callback passed
-const dbAll = db.all;
-db.all = function () {
-  // old syntax (callback last argument)
-  if(typeof arguments[arguments.length - 1] === 'function') {
-    dbAll.apply(this, arguments)
-    return
-  }
-  // new promise syntax
-  return new Promise((resolve, reject) => {
-    const cb = (error, result) => {
-      if(error) {
-        reject(error)
-      }
-      else {
-        resolve(result)
-      }
-    }
-    const newArgs = [...arguments, cb]
-    dbAll.apply(this, newArgs)
-  })
-}
+// patch db.get, db.run, db.all to make it promise-based if no callback passed
+db.get = patchMethod(db.get)
+db.run = patchMethod(db.run)
+db.all = patchMethod(db.all)
 
 module.exports = db

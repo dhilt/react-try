@@ -32,7 +32,7 @@ let AuthController = {
     });
   }),
 
-  testUsers: (req) => new Promise((resolve, reject) => {
+  testUsers: (req) => new Promise((resolve, reject) =>
     db.all('SELECT * FROM User', (err, rows) => {
       if (err) {
         return reject(err)
@@ -41,7 +41,7 @@ let AuthController = {
       rows.forEach(row => users.push(AuthHelper.getUserInfo(row)))
       resolve(users)
     })
-  })
+  )
 }
 
 module.exports = AuthController

@@ -51,7 +51,7 @@ app.put('/api/articles/:id/rate', (req, res) => VotesController.doVote(req, 1)  
 );
 
 app.delete('/api/articles/:id', (req, res) => ArticlesController.deleteArticle(req)
-  .then(result => res.send({ status: 'ok', result }))
+  .then(result => res.send({ status: 'ok', msg: result }))
   .catch(error => res.send({ status: 'error', error }))
 );
 
