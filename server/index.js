@@ -45,13 +45,13 @@ app.put('/api/articles/:id', (req, res) => ArticlesController.updateArticle(req)
   .catch(error => res.send({ status: 'error', error }))
 );
 
-app.put('/api/articles/:id/rate', (req, res) => VotesController.doVote(req, 1)  // 1 - article type in database Votes
-  .then(result => res.send({ status: 'ok', value: result }))
+app.delete('/api/articles/:id', (req, res) => ArticlesController.deleteArticle(req)
+  .then(result => res.send({ status: 'ok', msg: result }))
   .catch(error => res.send({ status: 'error', error }))
 );
 
-app.delete('/api/articles/:id', (req, res) => ArticlesController.deleteArticle(req)
-  .then(result => res.send({ status: 'ok', msg: result }))
+app.put('/api/articles/:id/rate', (req, res) => VotesController.doVote(req, 1)  // 1 - article type in database Votes
+  .then(result => res.send({ status: 'ok', value: result }))
   .catch(error => res.send({ status: 'error', error }))
 );
 
