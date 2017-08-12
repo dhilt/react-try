@@ -31,8 +31,8 @@ module.exports.doVote = (req, voteType) =>
   )
   // process params vote
   .then(data => {
-    let result = data.result
-    let params = data.params
+    const result = data.result
+    const params = data.params
     if (!result || !result.value) {
       return db.run('INSERT INTO Votes VALUES (?, ?, ?, ?, ?)', [params.userId, params.id, params.type, params.value, new Date().toISOString()]).then(
         result => Promise.resolve(params.value),
