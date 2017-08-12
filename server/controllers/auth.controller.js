@@ -26,10 +26,9 @@ let AuthController = {
       if (!AuthHelper.verifyPassword(password, row.hash)) {
         return reject('Invalid password.')
       }
-//      const token = AuthHelper.signToken({id: row.id, login: row.login, role: row.role});
       const token = AuthHelper.signToken(AuthHelper.getUserInfo(row))
       resolve({ userInfo: AuthHelper.getUserInfo(row), token: token })
-    });
+    })
   }),
 
   testUsers: (req) => new Promise((resolve, reject) =>

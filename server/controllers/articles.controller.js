@@ -101,161 +101,158 @@ let ArticlesController = {
     )
   }),
 
-  createArticle: (req) =>
-    AuthHelper.doAuthorize(req.headers.authorization)
-    // params validation
-    .then(user => {
-      if (user.id !== 1) {
-        throw `Access error`
-      }
-      const article = req.body.article
-      if (!article) {
-        throw `Can't create. No new article.`
-      }
-      if (!article.text) {
-        throw `Can't create. No text.`
-      }
-      if (!article.title) {
-        throw `Can't create. No title.`
-      }
-      if (!article.createdAt) {
-        throw `Can't create. No article date.`
-      }
-      if (!article.image) {
-        throw `Can't create. No image.`
-      }
-      if (!article.description) {
-        throw `Can't create. No description.`
-      }
-      return Promise.resolve({ article, user })
-    })
-    // find new id article
-    .then(params =>
-      db.get('SELECT max(id) FROM Article').then(
-        result => Promise.resolve(Object.assign({newId: result['max(id)']}, params)),
-        err => { throw `Can't create. Database error (select new id)` }
-      )
+  createArticle: (req) => AuthHelper.doAuthorize(req.headers.authorization)
+  // params validation
+  .then(user => {
+    if (user.id !== 1) {
+      throw `Access error`
+    }
+    const article = req.body.article
+    if (!article) {
+      throw `Can't create. No new article.`
+    }
+    if (!article.text) {
+      throw `Can't create. No text.`
+    }
+    if (!article.title) {
+      throw `Can't create. No title.`
+    }
+    if (!article.createdAt) {
+      throw `Can't create. No article date.`
+    }
+    if (!article.image) {
+      throw `Can't create. No image.`
+    }
+    if (!article.description) {
+      throw `Can't create. No description.`
+    }
+    return Promise.resolve({ article, user })
+  })
+  // find new id article
+  .then(params =>
+    db.get('SELECT max(id) FROM Article').then(
+      result => Promise.resolve(Object.assign({newId: result['max(id)']}, params)),
+      err => { throw `Can't create. Database error (select new id)` }
     )
-    // create new article
-    .then(data => {
-      const article = data.article
-      const user = data.user
-      const newId = data.newId + 1
-      article.id = newId
-      article.userId = user.id
-      article.userName = user.login
-      return db.run('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    [newId, article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login]).then(
-        result => Promise.resolve(article),
-        err => { throw `Can't create. Database error (insert)` }
-      )
-    }),
+  )
+  // create new article
+  .then(data => {
+    const article = data.article
+    const user = data.user
+    const newId = data.newId + 1
+    article.id = newId
+    article.userId = user.id
+    article.userName = user.login
+    return db.run('INSERT INTO Article VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                  [newId, article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login]).then(
+      result => Promise.resolve(article),
+      err => { throw `Can't create. Database error (insert)` }
+    )
+  }),
 
-  updateArticle: (req) =>
-    AuthHelper.doAuthorize(req.headers.authorization)
-    // params validation
-    .then(user => {
-      if (user.id !== 1) {
-        throw `Access error!`
-      }
-      const idArticle = Number(req.params.id),
-            article = req.body.article
-      article.userId = Number(article.userId)
-      article.id = Number(article.id)
-      if (isNaN(idArticle) || idArticle <= 0) {
-        throw `Can't update. Bad entity param (id)`
-      }
-      if (!article) {
-        throw `Can't update. No new article.`
-      }
-      if (!article.userId) {
-        throw `Can't update. No author id.`
-      }
-      if (isNaN(article.userId) || article.userId <= 0) {
-        throw `Can't update. Bad entity param (userId)`
-      }
-      if (!article.text) {
-        throw `Can't update. No text.`
-      }
-      if (!article.userName) {
-        throw `Can't update. No user name.`
-      }
-      if (!article.title) {
-        throw `Can't update. No title.`
-      }
-      if (!article.id) {
-        throw `Can't update. No id article.`
-      }
-      if (isNaN(article.id) || article.id <= 0) {
-        throw `Can't update. Bad entity param (id)`
-      }
-      if (!article.createdAt) {
-        throw `Can't update. No article date.`
-      }
-      if (!article.image) {
-        throw `Can't update. No image.`
-      }
-      if (!article.description) {
-        throw `Can't update. No description.`
-      }
-      return Promise.resolve({ article, idArticle, user })
-    })
-    // search for existed article
-    .then(params =>
-      db.get('SELECT * FROM Article WHERE id = ?', params.idArticle).then(
-        result => {
-          if (!result) {
-            throw `Can't update. Article with this id doesn't exist`
-          }
-          return Promise.resolve(params)
-        },
-        err => { throw `Can't update. Database error.` }
-      )
+  updateArticle: (req) => AuthHelper.doAuthorize(req.headers.authorization)
+  // params validation
+  .then(user => {
+    if (user.id !== 1) {
+      throw `Access error!`
+    }
+    const idArticle = Number(req.params.id),
+          article = req.body.article
+    article.userId = Number(article.userId)
+    article.id = Number(article.id)
+    if (isNaN(idArticle) || idArticle <= 0) {
+      throw `Can't update. Bad entity param (id)`
+    }
+    if (!article) {
+      throw `Can't update. No new article.`
+    }
+    if (!article.userId) {
+      throw `Can't update. No author id.`
+    }
+    if (isNaN(article.userId) || article.userId <= 0) {
+      throw `Can't update. Bad entity param (userId)`
+    }
+    if (!article.text) {
+      throw `Can't update. No text.`
+    }
+    if (!article.userName) {
+      throw `Can't update. No user name.`
+    }
+    if (!article.title) {
+      throw `Can't update. No title.`
+    }
+    if (!article.id) {
+      throw `Can't update. No id article.`
+    }
+    if (isNaN(article.id) || article.id <= 0) {
+      throw `Can't update. Bad entity param (id)`
+    }
+    if (!article.createdAt) {
+      throw `Can't update. No article date.`
+    }
+    if (!article.image) {
+      throw `Can't update. No image.`
+    }
+    if (!article.description) {
+      throw `Can't update. No description.`
+    }
+    return Promise.resolve({ article, idArticle, user })
+  })
+  // search for existed article
+  .then(params =>
+    db.get('SELECT * FROM Article WHERE id = ?', params.idArticle).then(
+      result => {
+        if (!result) {
+          throw `Can't update. Article with this id doesn't exist`
+        }
+        return Promise.resolve(params)
+      },
+      err => { throw `Can't update. Database error.` }
     )
-    // process article update
-    .then(data => {
-      const idArticle = data.idArticle
-      const article = data.article
-      const user = data.user
-      return db.run('UPDATE Article SET title = ?, text = ?, description = ?, createdAt = ?, image = ?, userId = ?, userName = ? WHERE id = ?',
-             [article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login, idArticle]).then(
-        result => Promise.resolve(article),
-        err => { throw `Can't update. Database error (update)` }
-      )
-    }),
+  )
+  // process article update
+  .then(data => {
+    const idArticle = data.idArticle
+    const article = data.article
+    const user = data.user
+    return db.run('UPDATE Article SET title = ?, text = ?, description = ?, createdAt = ?, image = ?, userId = ?, userName = ? WHERE id = ?',
+           [article.title, article.text, article.description, new Date(article.createdAt).toISOString(), article.image, user.id, user.login, idArticle]).then(
+      result => Promise.resolve(article),
+      err => { throw `Can't update. Database error (update)` }
+    )
+  }),
 
-  deleteArticle: (req) =>
-    AuthHelper.doAuthorize(req.headers.authorization)
-    // params validation
-    .then(user => {
-      if (user.id !== 1) {
-        throw `Access error!`
-      }
-      const idArticle = Number(req.params.id)
-      if (isNaN(idArticle) || idArticle <= 0) {
-        throw `Can't delete. Bad entity param (id)`
-      }
-      return Promise.resolve(idArticle)
-    })
-    // search for existed article
-    .then(idArticle =>
-      db.get('SELECT * FROM Article WHERE id = ?', idArticle).then(
-        result => {
-          if (!result) {
-            throw `Can't delete. Article doesn't exist`
-          }
-          return Promise.resolve(idArticle)
-        },
-        err => { throw `Can't delete. Database error` }
-      )
+  deleteArticle: (req) => AuthHelper.doAuthorize(req.headers.authorization)
+  // params validation
+  .then(user => {
+    if (user.id !== 1) {
+      throw `Access error!`
+    }
+    const idArticle = Number(req.params.id)
+    if (isNaN(idArticle) || idArticle <= 0) {
+      throw `Can't delete. Bad entity param (id)`
+    }
+    return Promise.resolve(idArticle)
+  })
+  // search for existed article
+  .then(idArticle =>
+    db.get('SELECT * FROM Article WHERE id = ?', idArticle).then(
+      result => {
+        if (!result) {
+          throw `Can't delete. Article doesn't exist`
+        }
+        return Promise.resolve(idArticle)
+      },
+      err => { throw `Can't delete. Database error` }
     )
-    // process params delete
-    .then(idArticle =>
-      db.run('DELETE FROM Article WHERE id = ?', idArticle).then(
-        result => Promise.resolve('Article was deleted.'),
-        err => { throw `Can't delete. Database error.` }
-      )
+  )
+  // process params delete
+  .then(idArticle =>
+    db.run('DELETE FROM Article WHERE id = ?', idArticle).then(
+      result => Promise.resolve('Article was deleted.'),
+      err => { throw `Can't delete. Database error.` }
     )
+  )
 }
 
 module.exports = ArticlesController
