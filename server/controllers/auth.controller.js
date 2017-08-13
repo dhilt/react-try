@@ -10,36 +10,49 @@ let AuthController = {
     )
   ),
 
-  getAuthorization: (req) => new Promise((resolve, reject) => {
-    const login = req.body.login,
-          password = req.body.password
-    if (!login || !password) {
-      return reject('No login or password!')
-    }
-    db.get('SELECT * FROM User WHERE login = ?', login, (err, row) => {
-      if (err) {
-        return reject(err)
+  getAuthorization: (req) =>
+    new Promise((resolve, reject) => {
+      const login = req.body.login,
+            password = req.body.password
+      if (!login) {
+        throw `Bad parameters. No login.`
       }
-      if (!row) {
-        return reject('Invalid login')
+      if (!password) {
+        throw `Bad parameters. No password.`
       }
-      if (!AuthHelper.verifyPassword(password, row.hash)) {
-        return reject('Invalid password.')
-      }
-      const token = AuthHelper.signToken(AuthHelper.getUserInfo(row))
-      resolve({ userInfo: AuthHelper.getUserInfo(row), token: token })
+      return resolve({ login, password })
     })
-  }),
+    // take user info
+    .then(params =>
+      db.get('SELECT * FROM User WHERE login = ?', params.login).then(
+        user => {
+          if (!user) {
+            throw `That user doesn't exist.`
+          }
+          if (!AuthHelper.verifyPassword(params.password, user.hash)) {
+            throw `Invalid password.`
+          }
+          return Promise.resolve(user)
+        },
+        error => { throw `Database error. Can't authorize user.` }
+      )
+    )
+    // send result
+    .then(user => {
+      const userInfo = AuthHelper.getUserInfo(user)
+      const token = AuthHelper.signToken(userInfo)
+      return Promise.resolve({ userInfo, token })
+    }),
 
   testUsers: (req) => new Promise((resolve, reject) =>
-    db.all('SELECT * FROM User', (err, rows) => {
-      if (err) {
-        return reject(err)
-      }
-      let users = []
-      rows.forEach(row => users.push(AuthHelper.getUserInfo(row)))
-      resolve(users)
-    })
+    db.all('SELECT * FROM User').then(
+      rows => {
+        let users = []
+        rows.forEach(row => users.push(AuthHelper.getUserInfo(row)))
+        return resolve(users)
+      },
+      error => reject(error)
+    )
   )
 }
 
