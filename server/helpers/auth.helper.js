@@ -8,17 +8,15 @@ const AUTH_TOKEN = {
 
 let AuthHelper = {
 
-  doAuthorize: (token) => {
-    return new Promise((resolve, reject) => {
-      jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
-        if (!err) { // resolve userInfo
-          return resolve({ id: decoded.id, login: decoded.login, role: decoded.role })
-        } else  {
-          return reject(err)
-        }
-      })
+  doAuthorize: (token) => new Promise((resolve, reject) =>
+    jwt.verify(token, AUTH_TOKEN.secretKey, (err, decoded) => {
+      if (!err) { // resolve userInfo
+        return resolve({ id: decoded.id, login: decoded.login, role: decoded.role })
+      } else  {
+        return reject(err)
+      }
     })
-  },
+  ),
 
   getUserInfo: (userObj) => {
     return {

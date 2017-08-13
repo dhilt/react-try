@@ -67,7 +67,13 @@ let ArticlesController = {
     params.author = req.query.author ? '%' + req.query.author + '%' : '%%'
     params.dateFrom = req.query.dateFrom ? req.query.dateFrom + 'T00:00:00' : '1970-01-01'
     params.dateTo = req.query.dateTo ? req.query.dateTo + 'T23:59:59' : 'date("now")'
-    // TODO: validate date like: '1999-12-12'
+    // validate date
+    if (params.dateTo !== 'date("now")' && !Date.parse(params.dateTo)) {
+      throw `Bad parameters. Invalid dateTo.`
+    }
+    if (params.dateFrom !== '1970-01-01' && !Date.parse(req.query.dateFrom)) {
+      throw `Bad parameters. Invalid dateFrom.`
+    }
     let orderBy = 'createdAt'
     let orderDir = 'DESC'
     params.ordering = (orderBy ? ' ORDER BY ' + orderBy + ' ' : '') + (orderBy && orderDir ? orderDir : '')
@@ -139,7 +145,7 @@ let ArticlesController = {
   .then(data => {
     const article = data.article
     const user = data.user
-    const newId = data.newId + 1
+    const newId = Number(data.newId) + 1
     article.id = newId
     article.userId = user.id
     article.userName = user.login
