@@ -27,23 +27,17 @@ let ArticlesController = {
     // take article
     .then(params =>
       db.get('SELECT * FROM Article WHERE Article.id = ?', params.idArticle).then(
-        result => Promise.resolve({ token: params.token, article: result }),
+        article => db.all('SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = -1 UNION ALL SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = 1', { $id: article.id }).then(
+          rates => {
+            article.rateDown = 0 || rates[0]['COUNT(userId)']
+            article.rateUp = 0 || rates[1]['COUNT(userId)']
+            return Promise.resolve({ article, token: params.token })
+          },
+          error => { throw `Can't get articles rate. Database error (select)` }
+        ),
         err => { throw `Can't get article. Database error (select)` }
       )
     )
-    // take article rate
-    .then(data => {
-      const article = data.article
-      const token = data.token
-      return db.all('SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = -1 UNION ALL SELECT COUNT(userId) FROM Votes WHERE type = 1 AND id = $id AND value = 1', { $id: article.id }).then(
-        result => {
-          article.rateDown = 0 || result[0]['COUNT(userId)']
-          article.rateUp = 0 || result[1]['COUNT(userId)']
-          return Promise.resolve({ article, token })
-        },
-        err => { throw `Can't take articles rate. Database error (select)` }
-      )
-    })
     // take user vote, if he is
     .then(data => {
       if (!data.token) {

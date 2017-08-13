@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 
 export const AuthModal = props => {
-  console.log('!!!', props, props.errors.size)
+
   function renderErrors (errors, apiError) {
     let result = [];
     errors.forEach(error => result.push(error));
