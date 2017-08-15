@@ -36,7 +36,7 @@
     font-size: 16px;
     font-weight: 300;
     line-height: 30px;
-    width: 90%;
+    white-space: pre-wrap;
   }
 }
 
@@ -44,7 +44,6 @@
   width: 250px;
   height: 80px;
   display: inline-block;
-//  float: right;
 }
 
 .likeButton {
@@ -53,7 +52,7 @@
   width: 74px;
   height: 74px;
   background: url(../assets/img/like.png) no-repeat 0px 5px;
-  margin-left: 10px;
+  margin-left: 42px;
 }
 
 .hasLikeButton {
@@ -62,7 +61,7 @@
   width: 74px;
   height: 74px;
   background: url(../assets/img/hasLike.png) no-repeat 0px 5px;
-  margin-left: 10px;
+  margin-left: 42px;
 }
 
 .dislikeButton {
@@ -98,17 +97,28 @@
 }
 
 .positiveRating {
+  position: absolute;
   font-size: 30px;
   font-weight: 800;
-  vertical-align: middle;
+  margin-top: 13px;
   color: #25B51B;
 }
 
 .negativeRating {
+  position: absolute;
   font-size: 30px;
   font-weight: 800;
-  vertical-align: middle;
+  margin-top: 13px;
   color: #BD2929;
+}
+
+.neutralRating {
+  position: absolute;
+  font-size: 30px;
+  font-weight: 800;
+  margin-top: 13px;
+  margin-left: 8px;
+  color: darkgray;
 }
 
 .noMovingLikeButton {
@@ -117,7 +127,7 @@
   width: 74px;
   height: 74px;
   background: url(../assets/img/like.png) no-repeat 0px 5px;
-  margin-left: 10px;
+  margin-left: 42px;
 }
 
 .noMovingDislikeButton {

@@ -28,7 +28,7 @@ export const RatingPanel = props => {
         disabled={pendingVote}
         onClick={voteDown}
         className={!accessToVote && 'noMovingDislikeButton' || accessToVote && (isVoted === -1 ? 'hasDislikeButton' : 'dislikeButton')} />
-      <span className={rateUp >= rateDown ? 'positiveRating' : 'negativeRating'}>{rating}</span>
+      <span className={rating == 0 && 'neutralRating' || (rating > 0 ? 'positiveRating' : 'negativeRating')}>{rating}</span>
       <button
         type='button'
         disabled={pendingVote}
