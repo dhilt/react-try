@@ -27,7 +27,7 @@ export default class ArticleControls extends React.Component {
     let location = history.location
     location.pathname = e.target.pathname
     history.push(location)
-  }  
+  }
 
   openModal() {
     this.props.dispatch(openConfirmationModal())
@@ -49,21 +49,21 @@ export default class ArticleControls extends React.Component {
 
     return (
       <div className='adminPanelCreateAndRemoveArticles'>
-          <a onClick={this.goToEditArticlePage} href={'/admin/articles/' + article.get('id')}>
-            {'Править статью +'}
-          </a>
-          <a onClick={this.openModal}>
-            {'Удалить статью -'}
-          </a>
-          <ConfirmationModal
-            dialogTitle={'Confirm removing article'}
-            textButtonOk={'Yes, remove article!'}
-            textButtonCancel={'No, hide this modal!'}
-            isOpenModal={getRemoveArticleAttr('isOpenModal')}
-            cancel={this.closeModal}
-            confirm={this.removeArticle}
-            message={getRemoveArticleAttr('serverResult')}
-            pending={getRemoveArticleAttr('pending')} />
+        <a onClick={this.goToEditArticlePage} href={'/admin/articles/' + article.get('id')}>
+          {'Править статью +'}
+        </a>
+        <a onClick={this.openModal}>
+          {'Удалить статью -'}
+        </a>
+        <ConfirmationModal
+          dialogTitle={'Confirm removing article'}
+          textButtonOk={'Yes, remove article!'}
+          textButtonCancel={'No, hide this modal!'}
+          isOpenModal={getRemoveArticleAttr('isOpenModal')}
+          cancel={this.closeModal}
+          confirm={this.removeArticle}
+          message={getRemoveArticleAttr('serverResult')}
+          pending={getRemoveArticleAttr('pending')} />
       </div>
     )
   }
