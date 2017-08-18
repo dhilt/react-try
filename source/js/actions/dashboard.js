@@ -3,13 +3,10 @@ import { asyncRequest } from '../helpers/request';
 export const GET_DASHBOARD_ARTICLES_ASYNC_START = 'GET_DASHBOARD_ARTICLES_ASYNC_START';
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS = 'GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS';
 export const GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL = 'GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL';
-
 export const SELECT_HEADER_IMAGE = 'SELECT_HEADER_IMAGE';
-export const RESET_HEADER_IMAGE = 'RESET_HEADER_IMAGE';
-
-export const GET_DASHBOARD_HEAD_DATA_ASYNC_START = 'GET_DASHBOARD_HEAD_DATA_ASYNC_START';
-export const GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS = 'GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS';
-export const GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL = 'GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL';
+export const GET_DASHBOARD_GAMES_ASYNC_START = 'GET_DASHBOARD_HEAD_DATA_ASYNC_START';
+export const GET_DASHBOARD_GAMES_ASYNC_END_SUCCESS = 'GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS';
+export const GET_DASHBOARD_GAMES_ASYNC_END_FAIL = 'GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL';
 
 export function getDashboardArticlesAsync(offset) {
   return (dispatch) => {
@@ -43,47 +40,37 @@ export function getDashboardArticlesAsyncEndFail(error) {
 }
 
 export function clickOnHeaderImage(index) {
-  return (dispatch, getState) => {
-    let currentIndex = getState().dashboard.get('head').get('selectedIndex');
-    if (index === currentIndex) {
-      dispatch ({
-        type: RESET_HEADER_IMAGE
-      })
-    }
-    else {
-      dispatch ({
-        type: SELECT_HEADER_IMAGE,
-        data: index
-      })
-    }
+  return {
+    type: SELECT_HEADER_IMAGE,
+    data: index
   }
 }
 
-export function getDashboardHeadDataAsync() {
+export function getDashboardGamesAsync() {
   return (dispatch) => {
-    dispatch(getDashboardHeadDataAsyncStart());
+    dispatch(getDashboardGamesAsyncStart());
     asyncRequest('games?dashboard')
-      .then(result => dispatch(getDashboardHeadDataAsyncEndSuccess(result.games)))
-      .catch(error => dispatch(getDashboardHeadDataAsyncEndFail(error)));
+      .then(result => dispatch(getDashboardGamesAsyncEndSuccess(result.games)))
+      .catch(error => dispatch(getDashboardGamesAsyncEndFail(error)));
   }
 }
 
-export function getDashboardHeadDataAsyncStart() {
+export function getDashboardGamesAsyncStart() {
   return {
-    type: GET_DASHBOARD_HEAD_DATA_ASYNC_START
+    type: GET_DASHBOARD_GAMES_ASYNC_START
   }
 }
 
-export function getDashboardHeadDataAsyncEndSuccess(data) {
+export function getDashboardGamesAsyncEndSuccess(data) {
   return {
-    type: GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS,
+    type: GET_DASHBOARD_GAMES_ASYNC_END_SUCCESS,
     data
   }
 }
 
-export function getDashboardHeadDataAsyncEndFail(error) {
+export function getDashboardGamesAsyncEndFail(error) {
   return {
-    type: GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL,
+    type: GET_DASHBOARD_GAMES_ASYNC_END_FAIL,
     error
   }
 }

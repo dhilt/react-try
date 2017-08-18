@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { clickOnHeaderImage, getDashboardHeadDataAsync } from 'actions/dashboard';
-import { TextBlock } from './TextBlock';
+import { clickOnHeaderImage, getDashboardGamesAsync } from 'actions/dashboard'
+import { TextBlock } from './TextBlock'
 
 @connect(state => ({
   selectedIndex: state.dashboard.get('head').get('selectedIndex'),
@@ -11,8 +11,6 @@ import { TextBlock } from './TextBlock';
   error: state.dashboard.get('head').get('error'),
   games: state.dashboard.get('head').get('games')
 }))
-
-
 export default class DashboardHead extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
@@ -22,43 +20,49 @@ export default class DashboardHead extends Component {
   }
 
   constructor() {
-    super();
-
-    this.onImageClick = this.onImageClick.bind(this);
+    super()
+    this.onImageClick = this.onImageClick.bind(this)
   }
 
   onImageClick(index) {
-    this.props.dispatch(clickOnHeaderImage(index));
+    if (this.props.selectedIndex === index) {
+      return
+    }
+    this.props.dispatch(clickOnHeaderImage(index))
   }
 
   componentWillMount() {
     if(!this.props.games.size) {
-      this.props.dispatch(getDashboardHeadDataAsync());
+      this.props.dispatch(getDashboardGamesAsync())
     }
   }
 
   render() {
-    const { selectedIndex } = this.props;
-    const data = this.props.games;
+    const { selectedIndex } = this.props
+    let games = []
+    let backgroundGameImage = {background: '', backgroundSize: 'cover'}
+    let showImageGames = null
+    if (this.props.games.length !== 0) {
+      games = this.props.games.toJS()
+      backgroundGameImage = {background: 'url(' + games[selectedIndex].image + ') no-repeat scroll 0% 0%', backgroundSize: 'cover'}
+      showImageGames = games.map((game, index) => (
+        <img key={index}
+          src={game.image}
+          onClick={() => this.onImageClick(index)}
+          className={selectedIndex === index ? 'active' : ''}
+        />
+      ))
+    }
 
     return(
-      <div className='DashboardHead'>
+      <div className='DashboardHead' style={backgroundGameImage}>
         <div className='games-list'>
-          {data.map((game, index) => (
-            <li
-              key={index}
-              onClick={() => this.onImageClick(index)}
-            >
-              <img
-                src={game.img}
-                className={selectedIndex === index ? 'active' : '' } />
-            </li>
-          ))}
+          {games.length ? <div className='leftupGameDecoration' /> : null}
+          {showImageGames}
+          {games.length ? <div className='rightdownGameDecoration' /> : null}
+          {selectedIndex >= 0 ? <TextBlock game = {games[selectedIndex]} /> : null}
         </div>
-        {
-          selectedIndex >= 0 ? <TextBlock game = {data[selectedIndex]} /> : null
-        }
       </div>
-    );
+    )
   }
 }

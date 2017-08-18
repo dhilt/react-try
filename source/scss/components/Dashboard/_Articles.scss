@@ -43,10 +43,8 @@
 }
 
 $article-width: 420px;
-
 .listDashboardArticles {
   margin: 0 20px;
-
   .Article {
     margin-right: 30px;
     display: inline-block;
@@ -55,7 +53,6 @@ $article-width: 420px;
     border: 2px solid #f2f2ef;
     background-color: #ffffff;
   }
-
   .userInfoArticle {
     margin: 0px;
     position: relative;
@@ -93,7 +90,6 @@ $article-width: 420px;
       border-top: 2px solid #808080;
     }
   }
-
   .articleCreatedAt {
     p {
       margin: 0px;
@@ -111,7 +107,6 @@ $article-width: 420px;
       line-height: 24px;
     }
   }
-
   .textArticle {
     position: absolute;
     margin-top: 38px;

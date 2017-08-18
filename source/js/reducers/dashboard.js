@@ -5,10 +5,9 @@ import {
   GET_DASHBOARD_ARTICLES_ASYNC_END_SUCCESS,
   GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL,
   SELECT_HEADER_IMAGE,
-  RESET_HEADER_IMAGE,
-  GET_DASHBOARD_HEAD_DATA_ASYNC_START,
-  GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS,
-  GET_DASHBOARD_HEAD_DATA_ASYNC_END_FAIL
+  GET_DASHBOARD_GAMES_ASYNC_START,
+  GET_DASHBOARD_GAMES_ASYNC_END_SUCCESS,
+  GET_DASHBOARD_GAMES_ASYNC_END_FAIL
 } from 'actions/dashboard';
 
 const initialState = Map({
@@ -58,35 +57,30 @@ const actionsMap = {
       })
     })
   },
-  [RESET_HEADER_IMAGE]: (state, action) => {
+  [GET_DASHBOARD_GAMES_ASYNC_START]: (state) => {
     return state.merge({
       head: state.get('head').merge({
-        selectedIndex: initialState.get('head').get('selectedIndex')
-      })
-    })
-  },
-  [GET_DASHBOARD_HEAD_DATA_ASYNC_START]: (state) => {
-    return state.merge({
-      games: state.get('head').merge({
         pending: true
       })
     })
   },
-  [GET_DASHBOARD_HEAD_DATA_ASYNC_END_SUCCESS]: (state, action) => {
+  [GET_DASHBOARD_GAMES_ASYNC_END_SUCCESS]: (state, action) => {
     return state.merge({
-      games: state.get('head').merge({
+      head: state.get('head').merge({
         pending: false,
         error: '',
-        games: [...action.data]
+        games: action.data,
+        selectedIndex: 0
       })
     })
   },
-  [GET_DASHBOARD_ARTICLES_ASYNC_END_FAIL]: (state, action) => {
+  [GET_DASHBOARD_GAMES_ASYNC_END_FAIL]: (state, action) => {
     return state.merge({
-      games: state.merge({
+      head: state.get('head').merge({
         pending: false,
         error: action.error,
-        games: []
+        games: [],
+        selectedIndex: -1
       })
     })
   }
