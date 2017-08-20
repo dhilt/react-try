@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 
 export const AuthModal = props => {
-  
+
   function renderErrors (errors, apiError) {
     let result = [];
     errors.forEach(error => result.push(error));
@@ -47,8 +47,8 @@ export const AuthModal = props => {
           className={!props.isPasswordValid ? 'invalidInput' : ''}/>
       </div>
       <div>
-        <button type="button" disabled={props.errors.size || props.loginPending} onClick={props.doLogin}>Log in</button>
-        <button type="button" onClick={props.closeModal}>Close Modal</button>
+        <button type='button' disabled={props.errors.size || props.loginPending || props.login === '' || props.password === ''} onClick={props.doLogin}>{'Log in'}</button>
+        <button type='button' onClick={props.closeModal}>{'Close Modal'}</button>
       </div>
       {renderErrors(props.errors, props.apiError)}
     </ReactModal>

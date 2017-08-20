@@ -22,7 +22,41 @@
   }
 }
 
+.ArticleForm {
+  label {
+    font-size: 1.1rem;
+  }
+  input:first-child {
+    width: 150px;
+  }
+  input {
+    width: 75%;
+  }
+  textarea {
+    width:  75%;
+    height: 600px;
+  }
+  button {
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #4BE64B;
+    border: 2px solid black;
+    font-size: 18px;
+    font-weight: 300;
+  }
+}
+
 .ArticleFormResetButton {
+  cursor: pointer;
   margin-left: 10%;
   margin-top: 10px;
+  width: 200px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #FF4500;
+  border: 2px solid black;
+  font-size: 18px;
+  font-weight: 300;
 }

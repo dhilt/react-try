@@ -19,6 +19,7 @@ let getErrors = (token, options) => {
 }
 
 export const ArticleForm = props => {
+
   const model = String(props.model)
   const { data, onDateChanged } = props
   return (
@@ -63,6 +64,7 @@ export const ArticleForm = props => {
 
       <div>
         <button
+          style={(props.pending || props.pristine || !props.valid) ? {cursor: 'default'} : {cursor: 'pointer'}}
           onClick={props.onSubmit}
           disabled={props.pending || props.pristine || !props.valid}
           type='submit'>

@@ -16,7 +16,7 @@ export const ArticleContents = props => {
        <p className='authorArticle'>Author: {article.get('userName')}</p>
        <p className='descriptionArticle'>{article.get('description')}</p>
        <img className='imageArticle' src={article.get('image')} />
-       <p className='textArticle'>{article.get('text')}</p>
+       <pre className='textArticle'>{article.get('text')}</pre>
      </div>
   )
 }

@@ -15,10 +15,11 @@ export default class ArticleControlPanel extends Component {
 
   constructor() {
     super()
+    this.state = { localRemoveArticleIsOpenModal: false }
 
     this.editArticle = this.editArticle.bind(this)
     this.removeArticle = this.removeArticle.bind(this)
-    this.removeArtcielOpenConfirmationModal = this.removeArtcielOpenConfirmationModal.bind(this)
+    this.removeArticleOpenConfirmationModal = this.removeArticleOpenConfirmationModal.bind(this)
     this.removeArticleCloseConfirmationModal = this.removeArticleCloseConfirmationModal.bind(this)
   }
 
@@ -29,25 +30,29 @@ export default class ArticleControlPanel extends Component {
 
   removeArticle() {
     this.props.dispatch(removeArticleAsync(this.props.idArticle, this.props.history))
+    this.setState({ localRemoveArticleIsOpenModal: false })
   }
 
-  removeArtcielOpenConfirmationModal() {
+  removeArticleOpenConfirmationModal() {
     this.props.dispatch(openConfirmationModal())
+    this.setState({ localRemoveArticleIsOpenModal: true })
   }
 
   removeArticleCloseConfirmationModal() {
     this.props.dispatch(closeConfirmationModal())
+    this.setState({ localRemoveArticleIsOpenModal: false })
   }
 
   render() {
     let { removeArticleIsOpenModal, removeArticlePending, removeArticleServerResult } = this.props
+    let { localRemoveArticleIsOpenModal } = this.state
     return (
       <div className='ArticleControlPanel'>
         <a onClick={this.editArticle}>{'Редактировать статью '}</a>
-        <a onClick={this.removeArtcielOpenConfirmationModal}>{'Удалить статью'}</a>
+        <a onClick={this.removeArticleOpenConfirmationModal}>{'Удалить статью'}</a>
 
         <ConfirmationModal
-          isOpenModal={removeArticleIsOpenModal}
+          isOpenModal={removeArticleIsOpenModal && localRemoveArticleIsOpenModal}
           cancel={this.removeArticleCloseConfirmationModal}
           confirm={this.removeArticle}
           dialogTitle={'Confirm removing article'}

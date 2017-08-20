@@ -19,7 +19,7 @@ export function editArticleAsync() {
     dispatch(editArticleAsyncStart())
     const query = 'articles/' + article.id
     asyncRequest(query, 'put', { article })
-      .then(result => dispatch(editArticleAsyncEndSuccess(result)))
+      .then(result => dispatch(editArticleAsyncEndSuccess(result.result)))
       .catch(error => dispatch(editArticleAsyncEndFail(error)))
   }
 }
