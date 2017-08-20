@@ -64,22 +64,3 @@ app.get('/api/games', (req, res) => GamesController.getGames(req)
 app.listen(APP_PORT, () =>
   console.log('Hello, console! Listening on port ' + APP_PORT + '...')
 );
-
-//app.get('/api/games', (req, res) => {
-//  const dashboard = req.query.hasOwnProperty('dashboard');
-//  let count = Number(req.query.count) || GAMES.defaultCount;
-//  let orderBy = 'createdAt';
-//  let orderDir = 'DESC';
-//
-//  if (dashboard) {
-//    count = GAMES.dashboardCount;
-//  }
-//
-//  const ordering = (orderBy ? ' ORDER BY ' + orderBy + ' ' : '') + (orderBy && orderDir ? orderDir : '');
-//
-//  db.all('SELECT * FROM Game' + ordering + ' LIMIT ?', count, (err, row) => {
-//    if (err)
-//      return res.send({ status: 'error', error: err });
-//    res.send({ games: row });
-//  });
-//});
