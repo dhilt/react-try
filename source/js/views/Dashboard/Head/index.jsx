@@ -40,11 +40,11 @@ export default class DashboardHead extends Component {
   render() {
     const { selectedIndex } = this.props
     let games = []
-    let backgroundGameImage = {background: '', backgroundSize: 'cover'}
+    let backgroundGameImage = {background: ''}
     let showImageGames = null
     if (this.props.games.length !== 0) {
       games = this.props.games.toJS()
-      backgroundGameImage = {background: 'url(' + games[selectedIndex].image + ') no-repeat scroll 0% 0%', backgroundSize: 'cover'}
+      backgroundGameImage = {background: 'url(' + games[selectedIndex].image + ') no-repeat scroll 0% 0% / cover'}
       showImageGames = games.map((game, index) => (
         <img key={index}
           src={game.image}
