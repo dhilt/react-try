@@ -6,6 +6,7 @@ const DATABASE_PATH = 'server/development.db';
 
 const USERS_COUNT = 10;
 const ARTICLES_COUNT = 200;
+const GAMES_COUNT = 100;
 const ADMIN_LOGIN = 'admin';
 const ADMIN_HASH = 'password34';
 let logins = [];
@@ -71,11 +72,29 @@ function setupVotes(db) {
   })
 }
 
+function setupGames(db) {
+  db.serialize(() => {
+    db.run('CREATE TABLE Game (id INTEGER PRIMARY KEY, title TEXT, text TEXT, createdAt TEXT, image TEXT)', (err) =>
+      console.log(err || 'Games table was created.')
+    );
+
+    const stmt = db.prepare('INSERT INTO Game VALUES (?, ?, ?, ?, ?)');
+    for (let i = 1; i <= GAMES_COUNT; i++) {
+      stmt.run(i, faker.lorem.words(3), faker.lorem.paragraph(2), faker.date.past(0.5, new Date()).toISOString(), faker.image.technics());
+    }
+    for (let i = GAMES_COUNT + 1; i <= GAMES_COUNT + 6; i++) {
+      stmt.run(i, faker.lorem.words(3), faker.lorem.paragraph(2), faker.date.future(0.1, new Date()).toISOString(), 'assets/img/game' + (i - GAMES_COUNT) + '.png' )
+    }
+    stmt.finalize(() => console.log('Games table was populated.'));
+  });
+}
+
 function generateDB() {
   const db = new sqlite3.Database(DATABASE_PATH);
   setupUsers(db);
   setupArticles(db);
   setupVotes(db);
+  setupGames(db);
   db.close();
 }
 
