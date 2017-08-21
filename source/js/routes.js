@@ -12,6 +12,8 @@ import NotFound from 'views/NotFound';
 import NewArticle from 'views/_admin/Article/NewArticle';
 import EditArticle from 'views/_admin/Article/EditArticle';
 
+import Protected from 'views/_admin/wrapper-route'
+
 const publicPath = '/';
 const adminPath = '/admin/';
 
@@ -42,6 +44,7 @@ export default class Routes extends Component {
               <Route path={ routeCodes.ARTICLE } component={ Article } />
               <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
               <Route path={ routeCodesAdmin.EDITARTICLE } component={ EditArticle } />
+              <Route path='/test' component={ Protected(NewArticle) } />
               <Route component={ NotFound } />
             </Switch>
           </div>

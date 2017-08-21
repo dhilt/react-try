@@ -19,8 +19,9 @@ if (localStorage.getItem('token')) {
 }
 
 // Render it to DOM
-ReactDOM.render( < Provider store = { store } >
-  < Routes / >
-  < /Provider>,
+ReactDOM.render(
+  <Provider store={ store }>
+    <Routes />
+  </Provider>,
   document.getElementById('root')
 );
