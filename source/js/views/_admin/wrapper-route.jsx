@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // Authorization HOC
-const Protected = (routeComponent) =>
+const Protected = (RouteComponent, NotFound) =>
   @connect(state => ({
     role: state.auth.get('userInfo') && state.auth.get('userInfo').get('role'),
     authPending: state.auth.get('tokenAuthPending')
@@ -22,9 +22,9 @@ const Protected = (routeComponent) =>
         return <div>{'Wait...'}</div>
       }
       if (role === requiredRole) {
-        return <routeComponent {...this.props} />
+        return <RouteComponent {...this.props} />
       } else {
-        return <div>{'Page 404'}</div>
+        return <NotFound />
       }
     }
   }

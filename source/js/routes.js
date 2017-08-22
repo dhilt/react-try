@@ -42,9 +42,8 @@ export default class Routes extends Component {
               <Route path={ routeCodes.ABOUT } component={ About } />
               <Route exact path={ routeCodes.ARTICLES } component={ Articles } />
               <Route path={ routeCodes.ARTICLE } component={ Article } />
-              <Route path={ routeCodesAdmin.NEWARTICLE } component={ NewArticle } />
-              <Route path={ routeCodesAdmin.EDITARTICLE } component={ EditArticle } />
-              <Route path='/test' component={ Protected(NewArticle) } />
+              <Route path={ routeCodesAdmin.NEWARTICLE } component={ Protected(NewArticle, NotFound) } />
+              <Route path={ routeCodesAdmin.EDITARTICLE } component={ Protected(EditArticle, NotFound) } />
               <Route component={ NotFound } />
             </Switch>
           </div>
