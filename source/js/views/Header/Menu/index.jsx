@@ -9,7 +9,7 @@ export default class Menu extends Component {
     return (
       <div className='Menu'>
         <Link to='/'>
-          <img src="/assets/img/logo.png" />
+          <img src='/assets/img/logo.png' />
         </Link>
 
         <Link to='/news'>

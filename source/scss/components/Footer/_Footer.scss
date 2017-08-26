@@ -1,0 +1,159 @@
+.footer {
+  height: 440px;
+  background-color: #ebebeb;
+  .social-table {
+    position: absolute;
+    margin-left: 120px;
+    width: 46%;
+    height: 270px;
+    background-color: #33282c;
+    .running-man-picture {
+      background-image: url(../assets/img/running-man.png);
+      height: 60px;
+      width: 60px;
+      position: absolute;
+    }
+    .yellow-top-line {
+      margin: 0px;
+      width: 100%;
+      height: 10px;
+      background-color: #f7d54a;
+      position: absolute;
+    }
+    .social-links {
+      padding-left: 10px;
+      margin: 0px;
+      position: absolute;
+      margin-top: 22px;
+      margin-left: 64px;
+      a {
+        margin: 0px 8px 0px 0px;
+        width: 42px;
+        height: 38px;
+        display: inline-block;
+      }
+      a:first-child {
+        background-image: url(../assets/img/icon-twitter.png);
+      }
+      a:nth-child(2) {
+        background-image: url(../assets/img/icon-facebook.png);
+      }
+      a:nth-child(3) {
+        background-image: url(../assets/img/icon-grinder.png);
+      }
+      a:nth-child(4) {
+        background-image: url(../assets/img/icon-google.png);
+      }
+      a:nth-child(5) {
+        background-image: url(../assets/img/icon-tree.png);
+      }
+    }
+    .footer-about-site {
+      width: 441px;
+      height: 137px;
+      font-family: "Open Sans";
+      line-height: 24px;
+      position: absolute;
+      margin: 97px 0px 0px 37px;
+      p {
+        color: #ffffff;
+        font-size: 17px;
+        font-weight: 600;
+      }
+      pre {
+        color: #a7a7a7;
+        font-size: 15px;
+        font-weight: 300;
+        white-space: inherit;
+      }
+    }
+    .button-write-us {
+      width: 240px;
+      height: 50px;
+      background-color: #48a4be;
+      position: absolute;
+      margin-top: 257px;
+      margin-left: 244px;
+      border: 0px;
+      cursor: pointer;
+      color: #ffffff;
+      font-family: "Open Sans";
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 24px;
+    }
+  }
+
+  .bottom-images {
+    .table-age-limit {
+      width: 100px;
+      height: 60px;
+      border: 5px solid #d4d4d4;
+      background-color: rgba(167, 62, 92, 0);
+      position: absolute;
+      right: calc(150/1600 * 100%);
+      margin-top: calc(40/1600 * 100%);
+      line-height: 50px;
+      text-align: center;
+      color: #000000;
+      font-family: "Open Sans";
+      font-size: 31px;
+      font-weight: 300;
+    }
+    .table-copyright {
+      width: 370px;
+      height: 88px;
+      color: #000000;
+      font-family: "Open Sans";
+      font-size: 15px;
+      line-height: 24px;
+      margin: 0px;
+      position: absolute;
+      right: calc(140/1600 * 100%);
+      margin-top: 240px;
+      p {
+        font-weight: 600;
+      }
+      pre {
+        font-weight: 300;
+        white-space: inherit;
+      }
+    }
+    .footer-guy-with-guns {
+      background-image: url(../assets/img/footer-guy-with-guns.png);
+      height: 500px;
+      width: 672px;
+      margin: 0px;
+      right: 320px;
+      position: absolute;
+      margin-top: -70px;
+    }
+    .footer-rectangles {
+      background-image: url(../assets/img/footer-rectangles.png);
+      width: 583px;
+      height: 64px;
+      margin: 0px;
+      position: absolute;
+      z-index: 1;
+      margin-left: calc(583/1600 * 100%);
+      margin-top: 377px;
+    }
+    .bottom-red-line {
+      margin: 0px;
+      width: calc(790/1600 * 100%);
+      height: 10px;
+      background-color: #ff4c36;
+      position: absolute;
+      margin-top: 430px;
+    }
+    .bottom-blue-line {
+      margin: 0px;
+      width: calc(510/1600 * 100%);
+      height: 10px;
+      background-color: #00abed;
+      position: absolute;
+      margin-top: 430px;
+      right: 0px;
+    }
+  }
+}

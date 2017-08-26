@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Route, BrowserRouter, Switch } from 'react-router-dom'
 
-import Header from 'views/Header/index'
+import Header from 'views/Header'
+import Footer from 'views/Footer'
+import Dashboard from 'views/Dashboard'
+import Articles from 'views/Articles'
+import Article from 'views/Article'
+import About from 'views/About'
+import NotFound from 'views/NotFound'
 
-import Dashboard from 'views/Dashboard';
-import Articles from 'views/Articles';
-import Article from 'views/Article';
-import About from 'views/About';
-import NotFound from 'views/NotFound';
-
-import NewArticle from 'views/_admin/Article/NewArticle';
-import EditArticle from 'views/_admin/Article/EditArticle';
-
+import NewArticle from 'views/_admin/Article/NewArticle'
+import EditArticle from 'views/_admin/Article/EditArticle'
 import Protected from 'views/_admin/wrapper-route'
 
 const publicPath = '/';
@@ -22,12 +21,12 @@ export const routeCodes = {
   ABOUT: `${ publicPath }about`,
   ARTICLES: `${ publicPath }articles`,
   ARTICLE: `${ publicPath }articles/:id`
-};
+}
 
 export const routeCodesAdmin = {
   NEWARTICLE: `${ adminPath }articles/new`,
   EDITARTICLE: `${ adminPath }articles/:id`
-};
+}
 
 export default class Routes extends Component {
   render() {
@@ -47,8 +46,9 @@ export default class Routes extends Component {
               <Route component={ NotFound } />
             </Switch>
           </div>
+          <Footer />
         </div>
       </BrowserRouter>
-    );
+    )
   }
 }
