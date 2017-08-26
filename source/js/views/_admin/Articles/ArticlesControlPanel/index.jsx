@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
 
-import { setFilterAuthor, setFilterTitle, setFilterBeginDate, setFilterEndDate, cleanUpFilter } from 'actions/articles'
+import {
+  setFilterAuthor,
+  setFilterTitle,
+  setFilterBeginDate,
+  setFilterEndDate,
+  cleanUpFilter
+} from 'actions/articles'
 
 @connect(state => ({
   filter: state.articles.get('filter')
@@ -11,7 +17,6 @@ export default class ArticlesControlPanel extends Component {
 
   constructor() {
     super()
-
     this.makeNewArticle = this.makeNewArticle.bind(this)
     this.onChangeUserName = this.onChangeUserName.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this)

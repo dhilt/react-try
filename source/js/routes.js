@@ -13,8 +13,8 @@ import NewArticle from 'views/_admin/Article/NewArticle'
 import EditArticle from 'views/_admin/Article/EditArticle'
 import Protected from 'views/_admin/wrapper-route'
 
-const publicPath = '/';
-const adminPath = '/admin/';
+const publicPath = '/'
+const adminPath = '/admin/'
 
 export const routeCodes = {
   DASHBOARD: `${ publicPath }dashboard`,

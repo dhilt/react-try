@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map } from 'immutable'
 
 import {
   OPEN_LOGIN_MODAL,
@@ -13,7 +13,7 @@ import {
   AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS,
   AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL,
   DO_LOGOUT
-} from 'actions/auth';
+} from 'actions/auth'
 
 const initialState = Map({
   isAuthorized: false,
@@ -32,35 +32,35 @@ const initialState = Map({
   tokenAuthError: '',
   login: '',
   password: ''
-});
+})
 
 const actionsMap = {
   [OPEN_LOGIN_MODAL]: (state) => {
     return state.merge({
       dialogOpen: true
-    });
+    })
   },
   [CLOSE_LOGIN_MODAL]: (state) => {
     return state.merge({
       dialogOpen: false
-    });
+    })
   },
   [CHANGE_LOGIN_STRING]: (state, action) => {
     return state.merge({
       login: action.data
-    });
+    })
   },
   [CHANGE_PASSWORD_STRING]: (state, action) => {
     return state.merge({
       password: action.data
-    });
+    })
   },
   [VALIDATE_LOGIN_FORM]: (state, action) => {
     return state.merge({
       isLoginValid: action.isLoginValid,
       isPasswordValid: action.isPasswordValid,
       errors: action.errors
-    });
+    })
   },
   [LOGIN_ASYNC_START]: (state) => {
     return state.merge({
@@ -110,9 +110,9 @@ const actionsMap = {
       userInfo: initialState.get('userInfo')
     })
   }
-};
+}
 
 export default function reducer(state = initialState, action = {}) {
-  const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
+  const fn = actionsMap[action.type]
+  return fn ? fn(state, action) : state
 }

@@ -17,7 +17,8 @@ export const ConfirmationModal = props => {
         <div>
           <p>{'Message time: ' + String(new Date())}</p>
           <p>{props.message}</p>
-        </div>}
+        </div>
+      }
     </ReactModal>
   )
 }

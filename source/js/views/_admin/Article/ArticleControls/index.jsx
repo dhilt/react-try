@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 import { ConfirmationModal } from 'views/_admin/confirmation'
 
 import { setEditPageSource } from 'actions/_admin/editArticle'
-import { openConfirmationModal, closeConfirmationModal, removeArticleAsync } from 'actions/_admin/removeArticle'
+import {
+  openConfirmationModal,
+  closeConfirmationModal,
+  removeArticleAsync
+} from 'actions/_admin/removeArticle'
 
 @connect(state => ({
   article: state.article.get('data'),

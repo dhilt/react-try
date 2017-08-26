@@ -3,14 +3,14 @@ import React, { Component } from 'react'
 const SocialTable = props => {
   return (
     <div className='social-table'>
-      <hr className='yellow-top-line'/>
-      <div className='running-man-picture'/>
+      <hr className='yellow-top-line' />
+      <div className='running-man-picture' />
       <ul className='social-links'>
-        <a href='http://www.twitter.com'/>
-        <a href='http://www.facebook.com'/>
-        <a href='http://www.vk.com'/>
-        <a href='http://www.google.com'/>
-        <a href='http://www.twitter.com'/>
+        <a href='http://www.twitter.com' />
+        <a href='http://www.facebook.com' />
+        <a href='http://www.vk.com' />
+        <a href='http://www.google.com' />
+        <a href='http://www.twitter.com' />
       </ul>
       <div className='footer-about-site'>
         <p>{'Немного о нашем сайте'}</p>

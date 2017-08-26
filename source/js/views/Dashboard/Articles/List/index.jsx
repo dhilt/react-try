@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { getDashboardArticlesAsync } from 'actions/dashboard';
+import { getDashboardArticlesAsync } from 'actions/dashboard'
 
 @connect(state => ({
   pending: state.dashboard.get('articles').get('pending'),
@@ -18,39 +18,41 @@ export default class DashboardArticleList extends Component {
   }
 
   constructor() {
-    super();
+    super()
   }
 
   componentWillMount() {
     if(!this.props.list.size) {
-      this.props.dispatch(getDashboardArticlesAsync());
+      this.props.dispatch(getDashboardArticlesAsync())
     }
   }
 
   render() {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     let listArticles = this.props.list.map((article, index) => {
-      const time = new Date(article.get('createdAt'));
-      let articleMonth = time.getMonth();
-      let articleDay = time.getUTCDate();
-      return <div key={index} className='Article'>
-               <div className='userInfoArticle'>
-                 <div className='articleCreatedAt'>
-                   <p>{articleDay}</p>
-                   <p>{months[articleMonth]}</p>
-                 </div>
-                 <img src={article.get('image')} />
-                 <div>{article.get('userName')}</div>
-               </div>
-               <div className='textArticle'>
-                  <p>{article.get('title')}</p>
-                  <p>{article.get('description')}</p>
-                  <p>{article.get('text')}</p>
-               </div>
-             </div>
-    });
+      const time = new Date(article.get('createdAt'))
+      let articleMonth = time.getMonth()
+      let articleDay = time.getUTCDate()
+      return (
+        <div key={index} className='Article'>
+          <div className='userInfoArticle'>
+            <div className='articleCreatedAt'>
+              <p>{articleDay}</p>
+              <p>{months[articleMonth]}</p>
+            </div>
+            <img src={article.get('image')} />
+            <div>{article.get('userName')}</div>
+          </div>
+          <div className='textArticle'>
+            <p>{article.get('title')}</p>
+            <p>{article.get('description')}</p>
+            <p>{article.get('text')}</p>
+          </div>
+        </div>
+      )
+    })
     return (
       <ul className='listDashboardArticles'>{listArticles}</ul>
-    );
+    )
   }
 }

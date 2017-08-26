@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'react-redux-form/immutable'
 
-import { editArticleAsync, getExistArticleAsync, resetForm } from 'actions/_admin/editArticle'
 import { ArticleForm } from '../ArticleForm'
+import {
+  editArticleAsync,
+  getExistArticleAsync,
+  resetForm
+} from 'actions/_admin/editArticle'
 
 @connect(state => ({
   editArticle: state._adminEditArticle,
@@ -50,10 +54,10 @@ export default class EditArticle extends Component {
     let valid = editArticleForm.$form && editArticleForm.$form.valid
     return (
       <div>
-        <h2>Edit Article...(admin only)</h2>
+        <h2>{'Edit Article...(admin only)'}</h2>
         {
           !sourceAppliedCount ? (
-            <div>waiting...</div>
+            <div>{'waiting...'}</div>
           ) : (
             <div>
               <ArticleForm
@@ -71,6 +75,6 @@ export default class EditArticle extends Component {
           )
         }
       </div>
-    );
+    )
   }
 }

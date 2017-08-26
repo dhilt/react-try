@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import logger from 'dev/logger'
 
 import setRootReducer from '../reducers'
-import { setAdminReducer } from '../reducers/_admin';
+import { setAdminReducer } from '../reducers/_admin'
 
 export let storeHelper = {
 
@@ -11,7 +11,7 @@ export let storeHelper = {
 
   generateStore: function(isProduction) {
     let store = null
-    let rootReducer = setRootReducer();
+    let rootReducer = setRootReducer()
 
     if (isProduction) {
       // In production adding only thunk middleware
@@ -48,7 +48,7 @@ export let storeHelper = {
   },
 
   setAdminReducer: function() {
-    setAdminReducer();
+    setAdminReducer()
     this.store.replaceReducer(setRootReducer())
   }
 

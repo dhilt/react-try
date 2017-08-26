@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map } from 'immutable'
 
 import {
   EDIT_ARTICLE_ASYNC_START,
@@ -9,9 +9,9 @@ import {
   GET_EXIST_ARTICLE_ASYNC_END_SUCCESS,
   GET_EXIST_ARTICLE_ASYNC_END_FAIL,
   EDIT_ARTICLE_MODEL_HAS_BEEN_FILLED
-} from 'actions/_admin/editArticle';
+} from 'actions/_admin/editArticle'
 
-import { articleModel } from 'helpers/models';
+import { articleModel } from 'helpers/models'
 
 const initialState = Map({
   source: Map(articleModel),
@@ -68,9 +68,9 @@ const actionsMap = {
       sourceAppliedCount: action.data
     })
   }
-};
+}
 
 export default function reducer(state = initialState, action = {}) {
-  const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
+  const fn = actionsMap[action.type]
+  return fn ? fn(state, action) : state
 }

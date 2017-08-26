@@ -8,7 +8,10 @@ import ArticlesControlPanel from 'views/_admin/Articles/ArticlesControlPanel'
 import ArticleControlPanel from 'views/_admin/Articles/ArticleControlPanel'
 
 import { setPage } from 'actions/articles'
-import { getLocationPage, persistPage } from 'helpers/page'
+import {
+  getLocationPage,
+  persistPage
+} from 'helpers/page'
 
 @connect(state => ({
   listArticles: state.articles.get('listArticles'),

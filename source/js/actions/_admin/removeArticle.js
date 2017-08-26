@@ -8,7 +8,7 @@ export const CLOSE_CONFIRMATION_MODAL = 'CLOSE_CONFIRMATION_MODAL'
 
 export function removeArticleAsync(id, history) {
   return (dispatch) => {
-    dispatch(removeArticleAsyncStart());
+    dispatch(removeArticleAsyncStart())
     asyncRequest('articles/' + id, 'delete')
       .then(result => dispatch(removeArticleAsyncEndSuccess(result, history, id)))
       .catch(error => dispatch(removeArticleAsyncEndFail(error)))

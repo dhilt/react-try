@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import ReactModal from 'react-modal';
-import { AuthMenuElement } from './presentation/AuthMenuElement';
-import { AuthModal } from './presentation/AuthModal';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import ReactModal from 'react-modal'
+import { AuthMenuElement } from './presentation/AuthMenuElement'
+import { AuthModal } from './presentation/AuthModal'
 
-import { openLoginModal, closeLoginModal, changeLoginString, changePasswordString, validateForm, doLoginAsync, doLogout } from 'actions/auth';
+import {
+  openLoginModal,
+  closeLoginModal,
+  changeLoginString,
+  changePasswordString,
+  validateForm,
+  doLoginAsync,
+  doLogout
+} from 'actions/auth'
 
 @connect(state => ({
   dialogOpen: state.auth.get('dialogOpen'),
@@ -37,44 +45,43 @@ export default class AuthContainer extends Component {
   }
 
   constructor () {
-    super();
-
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.changeLogin = this.changeLogin.bind(this);
-    this.changePassword = this.changePassword.bind(this);
-    this.doLogin = this.doLogin.bind(this);
-    this.doLogout = this.doLogout.bind(this);
+    super()
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.changeLogin = this.changeLogin.bind(this)
+    this.changePassword = this.changePassword.bind(this)
+    this.doLogin = this.doLogin.bind(this)
+    this.doLogout = this.doLogout.bind(this)
   }
 
   openModal () {
-    this.props.dispatch(openLoginModal());
+    this.props.dispatch(openLoginModal())
   }
 
   closeModal () {
-    this.props.dispatch(closeLoginModal());
+    this.props.dispatch(closeLoginModal())
   }
 
   changeLogin (event) {
-    this.props.dispatch(changeLoginString(event.target.value));
-    this.props.dispatch(validateForm(event.target.value, this.props.password));
+    this.props.dispatch(changeLoginString(event.target.value))
+    this.props.dispatch(validateForm(event.target.value, this.props.password))
   }
 
   changePassword (event) {
-    this.props.dispatch(changePasswordString(event.target.value));
-    this.props.dispatch(validateForm(this.props.login, event.target.value));
+    this.props.dispatch(changePasswordString(event.target.value))
+    this.props.dispatch(validateForm(this.props.login, event.target.value))
   }
 
   doLogin () {
-    this.props.dispatch(doLoginAsync(this.props.login, this.props.password));
+    this.props.dispatch(doLoginAsync(this.props.login, this.props.password))
   }
 
   doLogout () {
-    this.props.dispatch(doLogout());
+    this.props.dispatch(doLogout())
   }
 
   render() {
-    let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfoLogin } = this.props;
+    let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfoLogin } = this.props
     return (
       <div className='Auth'>
         <AuthMenuElement
@@ -97,6 +104,6 @@ export default class AuthContainer extends Component {
           isLoginValid={isLoginValid}
           isPasswordValid={isPasswordValid} />
       </div>
-    );
+    )
   }
 }

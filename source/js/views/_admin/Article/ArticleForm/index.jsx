@@ -27,35 +27,35 @@ export const ArticleForm = props => {
       model={String(model)}
       className='ArticleForm'>
 
-      <label>Date</label>
+      <label>{'Date'}</label>
       <MyDatepickerInput model={model + '.createdAt'} value={data.createdAt} validators={validatorsVal.createdAt}
         onDateChanged={onDateChanged}/>
       <Errors className='errors'
         model={model + '.createdAt'}
         messages={getErrors('Date', { required: true, dateFormat: true})}/>
 
-      <label>Title</label>
+      <label>{'Title'}</label>
       <Control.text model={model + '.title'}  value={data.title} validators={validators.title}/>
       <Errors className='errors'
         model={model + '.title'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Title', { required: true, minLength: 10})}/>
 
-      <label>Description</label>
+      <label>{'Description'}</label>
       <Control.text model={model + '.description'} value={data.description} validators={validators.description}/>
       <Errors className='errors'
         model={model + '.description'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Description', { required: true, minLength: 10})}/>
 
-      <label>Image</label>
+      <label>{'Image'}</label>
       <Control.text model={model + '.image'} value={data.image} validators={validators.image}/>
       <Errors className='errors'
         model={model + '.image'}
         show={{touched: true, pristine: false}}
         messages={getErrors('Image', { required: true, minLength: 5})}/>
 
-      <label>Text</label>
+      <label>{'Text'}</label>
       <Control.textarea model={model + '.text'} value={data.text} validators={validators.text}/>
       <Errors className='errors'
         model={model + '.text'}
@@ -68,7 +68,7 @@ export const ArticleForm = props => {
           onClick={props.onSubmit}
           disabled={props.pending || props.pristine || !props.valid}
           type='submit'>
-            Сохранить!
+            {'Сохранить!'}
         </button>
       </div>
     </Form>

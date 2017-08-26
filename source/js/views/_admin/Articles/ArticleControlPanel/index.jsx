@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 import { ConfirmationModal } from 'views/_admin/confirmation'
 
 import { getExistArticleAsync } from 'actions/_admin/editArticle'
-import { removeArticleAsync, openConfirmationModal, closeConfirmationModal } from 'actions/_admin/removeArticle'
+import {
+  removeArticleAsync,
+  openConfirmationModal,
+  closeConfirmationModal
+} from 'actions/_admin/removeArticle'
 
 @connect(state => ({
   removeArticleIsOpenModal: state._adminRemoveArticle.get('isOpenModal'),
@@ -16,7 +20,6 @@ export default class ArticleControlPanel extends Component {
   constructor() {
     super()
     this.state = { localRemoveArticleIsOpenModal: false }
-
     this.editArticle = this.editArticle.bind(this)
     this.removeArticle = this.removeArticle.bind(this)
     this.removeArticleOpenConfirmationModal = this.removeArticleOpenConfirmationModal.bind(this)

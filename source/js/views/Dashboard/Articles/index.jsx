@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import DashboardArticleList from './List/index';
-import { getDashboardArticlesAsync } from 'actions/dashboard';
+import DashboardArticleList from './List/index'
+import { getDashboardArticlesAsync } from 'actions/dashboard'
 
 @connect(state => ({
   pending: state.dashboard.get('articles').get('pending'),
@@ -20,19 +20,18 @@ export default class DashboardArticles extends Component {
   }
 
   constructor() {
-    super();
-    
-    this.getAnotherArticles = this.getAnotherArticles.bind(this);
+    super()
+    this.getAnotherArticles = this.getAnotherArticles.bind(this)
   }
 
   getAnotherArticles() {
     if(!this.props.pending) {
-      this.props.dispatch(getDashboardArticlesAsync(this.props.list.size));
+      this.props.dispatch(getDashboardArticlesAsync(this.props.list.size))
     }
   }
 
   render() {
-    let { pending, role } = this.props;
+    let { pending, role } = this.props
     return (
       <div className='wrappingArticles'>
         <div className='headerArticles'>
@@ -46,6 +45,6 @@ export default class DashboardArticles extends Component {
              onClick={this.getAnotherArticles}>{'Подгрузить еще'}</a>
         </div>
       </div>
-    );
+    )
   }
 }

@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map } from 'immutable'
 
 import {
   GET_ARTICLES_ASYNC_START,
@@ -10,7 +10,7 @@ import {
   SET_FILTER_AUTHOR,
   SET_FILTER_TITLE,
   CLEAN_UP_FILTER
-} from 'actions/articles';
+} from 'actions/articles'
 
 import {
   EDIT_ARTICLE_ASYNC_END_SUCCESS
@@ -37,7 +37,7 @@ const initialState = Map({
     dateFrom: '',
     dateTo: ''
   })
-});
+})
 
 const actionsMap = {
   [GET_ARTICLES_ASYNC_START]: (state) => {
@@ -122,9 +122,9 @@ const actionsMap = {
       listArticles: []
     })
   }
-};
+}
 
 export default function reducer(state = initialState, action = {}) {
-  const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
+  const fn = actionsMap[action.type]
+  return fn ? fn(state, action) : state
 }

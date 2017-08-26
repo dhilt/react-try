@@ -1,18 +1,18 @@
 import { asyncRequest } from '../helpers/request'
 import { setAdminReducerAction } from './_admin/common'
 
-export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
-export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL';
-export const CHANGE_LOGIN_STRING = 'CHANGE_LOGIN_STRING';
-export const CHANGE_PASSWORD_STRING = 'CHANGE_PASSWORD_STRING';
-export const VALIDATE_LOGIN_FORM = 'VALIDATE_LOGIN_FORM';
-export const LOGIN_ASYNC_START = 'LOGIN_ASYNC_START';
-export const LOGIN_ASYNC_END_SUCCESS = 'LOGIN_ASYNC_END_SUCCESS';
-export const LOGIN_ASYNC_END_FAIL = 'LOGIN_ASYNC_END_FAIL';
-export const AUTHORIZE_BY_TOKEN_ASYNC_START = 'AUTHORIZE_BY_TOKEN_ASYNC_START';
-export const AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS = 'AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS';
-export const AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL = 'AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL';
-export const DO_LOGOUT = 'DO_LOGOUT';
+export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL'
+export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL'
+export const CHANGE_LOGIN_STRING = 'CHANGE_LOGIN_STRING'
+export const CHANGE_PASSWORD_STRING = 'CHANGE_PASSWORD_STRING'
+export const VALIDATE_LOGIN_FORM = 'VALIDATE_LOGIN_FORM'
+export const LOGIN_ASYNC_START = 'LOGIN_ASYNC_START'
+export const LOGIN_ASYNC_END_SUCCESS = 'LOGIN_ASYNC_END_SUCCESS'
+export const LOGIN_ASYNC_END_FAIL = 'LOGIN_ASYNC_END_FAIL'
+export const AUTHORIZE_BY_TOKEN_ASYNC_START = 'AUTHORIZE_BY_TOKEN_ASYNC_START'
+export const AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS = 'AUTHORIZE_BY_TOKEN_ASYNC_END_SUCCESS'
+export const AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL = 'AUTHORIZE_BY_TOKEN_ASYNC_END_FAIL'
+export const DO_LOGOUT = 'DO_LOGOUT'
 
 export function openLoginModal() {
   return {
@@ -44,16 +44,16 @@ export function validateForm(login, password) {
   return function(dispatch) {
     let isLoginValid = true,
       isPasswordValid = true,
-      errors = [];
+      errors = []
 
     if (!login) {
-      isLoginValid = false;
-      errors.push('Login is required.');
+      isLoginValid = false
+      errors.push('Login is required.')
     }
 
     if (!password) {
-      isPasswordValid = false;
-      errors.push('Password is required.');
+      isPasswordValid = false
+      errors.push('Password is required.')
     }
 
     dispatch({
@@ -61,21 +61,21 @@ export function validateForm(login, password) {
       isLoginValid,
       isPasswordValid,
       errors
-    });
+    })
   }
 }
 
 export function doLoginAsync(login, password) {
   return function(dispatch) {
-    dispatch(loginAsyncStart());
+    dispatch(loginAsyncStart())
     asyncRequest('login', 'post', { login, password })
       .then(result => {
-        localStorage.setItem('token', result.token);
-        dispatch(loginAsyncEndSuccess(result.userInfo));
-        dispatch(closeLoginModal());
+        localStorage.setItem('token', result.token)
+        dispatch(loginAsyncEndSuccess(result.userInfo))
+        dispatch(closeLoginModal())
       })
-      .catch(error => dispatch(loginAsyncEndFail(error)));
-  };
+      .catch(error => dispatch(loginAsyncEndFail(error)))
+  }
 }
 
 function loginAsyncStart() {
@@ -100,13 +100,13 @@ function loginAsyncEndFail(error) {
 
 export function authorizeByTokenAsync() {
   return function(dispatch) {
-    dispatch(authorizeByTokenAsyncStart());
+    dispatch(authorizeByTokenAsyncStart())
     asyncRequest('userInfo')
       .then(result => {
-        dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo));
-        //dispatch(setAdminReducerAction());
+        dispatch(authorizeByTokenAsyncEndSuccess(result.userInfo))
+        //dispatch(setAdminReducerAction())
       })
-      .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)));
+      .catch(error => dispatch(authorizeByTokenAsyncEndFail(error)))
   }
 }
 
@@ -131,7 +131,7 @@ function authorizeByTokenAsyncEndFail(error) {
 }
 
 export function doLogout() {
-  localStorage.removeItem('token');
+  localStorage.removeItem('token')
   return {
     type: DO_LOGOUT
   }

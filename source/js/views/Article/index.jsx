@@ -45,26 +45,28 @@ export default class Article extends Component {
   render() {
     let { data, pending, error, role, history, rateUp, rateDown, isVoted, pendingVote } = this.props
 
-    return (<div className='wrapArticle'> {
-      !data ? (
-        pending ? (
-            <div className='ArticlePreloader'></div>
+    return (
+      <div className='wrapArticle'>{
+        !data ? (
+          pending ? (
+              <div className='ArticlePreloader'></div>
+            ) : (
+              <p>{error}</p>
+            )
           ) : (
-            <p>{error}</p>
-          )
-        ) : (
-        <div>
-          <ArticleContents article={data} />
-          <RatingPanel voteArticle={this.voteArticle}
-            role={role}
-            rateUp={rateUp}
-            rateDown={rateDown}
-            isVoted={isVoted}
-            pendingVote={pendingVote} />
-          { role === 1 && ( <ArticleControls history={history} /> ) }
-        </div>
-      )
-    }
-    </div>)
+          <div>
+            <ArticleContents article={data} />
+            <RatingPanel voteArticle={this.voteArticle}
+              role={role}
+              rateUp={rateUp}
+              rateDown={rateDown}
+              isVoted={isVoted}
+              pendingVote={pendingVote} />
+            { role === 1 && ( <ArticleControls history={history} /> ) }
+          </div>
+        )
+      }
+      </div>
+    )
   }
 }

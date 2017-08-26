@@ -12,7 +12,7 @@ export function getArticleAsync(id) {
     dispatch(getArticleAsyncStart())
     asyncRequest('articles/' + id)
       .then(result => dispatch(getArticleAsyncEndSuccess({article: result.article, userVote: result.rateUser})))
-      .catch(error => dispatch(getArticleAsyncEndFail(error)));
+      .catch(error => dispatch(getArticleAsyncEndFail(error)))
   }
 }
 

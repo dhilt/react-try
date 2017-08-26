@@ -11,12 +11,12 @@ export const ArticleContents = props => {
 
   return (
     <div>
-       <p className='titleArticle'>{article.get('title')}</p>
-       <p className='dateArticle'>Date: {articleDay} {months[articleMonth]}, {articleYear}</p>
-       <p className='authorArticle'>Author: {article.get('userName')}</p>
-       <p className='descriptionArticle'>{article.get('description')}</p>
-       <img className='imageArticle' src={article.get('image')} />
-       <pre className='textArticle'>{article.get('text')}</pre>
-     </div>
+      <p className='titleArticle'>{article.get('title')}</p>
+      <p className='dateArticle'>Date: {articleDay} {months[articleMonth]}, {articleYear}</p>
+      <p className='authorArticle'>Author: {article.get('userName')}</p>
+      <p className='descriptionArticle'>{article.get('description')}</p>
+      <img className='imageArticle' src={article.get('image')} />
+      <pre className='textArticle'>{article.get('text')}</pre>
+    </div>
   )
 }

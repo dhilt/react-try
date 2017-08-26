@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { clickOnHeaderImage, getDashboardGamesAsync } from 'actions/dashboard'
 import { TextBlock } from './TextBlock'
+import {
+  clickOnHeaderImage,
+  getDashboardGamesAsync
+} from 'actions/dashboard'
 
 @connect(state => ({
   selectedIndex: state.dashboard.get('head').get('selectedIndex'),

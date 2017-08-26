@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map } from 'immutable'
 
 import {
   GET_DASHBOARD_ARTICLES_ASYNC_START,
@@ -8,7 +8,7 @@ import {
   GET_DASHBOARD_GAMES_ASYNC_START,
   GET_DASHBOARD_GAMES_ASYNC_END_SUCCESS,
   GET_DASHBOARD_GAMES_ASYNC_END_FAIL
-} from 'actions/dashboard';
+} from 'actions/dashboard'
 
 import {
   EDIT_ARTICLE_ASYNC_END_SUCCESS
@@ -34,7 +34,7 @@ const initialState = Map({
     error: '',
     games: []
   })
-});
+})
 
 const actionsMap = {
   [GET_DASHBOARD_ARTICLES_ASYNC_START]: (state) => {
@@ -121,9 +121,9 @@ const actionsMap = {
       })
     })
   }
-};
+}
 
 export default function reducer(state = initialState, action = {}) {
-  const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
+  const fn = actionsMap[action.type]
+  return fn ? fn(state, action) : state
 }

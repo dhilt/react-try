@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
-import ReactModal from 'react-modal';
+import React, { Component } from 'react'
+import ReactModal from 'react-modal'
 
 export const AuthModal = props => {
 
   function renderErrors (errors, apiError) {
-    let result = [];
-    errors.forEach(error => result.push(error));
+    let result = []
+    errors.forEach(error => result.push(error))
     if(apiError) {
-      result.push(apiError);
+      result.push(apiError)
     }
-    result = result.map((error, key) => <div key={key}>{error}</div>);
-    return result;
+    result = result.map((error, key) => <div key={key}>{error}</div>)
+    return result
   }
 
   function changeLogin (event) {
-    props.changeLogin(event);
+    props.changeLogin(event)
   }
 
   function changePassword (event) {
-    props.changePassword(event);
+    props.changePassword(event)
   }
 
   return (
@@ -29,7 +29,7 @@ export const AuthModal = props => {
       overlayClassName='Overlay'
     >
       <div>
-        <label>Login</label>
+        <label>{'Login'}</label>
         <input
           type='text'
           placeholder='Username'
@@ -38,7 +38,7 @@ export const AuthModal = props => {
           className={!props.isLoginValid ? 'invalidInput' : ''}/>
       </div>
       <div>
-        <label>Password</label>
+        <label>{'Password'}</label>
         <input
           type='password'
           placeholder='**********'
@@ -52,5 +52,5 @@ export const AuthModal = props => {
       </div>
       {renderErrors(props.errors, props.apiError)}
     </ReactModal>
-  );
+  )
 }

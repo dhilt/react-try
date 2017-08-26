@@ -37,7 +37,7 @@ export default class NewArticle extends Component {
 
     return (
       <div>
-        <h2>Create new Article...(admin only)</h2>
+        <h2>{'Create new Article...(admin only)'}</h2>
         <ArticleForm
           data={newArticleModel.toJS()}
           onDateChanged={this.onDateChanged}

@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map } from 'immutable'
 
 import {
   REMOVE_ARTICLE_ASYNC_START,
@@ -6,14 +6,14 @@ import {
   REMOVE_ARTICLE_ASYNC_END_FAIL,
   OPEN_CONFIRMATION_MODAL,
   CLOSE_CONFIRMATION_MODAL
-} from 'actions/_admin/removeArticle';
+} from 'actions/_admin/removeArticle'
 
 const initialState = Map({
   pending: false,
   isRemovedArticle: false,
   isOpenModal: false,
   serverResult: null
-});
+})
 
 const actionsMap = {
   [REMOVE_ARTICLE_ASYNC_START]: (state) => {
@@ -46,9 +46,9 @@ const actionsMap = {
       serverResult: null
     })
   }
-};
+}
 
 export default function reducer(state = initialState, action = {}) {
-  const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
+  const fn = actionsMap[action.type]
+  return fn ? fn(state, action) : state
 }

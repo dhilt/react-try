@@ -14,7 +14,7 @@ import { articleModel } from 'helpers/models'
 
 // export let adminReducers = combineReducers({
 //   common
-// });
+// })
 
 export function setAdminReducer() {
   adminReducers = combineReducers({
@@ -23,7 +23,7 @@ export function setAdminReducer() {
       newArticle: Map(articleModel),
       editArticle: Map(articleModel)
     }),
-  });
+  })
 }
 
 export let adminReducers = {

@@ -8,10 +8,10 @@ const BottomImages = props => {
         <p>{'Copyright © 2001-2014'}</p>
         <pre>{'Все права защищены законодательством РФ. Использование материалов сайта возможно только с прямой ссылкой на источник.'}</pre>
       </div>
-      <div className='footer-guy-with-guns'/>
-      <div className='footer-rectangles'/>
-      <hr className='bottom-red-line'/>
-      <hr className='bottom-blue-line'/>
+      <div className='footer-guy-with-guns' />
+      <div className='footer-rectangles' />
+      <hr className='bottom-red-line' />
+      <hr className='bottom-blue-line' />
     </div>
   )
 }

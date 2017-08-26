@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export const AuthMenuElement = props => {
-  const {isPending, isAuthorized, login, doLogout, doLogin} = props;
+  const {isPending, isAuthorized, login, doLogout, doLogin} = props
 
   return isPending ? (
     <div>{'Авторизуем'}</div>
@@ -11,5 +11,5 @@ export const AuthMenuElement = props => {
     ) : (
       <div onClick={doLogin}>{'Войти'}</div>
     )
-  );
+  )
 }

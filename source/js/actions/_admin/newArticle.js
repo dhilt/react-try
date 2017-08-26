@@ -7,7 +7,7 @@ export const CREATE_ARTICLE_ASYNC_END_FAIL = 'CREATE_ARTICLE_ASYNC_END_FAIL'
 export function createArticleAsync() {
   return (dispatch, getState) => {
     const article = getState()._adminForms.newArticleModel.toJS()
-    dispatch(createArticleAsyncStart());
+    dispatch(createArticleAsyncStart())
     asyncRequest('articles', 'post', { article })
       .then(result => dispatch(createArticleAsyncEndSuccess(result)))
       .catch(error => dispatch(createArticleAsyncEndFail(error)))
