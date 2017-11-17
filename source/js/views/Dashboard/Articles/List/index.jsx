@@ -34,16 +34,16 @@ export default class DashboardArticleList extends Component {
       let articleMonth = time.getMonth()
       let articleDay = time.getUTCDate()
       return (
-        <div key={index} className='Article'>
-          <div className='userInfoArticle'>
-            <div className='articleCreatedAt'>
+        <div key={index} className='article'>
+          <div className='user-info-article'>
+            <div className='article-created-at'>
               <p>{articleDay}</p>
               <p>{months[articleMonth]}</p>
             </div>
             <img src={article.get('image')} />
             <div>{article.get('userName')}</div>
           </div>
-          <div className='textArticle'>
+          <div className='text-article'>
             <p>{article.get('title')}</p>
             <p>{article.get('description')}</p>
             <p>{article.get('text')}</p>
@@ -52,7 +52,7 @@ export default class DashboardArticleList extends Component {
       )
     })
     return (
-      <ul className='listDashboardArticles'>{listArticles}</ul>
+      <ul className='list-dashboard-articles'>{listArticles}</ul>
     )
   }
 }

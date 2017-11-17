@@ -5,7 +5,7 @@ import AuthContainer from '../Auth/AuthContainer'
 export default class Menu extends Component {
   render() {
     return (
-      <div className='Menu'>
+      <div className='header-menu'>
         <Link to='/'>
           <img src='/assets/img/logo.png' />
         </Link>
@@ -14,7 +14,7 @@ export default class Menu extends Component {
         <Link to='/videos'>{'Видео'}</Link>
         <Link to='/games'>{'Игры'}</Link>
         <Link to='/about'>{'О проекте'}</Link>
-        <AuthContainer className='Auth' />        
+        <AuthContainer />
       </div>
     )
   }

@@ -1,9 +1,9 @@
-.DashboardHead {
+.dashboard-head {
   height: 560px;
   background: url(../assets/img/content.jpg) no-repeat;
   background-size: cover;
   background-color: #1C1E20;
-  .leftupGameDecoration {
+  .left-up-game-decoration {
     display: inline-block;
     margin: 0px;
     width: 158px;
@@ -11,7 +11,7 @@
     background: url(../assets/img/gameLeftDecoration.png) no-repeat;
     background-size: 160px 101px;
   }
-  .rightdownGameDecoration {
+  .right-down-game-decoration {
     display: inline-block;
     margin: 0px;
     width: 160px;

@@ -32,9 +32,9 @@ export default class Routes extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className='App'>
+        <div className='app'>
           <Header />
-          <div className='MainContent'>
+          <div className='main-content'>
             <Switch>
               <Route exact path={ publicPath } component={ Dashboard } />
               <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />

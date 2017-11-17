@@ -1,10 +1,10 @@
-.wrappingArticles {
+.wrapping-articles {
   width: 100%;
   height: 100%;
   background-color: #ffffff;
 }
 
-.headerArticles {
+.header-articles {
   height: 155px;
   width: 90%;
   a:first-child {
@@ -33,7 +33,7 @@
     margin-top: 65px;
     padding: 7px 15px;
     border-radius: 23px;
-    width: 210px;
+    width: 240px;
     height: 40px;
     background-color: #2d95bf;
     font-family: "Open Sans";
@@ -45,9 +45,9 @@
 }
 
 $article-width: 420px;
-.listDashboardArticles {
+.list-dashboard-articles {
   margin: 0 20px;
-  .Article {
+  .article {
     margin-right: 30px;
     display: inline-block;
     width: $article-width;
@@ -55,7 +55,7 @@ $article-width: 420px;
     border: 2px solid #f2f2ef;
     background-color: #ffffff;
   }
-  .userInfoArticle {
+  .user-info-article {
     margin: 0px;
     position: relative;
     left: -11px;
@@ -92,7 +92,7 @@ $article-width: 420px;
       border-top: 2px solid #808080;
     }
   }
-  .articleCreatedAt {
+  .article-created-at {
     p {
       margin: 0px;
       color: #ffffff;
@@ -109,7 +109,7 @@ $article-width: 420px;
       line-height: 24px;
     }
   }
-  .textArticle {
+  .text-article {
     position: absolute;
     margin-top: 38px;
     margin-left: 25px;
@@ -139,7 +139,7 @@ $article-width: 420px;
   }
 }
 
-.downloadArticles {
+.download-articles {
   margin-top: 50px;
   margin-bottom: 77px;
   width: 356px;

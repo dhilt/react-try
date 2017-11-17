@@ -83,7 +83,7 @@ export default class AuthContainer extends Component {
   render() {
     let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfoLogin } = this.props
     return (
-      <div className='Auth'>
+      <div className='header-auth'>
         <AuthMenuElement
           isPending={tokenAuthPending}
           isAuthorized={isAuthorized}

@@ -58,11 +58,11 @@ export default class DashboardHead extends Component {
     }
 
     return(
-      <div className='DashboardHead' style={backgroundGameImage}>
+      <div className='dashboard-head' style={backgroundGameImage}>
         <div className='games-list'>
-          {games.length ? <div className='leftupGameDecoration' /> : null}
+          {games.length ? <div className='left-up-game-decoration' /> : null}
           {showImageGames}
-          {games.length ? <div className='rightdownGameDecoration' /> : null}
+          {games.length ? <div className='right-down-game-decoration' /> : null}
           {selectedIndex >= 0 ? <TextBlock game = {games[selectedIndex]} /> : null}
         </div>
       </div>

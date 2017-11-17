@@ -6,7 +6,7 @@ import BottomImages from 'views/Footer/BottomImages'
 export default class Footer extends Component {
   render() {
     return (
-      <div className='footer'>
+      <div className='page-footer'>
         <SocialTable />
         <BottomImages />
       </div>

@@ -1,37 +1,37 @@
-.ArticlePreloader {
+.article-preloader {
   background: url(../assets/img/preLoaders.gif) no-repeat 50% 0px;
   height: 900px;
 }
 
-.wrapArticle {
+.wrap-article {
   width: 90%;
   height: 100%;
   color: #000000;
   font-family: "Open Sans";
-  .titleArticle {
+  .article-title {
     padding-top: 40px;
     font-size: 30px;
     font-weight: 700;
     margin-left: 70px;
   }
-  .authorArticle {
+  .article-author {
     font-size: 15px;
     font-weight: 400;
   }
-  .dateArticle {
+  .article-date {
     font-size: 15px;
     font-weight: 400;
     margin-bottom: 5px;
   }
-  .descriptionArticle {
+  .article-description {
     font-size: 17px;
     font-style: italic;
     font-weight: 400;
   }
-  .imageArticle {
+  .article-image {
     border: 2px solid black;
   }
-  .textArticle {
+  .article-text {
     margin-top: 20px;
     font-size: 16px;
     font-weight: 300;
@@ -40,13 +40,13 @@
   }
 }
 
-.ratingPanel {
+.rating-panel {
   width: 250px;
   height: 80px;
   display: inline-block;
 }
 
-.likeButton {
+.like-button {
   cursor: pointer;
   border: 0px;
   width: 74px;
@@ -55,7 +55,7 @@
   margin-left: 42px;
 }
 
-.hasLikeButton {
+.has-like-button {
   cursor: pointer;
   border: 0px;
   width: 74px;
@@ -64,7 +64,7 @@
   margin-left: 42px;
 }
 
-.dislikeButton {
+.dislike-button {
   cursor: pointer;
   border: 0px;
   width: 74px;
@@ -72,7 +72,7 @@
   background: url(../assets/img/dislike.png) no-repeat 0px 5px;
 }
 
-.hasDislikeButton {
+.has-dislike-button {
   cursor: pointer;
   border: 0px;
   width: 74px;
@@ -80,23 +80,23 @@
   background: url(../assets/img/hasDislike.png) no-repeat 0px 5px;
 }
 
-.likeButton:hover {
+.like-button:hover {
   background: url(../assets/img/like.png) no-repeat 0px 0px;
 }
 
-.hasLikeButton:hover {
+.has-like-button:hover {
   background: url(../assets/img/hasLike.png) no-repeat 0px 0px;
 }
 
-.dislikeButton:hover {
+.dislike-button:hover {
   background: url(../assets/img/dislike.png) no-repeat 0px 10px;
 }
 
-.hasDislikeButton:hover {
+.has-dislike-button:hover {
   background: url(../assets/img/hasDislike.png) no-repeat 0px 10px;
 }
 
-.positiveRating {
+.positive-rating {
   position: absolute;
   font-size: 30px;
   font-weight: 800;
@@ -104,7 +104,7 @@
   color: #25B51B;
 }
 
-.negativeRating {
+.negative-rating {
   position: absolute;
   font-size: 30px;
   font-weight: 800;
@@ -112,7 +112,7 @@
   color: #BD2929;
 }
 
-.neutralRating {
+.neutral-rating {
   position: absolute;
   font-size: 30px;
   font-weight: 800;
@@ -121,7 +121,7 @@
   color: darkgray;
 }
 
-.noMovingLikeButton {
+.no-moving-like-button {
   cursor: default;
   border: 0px;
   width: 74px;
@@ -130,7 +130,7 @@
   margin-left: 42px;
 }
 
-.noMovingDislikeButton {
+.no-moving-dislike-button {
   cursor: default;
   border: 0px;
   width: 74px;

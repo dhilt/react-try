@@ -51,9 +51,9 @@ export default class Paging extends Component {
   render() {
     let pages = this.getPages(this.props)
     return !this.props.total ? null : (
-      <div className='Paging'>
+      <div className='articles-paging'>
         {
-          pages.map((item, index) => 
+          pages.map((item, index) =>
             item.type === 'button' ? (
               <button
                 key={index}

@@ -1,4 +1,4 @@
-.Auth {
+.header-auth {
   float: right;
   div {
     cursor: pointer;
@@ -14,5 +14,36 @@
   }
   div:hover {
     color: #aeaeae;
+  }
+}
+
+.header-auth-modal {
+  position: absolute;
+  border-radius: 5px;
+  top: 10%;
+  left: 35%;
+  right: 35%;
+  bottom: 10%;
+  background-color: #AFEEEE;
+  div {
+    label {
+      display: block;
+      margin-left: 10%;
+      margin-top: 30px;
+    }
+    input {
+      margin-left: 10%;
+      margin-top: 5px;
+      border-radius: 2px;
+    }
+  }
+  div:nth-child(3) {
+    margin-left: 10%;
+    margin-top: 10px;
+    button {
+      background-color: aliceblue;
+      border: 1px solid black;
+      margin-right: 10px;
+    }
   }
 }

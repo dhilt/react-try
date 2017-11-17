@@ -74,11 +74,11 @@ export default class Articles extends Component {
       let articleYear = time.getFullYear()
       let articleMonth = time.getMonth()
       let articleDay = time.getUTCDate()
-      return <div key={index} className='Article'>
+      return <div key={index} className='article-one-of'>
                <img src={article.get('image')} />
-               <div className='headArticle'>
+               <div className='head-article'>
                  <span>{months[articleMonth]}, {articleDay} {articleYear} </span>
-                 <span> {article.get('userName')} </span> 
+                 <span> {article.get('userName')} </span>
                  <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
                  {this.props.role === 1 &&
                    <ArticleControlPanel
@@ -89,11 +89,11 @@ export default class Articles extends Component {
              </div>
     })
     return (
-      <div className='Articles'>
+      <div className='articles-list'>
         <Paging history={this.props.history} />
         {this.props.role === 1 &&
           <ArticlesControlPanel history={this.props.history} />}
-        <ul className={this.props.pending ? 'ArticlesPreloader' : ''}>{Articles}</ul>
+        <ul className={this.props.pending ? 'articles-preloader' : ''}>{Articles}</ul>
       </div>
     )
   }

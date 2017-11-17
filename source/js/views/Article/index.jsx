@@ -46,10 +46,10 @@ export default class Article extends Component {
     let { data, pending, error, role, history, rateUp, rateDown, isVoted, pendingVote } = this.props
 
     return (
-      <div className='wrapArticle'>{
+      <div className='wrap-article'>{
         !data ? (
           pending ? (
-              <div className='ArticlePreloader'></div>
+              <div className='article-preloader'></div>
             ) : (
               <p>{error}</p>
             )

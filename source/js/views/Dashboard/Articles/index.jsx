@@ -33,14 +33,14 @@ export default class DashboardArticles extends Component {
   render() {
     let { pending, role } = this.props
     return (
-      <div className='wrappingArticles'>
-        <div className='headerArticles'>
+      <div className='wrapping-articles'>
+        <div className='header-articles'>
           <Link to='articles'>{'Статьи'}</Link>
           <Link to='articles'>{'Все статьи'}</Link>
           {role === 1 && <Link to='/admin/articles/new'>{'Добавить статью +'}</Link>}
         </div>
         <DashboardArticleList />
-        <div className='downloadArticles'>
+        <div className='download-articles'>
           <a className={pending ? 'preloader' : ''}
              onClick={this.getAnotherArticles}>{'Подгрузить еще'}</a>
         </div>

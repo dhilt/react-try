@@ -22,19 +22,19 @@ export const RatingPanel = props => {
   }
 
   return (
-    <div className='ratingPanel' title={!accessToVote ? 'Голосование доступно только для пользователей' : ''}>
+    <div className='rating-panel' title={!accessToVote ? 'Голосование доступно только для пользователей' : ''}>
       <button
         type='button'
         disabled={pendingVote}
         onClick={voteDown}
-        className={!accessToVote && 'noMovingDislikeButton' || accessToVote && (isVoted === -1 ? 'hasDislikeButton' : 'dislikeButton')} />
-      <span className={rating == 0 && 'neutralRating' || (rating > 0 ? 'positiveRating' : 'negativeRating')}>{rating}</span>
+        className={!accessToVote && 'no-moving-dislike-button' || accessToVote && (isVoted === -1 ? 'has-dislike-button' : 'dislike-button')} />
+      <span className={rating == 0 && 'neutral-rating' || (rating > 0 ? 'positive-rating' : 'negative-rating')}>{rating}</span>
       <button
         type='button'
         disabled={pendingVote}
         onClick={voteUp}
-        className={!accessToVote && 'noMovingLikeButton' || accessToVote && (isVoted === 1 ? 'hasLikeButton' : 'likeButton')} />
-      <div className={pendingVote && 'preloader'} />
+        className={!accessToVote && 'no-moving-like-button' || accessToVote && (isVoted === 1 ? 'has-like-button' : 'like-button')} />
+      {pendingVote && <div className='preloader' />}
     </div>
   )
 }

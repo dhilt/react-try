@@ -25,7 +25,7 @@ export const AuthModal = props => {
     <ReactModal
       isOpen={props.dialogOpen}
       contentLabel='Authorization Modal'
-      className='Modal'
+      className='header-auth-modal'
       overlayClassName='Overlay'
     >
       <div>
@@ -35,7 +35,7 @@ export const AuthModal = props => {
           placeholder='Username'
           value={props.login}
           onChange={props.changeLogin}
-          className={!props.isLoginValid ? 'invalidInput' : ''}/>
+          className={!props.isLoginValid ? 'auth-invalid-input' : ''}/>
       </div>
       <div>
         <label>{'Password'}</label>
@@ -44,7 +44,7 @@ export const AuthModal = props => {
           placeholder='**********'
           value={props.password}
           onChange={props.changePassword}
-          className={!props.isPasswordValid ? 'invalidInput' : ''}/>
+          className={!props.isPasswordValid ? 'auth-invalid-input' : ''}/>
       </div>
       <div>
         <button type='button' disabled={props.errors.size || props.loginPending || props.login === '' || props.password === ''} onClick={props.doLogin}>{'Log in'}</button>

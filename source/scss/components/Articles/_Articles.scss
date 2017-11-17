@@ -1,6 +1,7 @@
-.Articles {
+.articles-list {
   width: 100%;
   margin: 0px;
+  padding-top: 20px;
   font-family: "Open Sans";
   font-size: 15px;
 
@@ -12,11 +13,11 @@
     border: 1px black solid;
   }
 
-  .Article {
+  .article-one-of {
     margin-bottom: 15px;
     margin-right: 5px;
     clear: both;
-    .headArticle {
+    .head-article {
       font-size: 15px;
       font-weight: 600;
     }
@@ -28,6 +29,6 @@
   }
 }
 
-.ArticlesPreloader {
+.articles-preloader {
   background: url(../assets/img/preLoaders.gif) no-repeat 50% 0px;
 }
