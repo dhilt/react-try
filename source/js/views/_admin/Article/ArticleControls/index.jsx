@@ -47,12 +47,10 @@ export default class ArticleControls extends React.Component {
 
   render() {
     const { article, openModal, removeArticle } = this.props
-
-    let getRemoveArticleAttr = (token) =>
-      removeArticle && removeArticle.get(token)
+    let getRemoveArticleAttr = (token) => removeArticle && removeArticle.get(token)
 
     return (
-      <div className='adminPanelCreateAndRemoveArticles'>
+      <div className='admin-panel-create-and-remove-articles'>
         <a onClick={this.goToEditArticlePage} href={'/admin/articles/' + article.get('id')}>
           {'Править статью +'}
         </a>

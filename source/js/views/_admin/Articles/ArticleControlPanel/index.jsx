@@ -50,7 +50,7 @@ export default class ArticleControlPanel extends Component {
     let { removeArticleIsOpenModal, removeArticlePending, removeArticleServerResult } = this.props
     let { localRemoveArticleIsOpenModal } = this.state
     return (
-      <div className='ArticleControlPanel'>
+      <div className='article-control-panel'>
         <a onClick={this.editArticle}>{'Редактировать статью '}</a>
         <a onClick={this.removeArticleOpenConfirmationModal}>{'Удалить статью'}</a>
 

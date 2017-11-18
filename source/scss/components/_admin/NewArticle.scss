@@ -1,4 +1,4 @@
-.ArticleForm, .formEditIdArticle {
+.article-form/*, .formEditIdArticle*/ {
   width: 80%;
   height: 100%;
   margin-top: 40px;
@@ -10,7 +10,7 @@
   input, textarea {
     width: 200px;
   }
-  
+
   .errors {
     font-size: 0.8rem;
     color: #EE0000;
@@ -22,7 +22,7 @@
   }
 }
 
-.ArticleForm {
+.article-form {
   label {
     font-size: 1.1rem;
   }
@@ -48,7 +48,7 @@
   }
 }
 
-.ArticleFormResetButton {
+.article-form-reset-button {
   cursor: pointer;
   margin-left: 10%;
   margin-top: 10px;

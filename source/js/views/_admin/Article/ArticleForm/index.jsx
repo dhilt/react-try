@@ -25,7 +25,7 @@ export const ArticleForm = props => {
   return (
     <Form
       model={String(model)}
-      className='ArticleForm'>
+      className='article-form'>
 
       <label>{'Date'}</label>
       <MyDatepickerInput model={model + '.createdAt'} value={data.createdAt} validators={validatorsVal.createdAt}

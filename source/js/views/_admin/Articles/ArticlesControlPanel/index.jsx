@@ -52,7 +52,7 @@ export default class ArticlesControlPanel extends Component {
   render() {
     let { author, title, dateFrom, dateTo } = this.props.filter.toJS()
     return (
-      <div className='ArticlesControlPanel'>
+      <div className='articles-control-panel'>
         <div className='filter'>
           <label>{'Сортировать по: '}</label>
           <input placeholder='UserName' onChange={this.onChangeUserName} value={author} />

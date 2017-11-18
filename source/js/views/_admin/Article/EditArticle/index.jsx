@@ -68,7 +68,7 @@ export default class EditArticle extends Component {
                 pending={pending}
                 pristine={pristine}
                 valid={valid} />
-              <button className='ArticleFormResetButton' onClick={this.resetButton}>
+              <button className='article-form-reset-button' onClick={this.resetButton}>
                 {'Сбросить'}
               </button>
             </div>
