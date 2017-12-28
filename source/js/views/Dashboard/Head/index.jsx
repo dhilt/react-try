@@ -10,15 +10,11 @@ import {
 
 @connect(state => ({
   selectedIndex: state.dashboard.get('head').get('selectedIndex'),
-  pending: state.dashboard.get('head').get('pending'),
-  error: state.dashboard.get('head').get('error'),
   games: state.dashboard.get('head').get('games')
 }))
 export default class DashboardHead extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
-    pending: PropTypes.bool,
-    error: PropTypes.string,
     games: PropTypes.array
   }
 

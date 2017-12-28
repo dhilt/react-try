@@ -1,31 +1,31 @@
 import React, { Component } from 'react'
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 
-import Header from 'views/Header'
-import Footer from 'views/Footer'
 import Dashboard from 'views/Dashboard'
+import NotFound from 'views/NotFound'
 import Articles from 'views/Articles'
 import Article from 'views/Article'
+import Header from 'views/Header'
+import Footer from 'views/Footer'
 import About from 'views/About'
-import NotFound from 'views/NotFound'
 
-import NewArticle from 'views/_admin/Article/NewArticle'
 import EditArticle from 'views/_admin/Article/EditArticle'
-import Protected from 'views/_admin/wrapper-route'
+import NewArticle from 'views/_admin/Article/NewArticle'
+import Protected from 'views/_admin/WrapperRoute'
 
-const publicPath = '/'
 const adminPath = '/admin/'
+const publicPath = '/'
 
-export const routeCodes = {
+const routeCodes = {
+  ARTICLE: `${ publicPath }articles/:id`,
   DASHBOARD: `${ publicPath }dashboard`,
-  ABOUT: `${ publicPath }about`,
   ARTICLES: `${ publicPath }articles`,
-  ARTICLE: `${ publicPath }articles/:id`
+  ABOUT: `${ publicPath }about`
 }
 
-export const routeCodesAdmin = {
-  NEWARTICLE: `${ adminPath }articles/new`,
-  EDITARTICLE: `${ adminPath }articles/:id`
+const routeCodesAdmin = {
+  EDITARTICLE: `${ adminPath }articles/:id`,
+  NEWARTICLE: `${ adminPath }articles/new`
 }
 
 export default class Routes extends Component {

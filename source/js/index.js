@@ -1,9 +1,9 @@
+import 'babel-polyfill'
+import '../scss/app.scss'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import 'babel-polyfill'
-
-import '../scss/app.scss'
 
 import { storeHelper } from './helpers/store'
 import { authorizeByTokenAsync } from './actions/auth'
