@@ -1,18 +1,15 @@
 import { combineReducers, reduceReducers } from 'redux'
-import auth from 'reducers/auth'
+
+import { adminReducers } from './_admin'
 import dashboard from 'reducers/dashboard'
 import articles from 'reducers/articles'
 import article from 'reducers/article'
+import auth from 'reducers/auth'
 
-import { adminReducers } from './_admin'
-
-let setRootReducer = () =>
-  combineReducers({
+export default setRootReducer =>
+  combineReducers({...adminReducers,
     dashboard,
     articles,
     article,
-    auth,
-    ...adminReducers
+    auth
   })
-
-export default setRootReducer

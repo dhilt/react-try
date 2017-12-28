@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 
 import Dashboard from 'views/Dashboard'
@@ -28,27 +28,23 @@ const routeCodesAdmin = {
   NEWARTICLE: `${ adminPath }articles/new`
 }
 
-export default class Routes extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div className='app'>
-          <Header />
-          <div className='main-content'>
-            <Switch>
-              <Route exact path={ publicPath } component={ Dashboard } />
-              <Route path={ routeCodes.DASHBOARD } component={ Dashboard } />
-              <Route path={ routeCodes.ABOUT } component={ About } />
-              <Route exact path={ routeCodes.ARTICLES } component={ Articles } />
-              <Route path={ routeCodes.ARTICLE } component={ Article } />
-              <Route path={ routeCodesAdmin.NEWARTICLE } component={ Protected(NewArticle, NotFound) } />
-              <Route path={ routeCodesAdmin.EDITARTICLE } component={ Protected(EditArticle, NotFound) } />
-              <Route component={ NotFound } />
-            </Switch>
-          </div>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    )
-  }
-}
+export default Routes =>
+  <BrowserRouter>
+    <div className="app">
+      <Header />
+      <div className="main-content">
+        <Switch>
+          // Here problem. Replacement of NewArticle and EditArticle in places giving an error
+          <Route exact path={ routeCodesAdmin.NEWARTICLE } component={ Protected(NewArticle, NotFound) } />
+          <Route exact path={ routeCodesAdmin.EDITARTICLE } component={ Protected(EditArticle, NotFound) } />
+          <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
+          <Route exact path={ routeCodes.ARTICLES } component={ Articles } />
+          <Route exact path={ routeCodes.ARTICLE } component={ Article } />
+          <Route exact path={ routeCodes.ABOUT } component={ About } />
+          <Route exact path={ publicPath } component={ Dashboard } />
+          <Route component={ NotFound } />
+        </Switch>
+      </div>
+      <Footer />
+    </div>
+  </BrowserRouter>

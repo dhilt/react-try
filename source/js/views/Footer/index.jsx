@@ -1,15 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import SocialTable from 'views/Footer/SocialTable'
-import BottomImages from 'views/Footer/BottomImages'
+import SocialTable from './socialTable'
+import BottomImages from './bottomImages'
 
-export default class Footer extends Component {
-  render() {
-    return (
-      <div className='page-footer'>
-        <SocialTable />
-        <BottomImages />
-      </div>
-    )
-  }
-}
+export default Footer =>
+  <div className="page-footer">
+    <SocialTable />
+    <BottomImages />
+  </div>
