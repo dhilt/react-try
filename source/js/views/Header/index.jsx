@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import Menu from './Menu/index'
+import Authorization from './Auth'
 
-export default class Header extends Component {
-  render() {
-    return (
-      <div className='page-header'>
-        <Menu />
-      </div>
-    )
-  }
-}
+export default Header =>
+  <div className="header">
+    <Link to='/'>
+      <img src="/assets/img/logo.png" />
+    </Link>
+    <Link to='/news'>{'Новости'}</Link>
+    <Link to='/articles'>{'Статьи'}</Link>
+    <Link to='/videos'>{'Видео'}</Link>
+    <Link to='/games'>{'Игры'}</Link>
+    <Link to='/about'>{'О проекте'}</Link>
+    <Authorization />
+  </div>

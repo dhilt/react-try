@@ -1,10 +1,29 @@
-.page-header {
+.header {
+  width: 100%;
   background: #ffffff;
   height: 65px;
-
-  // .menu,
-  // .auth {
-  //   display: inline-block;
-  //   height: 65px;
-  // }
+  a {
+    float: left;
+    margin-top: 0px;
+    font-weight: 100;
+    display: inline;
+    color: black;
+    text-decoration: none;
+    line-height: 25px;
+    font-size: 18px;
+    padding: 21px 20px 16px;
+    font-size: 20px;
+    font-weight: 300;
+  }
+  a:first-child {
+    padding: 0;
+  }
+  a:hover {
+    color: #aeaeae;
+  }
+  img {
+    float: left;
+    background-color: #30b5d7;
+    padding: 9px 45px 6px;
+  }
 }

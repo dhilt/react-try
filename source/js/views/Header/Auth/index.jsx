@@ -1,57 +1,57 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import ReactModal from 'react-modal'
-import { AuthMenuElement } from './presentation/AuthMenuElement'
-import { AuthModal } from './presentation/AuthModal'
+
+import { AuthModalLink } from './Modal/Link'
+import { AuthModal } from './Modal'
 
 import {
-  openLoginModal,
-  closeLoginModal,
-  changeLoginString,
   changePasswordString,
+  changeLoginString,
+  closeLoginModal,
+  openLoginModal,
   validateForm,
   doLoginAsync,
   doLogout
 } from 'actions/auth'
 
 @connect(state => ({
-  dialogOpen: state.auth.get('dialogOpen'),
-  isAuthorized: state.auth.get('isAuthorized'),
-  userInfoLogin: state.auth.get('userInfo').get('login'),
-  login: state.auth.get('login'),
-  password: state.auth.get('password'),
+  userLogin: state.auth.get('userInfo').get('login'),
   tokenAuthPending: state.auth.get('tokenAuthPending'),
+  isPasswordValid: state.auth.get('isPasswordValid'),
   loginPending: state.auth.get('loginPending'),
   isLoginValid: state.auth.get('isLoginValid'),
-  isPasswordValid: state.auth.get('isPasswordValid'),
+  isAuthorized: state.auth.get('isAuthorized'),
+  dialogOpen: state.auth.get('dialogOpen'),
+  password: state.auth.get('password'),
+  apiError: state.auth.get('apiError'),
   errors: state.auth.get('errors'),
-  apiError: state.auth.get('apiError')
+  login: state.auth.get('login')
 }))
-export default class AuthContainer extends Component {
+export default class AuthComponent extends Component {
   static propTypes = {
-    dialogOpen: PropTypes.bool,
-    isAuthorized: PropTypes.bool,
-    userInfoLogin: PropTypes.string,
-    login: PropTypes.string,
-    password: PropTypes.string,
     tokenAuthPending: PropTypes.bool,
+    isPasswordValid: PropTypes.bool,
+    isAuthorized: PropTypes.bool,
     loginPending: PropTypes.bool,
     isLoginValid: PropTypes.bool,
-    isPasswordValid: PropTypes.bool,
-    errors: PropTypes.array,
+    userLogin: PropTypes.string,
+    dialogOpen: PropTypes.bool,
     apiError: PropTypes.string,
+    password: PropTypes.string,
+    login: PropTypes.string,
+    errors: PropTypes.array,
     dispatch: PropTypes.func
   }
 
   constructor () {
     super()
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-    this.changeLogin = this.changeLogin.bind(this)
     this.changePassword = this.changePassword.bind(this)
-    this.doLogin = this.doLogin.bind(this)
+    this.changeLogin = this.changeLogin.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.openModal = this.openModal.bind(this)
     this.doLogout = this.doLogout.bind(this)
+    this.doLogin = this.doLogin.bind(this)
   }
 
   openModal () {
@@ -81,28 +81,32 @@ export default class AuthContainer extends Component {
   }
 
   render() {
-    let { dialogOpen, isAuthorized, login, password, isLoginValid, isPasswordValid, errors, loginPending, apiError, tokenAuthPending, userInfoLogin } = this.props
+    const { dialogOpen, errors, login, password, isLoginValid, isPasswordValid,
+      loginPending, apiError, tokenAuthPending, userLogin, isAuthorized
+    } = this.props
     return (
-      <div className='header-auth'>
-        <AuthMenuElement
+      <div className="header-auth">
+        <AuthModalLink
+          doLogin={this.openModal}
+          doLogout={this.doLogout}
           isPending={tokenAuthPending}
           isAuthorized={isAuthorized}
-          login={userInfoLogin}
-          doLogout={this.doLogout}
-          doLogin={this.openModal} />
+          login={userLogin}
+        />
         <AuthModal
-          errors={errors}
-          apiError={apiError}
-          dialogOpen={dialogOpen}
-          loginPending={loginPending}
-          closeModal={this.closeModal}
-          doLogin={this.doLogin}
           changePassword={this.changePassword}
           changeLogin={this.changeLogin}
-          login={login}
-          password={password}
+          closeModal={this.closeModal}
+          doLogin={this.doLogin}
+          isPasswordValid={isPasswordValid}
           isLoginValid={isLoginValid}
-          isPasswordValid={isPasswordValid} />
+          loginPending={loginPending}
+          dialogOpen={dialogOpen}
+          apiError={apiError}
+          password={password}
+          errors={errors}
+          login={login}
+        />
       </div>
     )
   }
