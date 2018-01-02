@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import DashboardArticleList from './List/index'
+import DashboardArticlesList from './DashboardArticlesList'
 import { getDashboardArticlesAsync } from 'actions/dashboard'
 
 @connect(state => ({
@@ -47,7 +47,7 @@ export default class DashboardArticles extends Component {
           <Link to='articles'>{'Все статьи'}</Link>
           {role === 1 && <Link to='/admin/articles/new'>{'Добавить статью +'}</Link>}
         </div>
-        <DashboardArticleList list={list} />
+        <DashboardArticlesList list={list} />
         <div className="download-articles">
           <a onClick={this.getAnotherArticles}
              className={pending ? 'preloader' : ''}>
