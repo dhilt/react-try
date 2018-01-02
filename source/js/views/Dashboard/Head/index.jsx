@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { TextBlock } from './TextBlock'
+import GameText from './DashboardGameText'
+import MenuGames from './DashboardMenuGames'
 import {
-  clickOnHeaderImage,
-  getDashboardGamesAsync
+  getDashboardGamesAsync,
+  clickOnHeaderImage
 } from 'actions/dashboard'
 
 @connect(state => ({
@@ -23,6 +24,12 @@ export default class DashboardHead extends Component {
     this.onImageClick = this.onImageClick.bind(this)
   }
 
+  componentWillMount() {
+    if(!this.props.games.size) {
+      this.props.dispatch(getDashboardGamesAsync())
+    }
+  }
+
   onImageClick(index) {
     if (this.props.selectedIndex === index) {
       return
@@ -30,36 +37,23 @@ export default class DashboardHead extends Component {
     this.props.dispatch(clickOnHeaderImage(index))
   }
 
-  componentWillMount() {
-    if(!this.props.games.size) {
-      this.props.dispatch(getDashboardGamesAsync())
-    }
-  }
-
   render() {
-    const { selectedIndex } = this.props
-    let games = []
-    let backgroundGameImage = {background: ''}
-    let showImageGames = null
-    if (this.props.games.length !== 0) {
-      games = this.props.games.toJS()
-      backgroundGameImage = {background: 'url(' + games[selectedIndex].image + ') no-repeat scroll 0% 0% / cover'}
-      showImageGames = games.map((game, index) => (
-        <img key={index}
-          src={game.image}
-          onClick={() => this.onImageClick(index)}
-          className={selectedIndex === index ? 'active' : ''}
-        />
-      ))
+    const { selectedIndex, games } = this.props
+    const bckImg = {background: ''}
+    if (games.size && selectedIndex >= 0) {
+      const imgUrl = games.get(selectedIndex).get('image')
+      bckImg.background = `url('${imgUrl}') no-repeat scroll 0% 0% / cover`
     }
 
-    return(
-      <div className='dashboard-head' style={backgroundGameImage}>
-        <div className='games-list'>
-          {games.length ? <div className='left-up-game-decoration' /> : null}
-          {showImageGames}
-          {games.length ? <div className='right-down-game-decoration' /> : null}
-          {selectedIndex >= 0 ? <TextBlock game = {games[selectedIndex]} /> : null}
+    return (
+      <div className="dashboard-head" style={bckImg}>
+        <div className="dashboard-games">
+          {games.size &&
+            <MenuGames games={games}
+              onImageClick={this.onImageClick}
+              selectedIndex={selectedIndex} />
+          }
+          { selectedIndex >= 0 && <GameText game={games.get(selectedIndex)} /> }
         </div>
       </div>
     )

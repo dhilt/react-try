@@ -22,12 +22,14 @@
     top: 194px;
     left: 159px;
   }
-  .games-list {
+  .dashboard-games {
     float: right;
     width: 640px;
     height: 400px;
     margin-right: 7%;
     margin-top: 80px;
+  }
+  .dashboard-games-list {
     img {
       margin: 0px;
       cursor: pointer;
