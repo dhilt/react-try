@@ -1,24 +1,23 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { ArticleContents } from 'views/Article/article'
-import { RatingPanel } from 'views/Article/ratingPanel'
 import ArticleControls from 'views/_admin/Article/ArticleControls'
+import ArticleContent from 'views/Article/ArticleContent'
+import RatingPanel from 'views/Article/RatingPanel'
 
 import { getArticleAsync } from 'actions/article'
 import { voteArticle } from 'actions/article'
 
 @connect(state => ({
-  data: state.article.get('data'),
+  rateDown: state.article.get('data') && state.article.get('data').get('rateDown'),
+  rateUp: state.article.get('data') && state.article.get('data').get('rateUp'),
+  pendingVote: state.article.get('pendingVote'),
+  role: state.auth.get('userInfo').get('role'),
+  isVoted: state.article.get('isVoted'),
   pending: state.article.get('pending'),
   error: state.article.get('error'),
-  role: state.auth.get('userInfo').get('role'),
-  rateUp: state.article.get('data') && state.article.get('data').get('rateUp'),
-  rateDown: state.article.get('data') && state.article.get('data').get('rateDown'),
-  isVoted: state.article.get('isVoted'),
-  pendingVote: state.article.get('pendingVote')
+  data: state.article.get('data')
 }))
 export default class Article extends Component {
   static propTypes = {
@@ -43,29 +42,31 @@ export default class Article extends Component {
   }
 
   render() {
-    let { data, pending, error, role, history, rateUp, rateDown, isVoted, pendingVote } = this.props
+    const { data, pending, error, role, history, rateUp, rateDown, isVoted, pendingVote } = this.props
 
     return (
-      <div className='wrap-article'>{
-        !data ? (
-          pending ? (
-              <div className='article-preloader'></div>
+      <div className="wrap-article">
+        {
+          !data ? (
+            pending ? (
+              <div className="article-preloader"></div>
             ) : (
               <p>{error}</p>
             )
           ) : (
-          <div>
-            <ArticleContents article={data} />
-            <RatingPanel voteArticle={this.voteArticle}
-              role={role}
-              rateUp={rateUp}
-              rateDown={rateDown}
-              isVoted={isVoted}
-              pendingVote={pendingVote} />
-            { role === 1 && ( <ArticleControls history={history} /> ) }
-          </div>
-        )
-      }
+            <div>
+              <ArticleContent article={data} />
+              <RatingPanel
+                voteArticle={this.voteArticle}
+                pendingVote={pendingVote}
+                rateDown={rateDown}
+                isVoted={isVoted}
+                rateUp={rateUp}
+                role={role} />
+              { role === 1 && <ArticleControls history={history} /> }
+            </div>
+          )
+        }
       </div>
     )
   }
