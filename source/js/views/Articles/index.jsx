@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Paging from './Paging'
+import ArticlesList from './ArticlesList'
 import ArticlesControlPanel from 'views/_admin/Articles/ArticlesControlPanel'
-import ArticleControlPanel from 'views/_admin/Articles/ArticleControlPanel'
 
 import { setPage } from 'actions/articles'
 import {
@@ -29,12 +28,13 @@ export default class Articles extends Component {
     pending: PropTypes.bool,
     error: PropTypes.string,
     total: PropTypes.number,
-    page: PropTypes.number,
-    count: PropTypes.number
+    count: PropTypes.number,
+    page: PropTypes.number
   }
 
   constructor() {
     super()
+    this.handleChangePage = this.handleChangePage.bind(this)
   }
 
   componentWillMount() {
@@ -57,44 +57,39 @@ export default class Articles extends Component {
     if(nextProps.pending) {
       return
     }
-    if (!this.props.listArticles.size) {
+    if (!this.props.listArticles.size) { // problem here
       dispatch(setPage(0, history))
     }
-    let urlPage = getLocationPage(history.location)
-    let currentPage = urlPage ? urlPage - 1 : 0
+    const urlPage = getLocationPage(history.location)
+    const currentPage = urlPage ? urlPage - 1 : 0
     if(currentPage !== page) {
       dispatch(setPage(currentPage, history))
     }
   }
 
+  handleChangePage(page) {
+    const { dispatch, pending, history } = this.props
+    if(!pending) {
+      dispatch(setPage(page, history))
+    }
+  }
+
   render() {
-    const Articles = this.props.listArticles.map((article, index) => {
-      const time = new Date(article.get('createdAt'))
-      const articleMonthName = time.getMonthName()
-      const articleYear = time.getFullYear()
-      const articleDay = time.getUTCDate()
-      return (
-        <div key={index} className='article-one-of'>
-          <img src={article.get('image')} />
-          <div className='head-article'>
-            <span>{articleDay + ' ' + articleMonthName + ', ' + articleYear}</span>
-            <span>{' ' + article.get('userName') + ' '}</span>
-            <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
-            {this.props.role === 1 &&
-              <ArticleControlPanel
-                history={this.props.history}
-                idArticle={article.get('id')}/>}
-          </div>
-          <span>{article.get('description')}&nbsp;</span>
-        </div>
-      )
-    })
+    const { listArticles, total, count, page, pending, role } = this.props
     return (
-      <div className='articles-list'>
-        <Paging history={this.props.history} />
-        {this.props.role === 1 &&
-          <ArticlesControlPanel history={this.props.history} />}
-        <ul className={this.props.pending ? 'articles-preloader' : ''}>{Articles}</ul>
+      <div className="articles-list">
+        <Paging
+          handleChangePage={this.handleChangePage}
+          history={history}
+          pending={pending}
+          count={count}
+          total={total}
+          page={page} />
+        {role === 1 && <ArticlesControlPanel history={history} />}
+        <ArticlesList
+          listArticles={listArticles}
+          pending={pending}
+          role={role} />
       </div>
     )
   }
