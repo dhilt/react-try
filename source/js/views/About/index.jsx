@@ -1,16 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class About extends Component {
-  render() {
-    return (
-      <div className='page-about'>
-        <h2>{'About'}</h2>
-        <hr />
+export default About =>
+  <div className="page-about">
+    <h2>{'About'}</h2>
+    <hr />
 
-        <h3>{'React and Redux, Webpack 2 boilerplate'}</h3>
-        <span>{'Visit documentation on '}</span>
-        <a href='https://github.com/Stanko/react-redux-webpack2-boilerplate'>{'GitHub'}</a>
-      </div>
-    )
-  }
-}
+    <h3>{'React and Redux, portal of game news'}</h3>
+    <span>{'Visit project on '}</span>
+    <a href="https://github.com/dhilt/react-try">{'GitHub'}</a>
+  </div>
