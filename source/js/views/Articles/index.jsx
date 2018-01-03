@@ -14,13 +14,13 @@ import {
 } from 'helpers/page'
 
 @connect(state => ({
+  role: state.auth.get('userInfo').get('role'),
   listArticles: state.articles.get('listArticles'),
   pending: state.articles.get('pending'),
   error: state.articles.get('error'),
   total: state.articles.get('total'),
   page: state.articles.get('page'),
-  count: state.articles.get('count'),
-  role: state.auth.get('userInfo').get('role')
+  count: state.articles.get('count')
 }))
 export default class Articles extends Component {
   static propTypes = {
@@ -68,25 +68,26 @@ export default class Articles extends Component {
   }
 
   render() {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    let Articles = this.props.listArticles.map((article, index) => {
+    const Articles = this.props.listArticles.map((article, index) => {
       const time = new Date(article.get('createdAt'))
-      let articleYear = time.getFullYear()
-      let articleMonth = time.getMonth()
-      let articleDay = time.getUTCDate()
-      return <div key={index} className='article-one-of'>
-               <img src={article.get('image')} />
-               <div className='head-article'>
-                 <span>{months[articleMonth]}, {articleDay} {articleYear} </span>
-                 <span> {article.get('userName')} </span>
-                 <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
-                 {this.props.role === 1 &&
-                   <ArticleControlPanel
-                     history={this.props.history}
-                     idArticle={article.get('id')}/>}
-               </div>
-               <span>{article.get('description')}&nbsp;</span>
-             </div>
+      const articleMonthName = time.getMonthName()
+      const articleYear = time.getFullYear()
+      const articleDay = time.getUTCDate()
+      return (
+        <div key={index} className='article-one-of'>
+          <img src={article.get('image')} />
+          <div className='head-article'>
+            <span>{articleDay + ' ' + articleMonthName + ', ' + articleYear}</span>
+            <span>{' ' + article.get('userName') + ' '}</span>
+            <Link to={'/articles/' + article.get('id')}> {article.get('title')}</Link>
+            {this.props.role === 1 &&
+              <ArticleControlPanel
+                history={this.props.history}
+                idArticle={article.get('id')}/>}
+          </div>
+          <span>{article.get('description')}&nbsp;</span>
+        </div>
+      )
     })
     return (
       <div className='articles-list'>
