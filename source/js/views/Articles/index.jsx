@@ -75,7 +75,7 @@ export default class Articles extends Component {
   }
 
   render() {
-    const { listArticles, total, count, page, pending, role } = this.props
+    const { listArticles, history, total, count, page, pending, role } = this.props
     return (
       <div className="articles-list">
         <Paging
@@ -88,6 +88,7 @@ export default class Articles extends Component {
         {role === 1 && <ArticlesControlPanel history={history} />}
         <ArticlesList
           listArticles={listArticles}
+          history={history}
           pending={pending}
           role={role} />
       </div>
