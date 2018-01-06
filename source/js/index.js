@@ -20,7 +20,7 @@ if (localStorage.getItem('token')) {
 }
 
 // Added to js-Date new method: getMonthName...
-initializeMethods();
+initializeMethods()
 
 // Render it to DOM
 ReactDOM.render(

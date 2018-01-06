@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'react-redux-form/immutable'
 
-import { ArticleForm } from '../ArticleForm'
+import { ArticleForm } from './ArticleForm'
 import {
   editArticleAsync,
   getExistArticleAsync,
@@ -14,7 +14,7 @@ import {
   editArticleForm: state._adminForms.forms.editArticleModel,
   editArticleModel: state._adminForms.editArticleModel
 }))
-export default class EditArticle extends Component {
+export default class EditArticle extends React.Component {
 
   constructor() {
     super()
@@ -24,7 +24,7 @@ export default class EditArticle extends Component {
   }
 
   componentWillMount() {
-    let { dispatch, editArticle } = this.props
+    const { dispatch, editArticle } = this.props
     if(!editArticle.get('source').get('id')) {
       dispatch(getExistArticleAsync(this.props.match.params.id))
     }
@@ -47,11 +47,11 @@ export default class EditArticle extends Component {
   }
 
   render() {
-    let { editArticle, editArticleModel, editArticleForm } = this.props
-    let pending = editArticle.get('pending')
-    let sourceAppliedCount = editArticle.get('sourceAppliedCount')
-    let pristine = editArticleForm.$form && editArticleForm.$form.pristine
-    let valid = editArticleForm.$form && editArticleForm.$form.valid
+    const { editArticle, editArticleModel, editArticleForm } = this.props
+    const pending = editArticle.get('pending')
+    const sourceAppliedCount = editArticle.get('sourceAppliedCount')
+    const pristine = editArticleForm.$form && editArticleForm.$form.pristine
+    const valid = editArticleForm.$form && editArticleForm.$form.valid
     return (
       <div>
         <h2>{'Edit Article...(admin only)'}</h2>

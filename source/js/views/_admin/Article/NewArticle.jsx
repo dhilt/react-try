@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'react-redux-form/immutable'
 
 import { createArticleAsync } from 'actions/_admin/newArticle'
-import { ArticleForm } from '../ArticleForm'
+import { ArticleForm } from './ArticleForm'
 
 @connect(state => ({
   newArticle: state._adminNewArticle,
   newArticleForm: state._adminForms.forms.newArticleModel,
   newArticleModel: state._adminForms.newArticleModel
 }))
-export default class NewArticle extends Component {
+export default class NewArticle extends React.Component {
 
   constructor() {
     super()
@@ -30,10 +30,10 @@ export default class NewArticle extends Component {
   }
 
   render() {
-    let { newArticle, newArticleModel, newArticleForm } = this.props
-    let pending = newArticle.get('pending')
-    let pristine = newArticleForm.$form && newArticleForm.$form.pristine
-    let valid = newArticleForm.$form && newArticleForm.$form.valid
+    const { newArticle, newArticleModel, newArticleForm } = this.props
+    const pending = newArticle.get('pending')
+    const pristine = newArticleForm.$form && newArticleForm.$form.pristine
+    const valid = newArticleForm.$form && newArticleForm.$form.valid
 
     return (
       <div>

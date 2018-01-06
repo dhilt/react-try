@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import NotFound from 'views/NotFound'
 
 // Authorization HOC
-const Protected = (RouteComponent, requiredRole) =>
+export default (RouteComponent, requiredRole) =>
   @connect(state => ({
     role: state.auth.get('userInfo') && state.auth.get('userInfo').get('role'),
     authPending: state.auth.get('tokenAuthPending')
@@ -23,5 +23,3 @@ const Protected = (RouteComponent, requiredRole) =>
       }
     }
   }
-
-export default Protected

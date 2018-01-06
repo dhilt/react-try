@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import ConfirmationModal from 'views/_admin/confirmation'
@@ -19,9 +19,9 @@ export default class ArticleControls extends React.Component {
   constructor() {
     super()
     this.goToEditArticlePage = this.goToEditArticlePage.bind(this)
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
     this.removeArticle = this.removeArticle.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.openModal = this.openModal.bind(this)
   }
 
   goToEditArticlePage(e) {
@@ -47,10 +47,10 @@ export default class ArticleControls extends React.Component {
 
   render() {
     const { article, openModal, removeArticle } = this.props
-    let getRemoveArticleAttr = (token) => removeArticle && removeArticle.get(token)
+    const getRemoveArticleAttr = (token) => removeArticle && removeArticle.get(token)
 
     return (
-      <div className='admin-panel-create-and-remove-articles'>
+      <div className="admin-panel-create-and-remove-articles">
         <a onClick={this.goToEditArticlePage} href={'/admin/articles/' + article.get('id')}>
           {'Править статью +'}
         </a>
@@ -58,14 +58,14 @@ export default class ArticleControls extends React.Component {
           {'Удалить статью -'}
         </a>
         <ConfirmationModal
+          isOpenModal={getRemoveArticleAttr('isOpenModal')}
+          message={getRemoveArticleAttr('serverResult')}
+          pending={getRemoveArticleAttr('pending')}
+          textButtonCancel={'No, hide this modal!'}
           dialogTitle={'Confirm removing article'}
           textButtonOk={'Yes, remove article!'}
-          textButtonCancel={'No, hide this modal!'}
-          isOpenModal={getRemoveArticleAttr('isOpenModal')}
-          cancel={this.closeModal}
           confirm={this.removeArticle}
-          message={getRemoveArticleAttr('serverResult')}
-          pending={getRemoveArticleAttr('pending')} />
+          cancel={this.closeModal} />
       </div>
     )
   }

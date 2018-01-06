@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
 
@@ -13,7 +13,7 @@ import {
 @connect(state => ({
   filter: state.articles.get('filter')
 }))
-export default class ArticlesControlPanel extends Component {
+export default class ArticlesControlPanel extends React.Component {
 
   constructor() {
     super()
@@ -50,7 +50,7 @@ export default class ArticlesControlPanel extends Component {
   }
 
   render() {
-    let { author, title, dateFrom, dateTo } = this.props.filter.toJS()
+    const { author, title, dateFrom, dateTo } = this.props.filter.toJS()
     return (
       <div className='articles-control-panel'>
         <div className='filter'>

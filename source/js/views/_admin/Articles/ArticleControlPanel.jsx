@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import ConfirmationModal from 'views/_admin/confirmation'
@@ -15,7 +15,7 @@ import {
   removeArticlePending: state._adminRemoveArticle.get('pending'),
   removeArticleServerResult: state._adminRemoveArticle.get('serverResult')
 }))
-export default class ArticleControlPanel extends Component {
+export default class ArticleControlPanel extends React.Component {
 
   constructor() {
     super()
@@ -47,8 +47,8 @@ export default class ArticleControlPanel extends Component {
   }
 
   render() {
-    let { removeArticleIsOpenModal, removeArticlePending, removeArticleServerResult } = this.props
-    let { localRemoveArticleIsOpenModal } = this.state
+    const { removeArticleIsOpenModal, removeArticlePending, removeArticleServerResult } = this.props
+    const { localRemoveArticleIsOpenModal } = this.state
     return (
       <div className='article-control-panel'>
         <a onClick={this.editArticle}>{'Редактировать статью '}</a>

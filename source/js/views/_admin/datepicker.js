@@ -13,7 +13,7 @@ export default class MyDatepickerInput extends React.Component {
   }
 
   componentWillMount() {
-    let dateValue = moment(this.props.value)
+    const dateValue = moment(this.props.value)
     if(dateValue.isValid()) {
       this.setState({ date: dateValue })
     }
