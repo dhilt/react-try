@@ -35,8 +35,8 @@ export default Routes =>
       <div className="main-content">
         <Switch>
           // Here problem. Replacement of NewArticle and EditArticle in places giving an error
-          <Route exact path={ routeCodesAdmin.NEWARTICLE } component={ Protected(NewArticle, NotFound) } />
-          <Route exact path={ routeCodesAdmin.EDITARTICLE } component={ Protected(EditArticle, NotFound) } />
+          <Route exact path={ routeCodesAdmin.NEWARTICLE } component={ Protected(NewArticle, 1) } />  // 1 = admin role
+          <Route exact path={ routeCodesAdmin.EDITARTICLE } component={ Protected(EditArticle, 1) } />
           <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
           <Route exact path={ routeCodes.ARTICLES } component={ Articles } />
           <Route exact path={ routeCodes.ARTICLE } component={ Article } />
