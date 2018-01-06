@@ -48,7 +48,7 @@ export default class DashboardHead extends Component {
     return (
       <div className="dashboard-head" style={bckImg}>
         <div className="dashboard-games">
-          {games.size &&
+          {games.size !== 0 &&
             <MenuGames games={games}
               onImageClick={this.onImageClick}
               selectedIndex={selectedIndex} />

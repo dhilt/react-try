@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ConfirmationModal } from 'views/_admin/confirmation'
+import ConfirmationModal from 'views/_admin/confirmation'
 
 import { setEditPageSource } from 'actions/_admin/editArticle'
 import {
