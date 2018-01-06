@@ -48,11 +48,10 @@ export default class DashboardArticles extends Component {
           {role === 1 && <Link to='/admin/articles/new'>{'Добавить статью +'}</Link>}
         </div>
         <DashboardArticlesList list={list} />
-        <div className="download-articles">
-          <a onClick={this.getAnotherArticles}
-             className={pending ? 'preloader' : ''}>
-             {'Подгрузить еще'}
-          </a>
+        <div onClick={this.getAnotherArticles} className="download-articles">
+          <span className={pending ? 'preloader' : ''}>
+            {'Подгрузить еще'}
+          </span>
         </div>
       </div>
     )

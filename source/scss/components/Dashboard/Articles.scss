@@ -140,6 +140,7 @@ $article-width: 420px;
 }
 
 .download-articles {
+  cursor: pointer;
   margin-top: 50px;
   margin-bottom: 77px;
   width: 356px;
@@ -148,11 +149,10 @@ $article-width: 420px;
   border-radius: 45px;
   text-align: center;
   line-height: 55px;
-  a {
+  span {
     color: #272727;
     font-family: "Open Sans";
     font-size: 24px;
     font-weight: 300;
-    cursor: pointer;
   }
 }
